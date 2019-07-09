@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="aplus-terminal" content="1">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no, address=no">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title>Peax</title>
+    <script type="text/javascript" src="./static/js/flexible.js"></script>
+    <link rel="stylesheet" href="./static/css/act_base.css"/>
+    <link rel="stylesheet" href="./static/css/animate.min.css" type="text/css"/>
+</head>
+<body>
+<noscript>
+    <strong>We're sorry but x-game doesn't work properly without JavaScript enabled. Please enable it to
+        continue.</strong>
+</noscript>
+<div id="app"></div>
+<!-- built files will be auto injected -->
+<script type="text/javascript" src="./static/js/gt.js"></script>
+<script type="text/javascript" src="./static/js/jsencrypt.min.js"></script>
+<script type="text/javascript" src="./static/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    if (navigator.userAgent.indexOf("InAppWebView") >= 0) {
+        document.write('<script type="text/javascript" src="./cordova.js"><\/script>');
+        document.write('<script type="text/javascript" src="./static/js/platform.js"><\/script>');
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        $('input,textarea').on('blur',function(){
+          window.scroll(0,0);
+        });
+        $('select').on('change',function(){
+          window.scroll(0,0);
+        });
+      }, false);
+
+    function setCookie(name, value) {
+        var Days = 30;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+    }
+
+    function autoLogin() {
+        setCookie("api_token", "1f2c5e0deabc4ac091416f015b178329")
+    }
+
+    if (location.protocol === "http:") {
+        // autoLogin()
+    }
+
+
+</script>
+</body>
+</html>

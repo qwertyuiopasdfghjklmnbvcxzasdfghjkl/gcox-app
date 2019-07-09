@@ -1,0 +1,105 @@
+*, *::before, *::after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+}
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-overflow-scrolling: touch;
+}
+html, body {
+  padding: 0;
+  margin: 0;
+}
+body {
+  font-family: Helvetica;
+  color: #222222;
+  background-color: #fff;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-overflow-scrolling: touch; /*当手指从触摸屏上移开，会保持一段时间的滚动*/
+  overflow-scrolling: touch;
+  /*-webkit-perspective: 1000;
+  -moz-perspective: 1000;
+  perspective: 1000;*/
+  -ms-progress-appearance: none; /*去除系统默认appearance的样式,常用于IOS下移除原生样式*/
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+dl, dd, h1, h2, h3, h4, h5, h6, p, form, ul, li {
+  padding: 0;
+  margin: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+ul, li {
+  list-style-type: none;
+}
+img {
+  max-width: 100%;
+  height: auto;
+  border-width: 0;
+}
+a {
+  color: #fff;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
+}
+a:active, a:hover, a:link, a:visited {
+  text-decoration: none;
+  outline-style: none;
+  -webkit-tap-highlight-color: transparent;
+}
+input, select, button {
+  font-size: 0.28rem;
+  font-family: Helvetica;
+  outline-style: none;
+}
+.hide {
+  display: none;
+}
+.show {
+  display: block;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before, .clearfix:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.tc {
+  text-align: center;
+}
+.tl {
+  text-align: left;
+}
+.tr {
+  text-align: right;
+}
+/*标题栏*/
+[class*=icon_], [class*=icon_]::before, [class*=icon_]::after {
+  display: inline-block;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  -webkit-background-size: 100% auto;
+  -moz-background-size: 100% auto;
+  -o-background-size: 100% auto;
+  background-size: 100% auto;
+}
+input{cursor:pointer;}
