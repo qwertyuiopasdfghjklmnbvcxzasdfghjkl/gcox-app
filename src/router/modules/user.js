@@ -10,6 +10,11 @@ export default [
 	  component: () => import('@/views/register')
 	},
 	{
+	  path: '/verify',
+	  name: 'verify',
+	  component: () => import('@/views/emailVerify')
+	},
+	{
 	  path: '/register/paymentSet',
 	  name: 'paymentSet',
 	  component: () => import('@/views/paymentSet')

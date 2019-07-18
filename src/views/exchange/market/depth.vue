@@ -16,9 +16,9 @@
                 </li>
             </ul>
         </div>
-        <div class="mt30">
+        <div class="numb_text">
           <p :class="{sell:(getLast24h.direction!=1)}">{{Number(toFixed(getLast24h.close))}}</p>
-          <p class="mt10">≈ <valuation :lastPrice="getLast24h.close" :baseSymbol="baseSymbol"/></p>
+          <!--<p class="mt10">≈ <valuation :lastPrice="getLast24h.close" :baseSymbol="baseSymbol"/></p>-->
         </div>
         <div class="mt35">
             <ul class="buy-list" ref="parentListBid">
@@ -62,7 +62,7 @@ export default {
     return {
       asks: [],
       bids: [],
-      mergeLen: 5,
+      mergeLen: 7,
       price: '0',
       active: 'askbid',
       direction: null
@@ -87,11 +87,11 @@ export default {
       asks = asks.sort((item1, item2) => {
         return numUtils.BN(item1.price).lt(item2.price) ? 1 : -1
       })
-      return asks.length>=5?asks.slice(asks.length-5,asks.length):asks
+      return asks.length>=7?asks.slice(asks.length-7,asks.length):asks
     },
     filterBids () {
       let bids = this.mergeDatas(this.bids)
-      return bids.length>=5?bids.slice(0,5):bids
+      return bids.length>=7?bids.slice(0,7):bids
     },
     askMax () {
       return this.getMaxAmount(this.filterAsks)
@@ -269,14 +269,13 @@ export default {
 @c_buy:#24C898;
 @c_sell:#F65B69;
 @c_light:#91A4A3;
-@c_board:#B9D0CF;
+@c_board:#C8C7CC;
 .order-book{position: relative;}
 .order-book> div:nth-of-type(1){ display: flex; justify-content: space-between;}
-.order-book> div:nth-of-type(1) span{color: @c_board;font-size: 0.26rem; }
+.order-book> div:nth-of-type(1) span{color: @c_board;font-size: 0.24rem; }
 .order-book > div:nth-of-type(3) {position: relative;}
 .order-book > div:nth-of-type(3) p:first-of-type{color: @c_buy; font-size: 0.34rem; }
 .order-book > div:nth-of-type(3) p:first-of-type.sell{color: @c_sell;}
-.order-book > div:nth-of-type(3) p:last-of-type{color: @c_board; font-size: 0.26rem;}
 .order-book > div:nth-of-type(5){flex: 7;min-height: 0;position: relative;display:flex;align-items:center;}
 .order-book > div:nth-of-type(5) > p{
   position: absolute;left: 0;right: 0;top: 50%;transform: translateY(-65%);font-size: 0.28rem;
@@ -296,4 +295,12 @@ export default {
 .order-book .sell-list.active{opacity:1;}
 .order-book .buy-list li{background-image: url('../../../assets/img/buy-list-bg.png');}
 .order-book .buy-list li span:first-of-type{color: @c_buy;}
+    .numb_text{
+        text-align: center;
+        font-size: .32rem;
+        padding: 0.2rem 0;
+        margin: 0.24rem 0;
+        border: 0.02rem solid #40403E;
+        border-width: 0.02rem 0 0.02rem 0;
+    }
 </style>

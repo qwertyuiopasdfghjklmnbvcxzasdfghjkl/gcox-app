@@ -29,7 +29,8 @@ user.resetTransactionPwd = resetTransactionPwd
 
 // 登录
 const login = function (formData, success, error) {
-  api.post(`${domain}api/v2/user/login`, formData, (res) => {
+  api.post(`${domain}api/v1/gcox/user/login`, formData, (res) => {
+  // api.post(`http://10.0.5.106:9999/api/v2/user/login`, formData, (res) => {
     if (res.rst === 1) {
       success && success(res.api_token, res)
     } else {
@@ -45,6 +46,18 @@ const login = function (formData, success, error) {
 }
 user.login = login
 
+// 重发邮件
+const resend = function (formData, success, error) {
+  api.post(`${domain}/api/v1/gcox/user/resend`, formData, (res) => {
+    if (res.rst === 1) {
+      success && success(res.data, res)
+    } else {
+      error && error(res.msg)
+    }
+  }, error)
+}
+user.resend = resend
+
 // 获取用户信息
 const userInfo = function (success, error) {
   api.get(`${domain}api/v2/user/info`, (res) => {
@@ -59,7 +72,7 @@ user.userInfo = userInfo
 
 // 注册
 const register = function (formData, success, error) {
-  api.post(`${domain}api/v2/user/gameRegister`, formData, (res) => {
+  api.post(`${domain}api/v1/gcox/user/register`, formData, (res) => {
     if (res.rst === 1) {
       success && success(res.msg)
     } else {
@@ -69,27 +82,9 @@ const register = function (formData, success, error) {
 }
 user.register = register
 
-// 修改登录密码
-const changePwd = function (data, success, error) {
-  api.post(`${domain}api/v2/user/changePwd`, data, (res) => {
-    if (res.rst === 1) {
-      success && success(res.msg)
-    } else {
-      let msg = ''
-      if (res.error) {
-        msg = typeof res.error === 'string' ? res.error : [0]
-      } else {
-        msg = typeof res.msg === 'string' ? res.msg : res.msg[0]
-      }
-      error && error(msg)
-    }
-  }, error)
-}
-user.changePwd = changePwd
-
 // 忘记密码 - 发送邮件
 const forgetPwdSendEmail = function (data, success, error) {
-  api.post(`${domain}api/v2/user/resetPwdRequest`, data, (res) => {
+  api.post(`${domain}/api/v1/gcox/user/resetPwd`, data, (res) => {
     if (res.rst === 1) {
       success && success()
     } else {
@@ -104,24 +99,6 @@ const forgetPwdSendEmail = function (data, success, error) {
   }, error)
 }
 user.forgetPwdSendEmail = forgetPwdSendEmail
-
-// 忘记密码 - 重置密码
-const forgetPwdChangePwd = function (data, success, error) {
-  api.post(`${domain}api/v2/user/resetPwd`, data, (res) => {
-    if (res.rst === 1) {
-      success && success()
-    } else {
-      let msg = ''
-      if (res.error) {
-        msg = typeof res.error === 'string' ? res.error : [0]
-      } else {
-        msg = typeof res.msg === 'string' ? res.msg : res.msg[0]
-      }
-      error && error(msg)
-    }
-  }, error)
-}
-user.forgetPwdChangePwd = forgetPwdChangePwd
 
 // 发送邮件 - 激活邮箱
 const reSendEmail = function (data, success, error) {

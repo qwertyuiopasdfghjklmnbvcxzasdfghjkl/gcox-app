@@ -15,6 +15,9 @@ axios.interceptors.request.use(function (config) {
   config.headers.common['uuid'] = userApi.uuid
   config.headers.common['lang'] = lang
   // 在发送请求之前做些什么
+  Indicator.open({
+    text: 'Loading...',
+  });
   return config
 }, function (error) {
   // 对请求错误做些什么
@@ -38,13 +41,15 @@ axios.interceptors.response.use(function (response) {
     } else {
       window.location.reload()
     }
-    
+
     return null
   }
   // 对响应数据做点什么
+  Indicator.close();
   return response
 }, function (error) {
   // 对响应错误做点什么
+  Indicator.close();
   return Promise.reject(error)
 })
 

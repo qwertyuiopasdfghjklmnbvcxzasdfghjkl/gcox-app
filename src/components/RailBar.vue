@@ -26,7 +26,8 @@
                 if(this.item.disabled){
                     return
                 }
-                this.$router.push(this.item.route)
+                this.$router.push({name: this.item.route})
+                console.log(this.item.route)
             }
         }
     }
@@ -34,24 +35,27 @@
 
 <style scoped lang="less">
     .bar {
-        background: #ffffff;
-        padding: 0.29rem;
+        background: #2A2A34;
+        padding: 0.22rem 0.32rem;
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
         justify-content: space-between;
+        height: 0.92rem;
+        line-height: 0.48rem;
 
         p {
             flex-shrink: 1;
             flex-grow: 1;
-            font-size: 0.32rem;
-            color: #222222;
+            font-size: 0.3rem;
+            color: #ffffff;
+            /*padding-left: 0.2rem;*/
         }
 
         &>img {
-            width: 0.64rem;
-            height: 0.36rem;
-            padding-right: 0.3rem;
+            width: 0.48rem;
+            height: 0.48rem;
+            margin-right: 0.2rem;
         }
 
         span {
@@ -59,7 +63,7 @@
         }
 
         i {
-            height: 0.24rem;
+            height: 0.48rem;
             img {
                 width: 0.14rem;
                 height: 0.24rem

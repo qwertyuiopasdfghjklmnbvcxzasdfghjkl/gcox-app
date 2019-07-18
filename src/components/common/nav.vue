@@ -3,22 +3,22 @@
         <mt-tab-item id="find" v-tap="{methods:$root.routeTo, to:'find', replace:true}">
             <img slot="icon" src="../../assets/img/icon_home_a@3x.png">
             <img slot="icon" src="../../assets/img/icon_home_b@3x.png">
-            <p>Home</p>
-        </mt-tab-item>
-        <mt-tab-item id="wallet" v-tap="{methods:$root.routeTo, to:'wallet', replace:true}">
-            <img slot="icon" src="../../assets/img/icon_markt_a@3x.png">
-            <img slot="icon" src="../../assets/img/icon_markt_b@3x.png">
-            <p>Harkets</p>
+            <p>{{$t('nav.home')}}</p>
         </mt-tab-item>
         <mt-tab-item id="market" v-tap="{methods:$root.routeTo, to:'market', replace:true}">
+            <img slot="icon" src="../../assets/img/icon_markt_a@3x.png">
+            <img slot="icon" src="../../assets/img/icon_markt_b@3x.png">
+            <p>{{$t('nav.market')}}</p>
+        </mt-tab-item>
+        <mt-tab-item id="exchange" v-tap="{methods:$root.routeTo, to:'exchange', replace:true}">
             <img slot="icon" src="../../assets/img/icon_trade_a@3x.png">
             <img slot="icon" src="../../assets/img/icon_trade_b@3x.png">
-            <p>Trade</p>
+            <p>{{$t('nav.trade')}}</p>
         </mt-tab-item>
         <mt-tab-item id="ucenter" v-tap="{methods:$root.routeTo, to:'ucenter', replace:true}">
             <img slot="icon" src="../../assets/img/icon_account_a3x.png">
             <img slot="icon" src="../../assets/img/icon_account_b3x.png">
-            <p>Account</p>
+            <p>{{$t('nav.my')}}</p>
         </mt-tab-item>
     </mt-tabbar>
 </template>
@@ -47,8 +47,8 @@
             setTab() {
                 if (this.$route.path.indexOf('find') > -1) {
                     this.selected = 'find'
-                } else if (this.$route.path.indexOf('wallet') > -1) {
-                    this.selected = 'wallet'
+                } else if (this.$route.path.indexOf('exchange') > -1) {
+                    this.selected = 'exchange'
                 } else if (this.$route.path.indexOf('market') > -1) {
                     this.selected = 'market'
                 } else if (this.$route.path.indexOf('ucenter') > -1) {

@@ -410,7 +410,7 @@
         height: 0.4rem;
         right: 0;
         top: 0.11rem;
-        background: url('../../assets/img/i_scanning.png') no-repeat center;
+        background: url('../../../assets/img/i_scanning.png') no-repeat center;
         background-size: auto 100%;
     }
 

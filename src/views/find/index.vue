@@ -2,24 +2,19 @@
     <div class="page">
         <!--<search-bar class="mt10" @change="setSearch"></search-bar>-->
         <banner></banner>
-        <div class="page-main" :class="{nodata:!adsense.length}">
-            <!--<ul class="adsense">-->
-                <!--<li v-for="game in filterAdsense">-->
-                    <!--<img :src="game.recommendImage"-->
-                         <!--v-tap="{methods:$root.routeTo, to:'dappDetail', params:{gameId:game.gameId}}">-->
-                    <!--<p>-->
-                        <!--<span class="ellipsis">{{game.name}}</span>-->
-                        <!--<mt-button type="primary" size="small" class="circle"-->
-                                   <!--v-tap="{methods:$root.routeTo, to:'gameSupport', params:game}" v-if="game.gameUrl">-->
-                            <!--{{$t('find.enterGame')}}-->
-                        <!--</mt-button>-->
-                        <!--<mt-button type="primary" :disabled="true" size="small" class="circle" v-else>-->
-                            <!--{{$t('find.notopen')}}-->
-                        <!--</mt-button>-->
-                    <!--</p>-->
-                <!--</li>-->
-            <!--</ul>-->
+        <div>
+            <label class="flex">
+                <i class="ico"><img src="../../assets/img/notice.png"></i>
+                <notice></notice>
+                <router-link to="#">更多</router-link>
+            </label>
         </div>
+        <data-box></data-box>
+        <data-list></data-list>
+
+        <!--<div class="page-main" :class="{nodata:!adsense.length}">-->
+
+        <!--</div>-->
     </div>
 </template>
 
@@ -30,12 +25,18 @@
     import searchBar from './index/search_bar'
     import JsCookies from 'js-cookie'
     import banner from './index/banner'
+    import notice from './index/notice'
+    import dataBox from './index/data_box'
+    import dataList from './index/data_list'
 
     export default {
         name: 'find',
         components: {
             searchBar,
-            banner
+            banner,
+            notice,
+            dataBox,
+            dataList
         },
         data() {
             return {
@@ -51,35 +52,35 @@
                 })
             }
         },
-        beforeRouteEnter(to, from, next) {
-            let api_token = JsCookies.get('api_token'),
-                isFirstLogin = localStorage.getItem('isFirstLogin') ? false : true
-            if (!api_token && isFirstLogin) {
-                next({
-                    name: 'init'
-                })
-            } else {
-                next()
-            }
-        },
+        // beforeRouteEnter(to, from, next) {
+        //     let api_token = JsCookies.get('api_token'),
+        //         isFirstLogin = localStorage.getItem('isFirstLogin') ? false : true
+        //     if (!api_token && isFirstLogin) {
+        //         next({
+        //             name: 'login'
+        //         })
+        //     } else {
+        //         next()
+        //     }
+        // },
         created() {
-            this.getRecommendGames()
+            // this.getRecommendGames()
         },
         methods: {
             ...mapActions(['setAdsense']),
             setSearch(key) {
                 this.searchKey = key.toLowerCase()
             },
-            getRecommendGames() {
-                if (this.getAdsense.length) {
-                    return
-                }
-                findApi.getRecommendGames({size: 1}, res => {
-                    this.setAdsense(res.ad)
-                }, msg => {
-                    Tip({type: 'error', message: this.$t(`error_code.${msg}`)})
-                })
-            }
+            // getRecommendGames() {
+            //     if (this.getAdsense.length) {
+            //         return
+            //     }
+            //     findApi.getRecommendGames({size: 1}, res => {
+            //         this.setAdsense(res.ad)
+            //     }, msg => {
+            //         Tip({type: 'error', message: this.$t(`error_code.${msg}`)})
+            //     })
+            // }
         }
 
     }
@@ -89,7 +90,9 @@
     .page-main {
         top: 0rem;
     }
-
+.page{
+    overflow-y: auto;
+}
     .icon_logo {
         height: 0.5rem;
         width: 100%;
@@ -132,6 +135,25 @@
                     margin-top: 0.22rem;
                     margin-left: 0.3rem;
                 }
+            }
+        }
+    }
+    .flex{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.3rem 0.32rem;
+        & > div{
+            flex-shrink: 1;
+            flex-grow: 1;
+        }
+        .ico{
+            width: 0.52rem;
+            height: 0.4rem;
+            padding-right: 0.12rem;
+            img{
+                width: 100%;
+                height: 100%;
             }
         }
     }

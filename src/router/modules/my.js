@@ -1,4 +1,7 @@
 // import My from '@/views/my/index'
+import trading from '@/views/my/wallet/trading'
+import topup from '@/views/my/wallet/topup'
+import withdrawal from '@/views/my/wallet/withdrawal'
 
 export default [
     {
@@ -73,8 +76,40 @@ export default [
                 path: 'center',
                 name: 'center',
                 component:() => import('@/views/my/center'),
+            },
+            {
+                path: 'wallet',
+                name: 'wallet',
+                component: () => import('@/views/my/wallet'),
+                meta:{
+                    login:true,
+                    nav:true
+                }
+            },
+            {
+                path: 'trading/:symbol', // 类型 etc btc
+                name: trading.name,
+                component: trading,
+                meta: {login: true}
+            },
+            {
+                path: 'topup/:symbol', // 充值
+                name: topup.name,
+                component: topup,
+                meta: {login: true}
+            },
+            {
+                path: 'withdrawal/:symbol', //
+                name: withdrawal.name,
+                component: withdrawal,
+                meta: {login: true}
+            },
+            {
+                path: 'wallet/history',
+                name: 'history',
+                component: () => import('@/views/my/wallet/history-list'),
+                meta:{login:true}
             }
-            
         ]
     },
 ]

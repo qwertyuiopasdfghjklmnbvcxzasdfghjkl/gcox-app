@@ -98,10 +98,10 @@ export default {
     background-size: auto 0.6rem;
   }
   i.icon_my {
-    background-image: url('../../assets/img/icon_wd_a@3x.png');
+    background-image: url('../../../assets/img/icon_wd_a@3x.png');
     background-position: left center;
     &.active {
-      background-image: url('../../assets/img/icon_wd_b@3x.png');
+      background-image: url('../../../assets/img/icon_wd_b@3x.png');
     }
   }
   i.icon_wallet {
