@@ -65,7 +65,7 @@
                 },
                 data1: [
                     {
-                        route: 'page-trading',
+                        route: 'trading',
                         icon: require('@/assets/img/wall@3x.png'),
                         name: this.$t('exchange.exchange_wallet'),
                     },
@@ -126,10 +126,10 @@
                 // 下载当前用户头像
                 let img = window.localStorage.headerImg
                 if(!img){
-                    userInfoApi.downloadHeader((url) => {
-                        this.avatarUrl = url
-                        window.localStorage.headerImg = url
-                    })
+                    // userInfoApi.downloadHeader((url) => {
+                    //     this.avatarUrl = url
+                    //     window.localStorage.headerImg = url
+                    // })
                 }else{
                     this.avatarUrl = img
                 }
@@ -296,7 +296,6 @@
             display: block;
             position: absolute;
             z-index: 9;
-            /*width: calc(100% - 0.88rem);*/
             bottom: 0;
             right: 0.3rem;
             left:0.3rem;

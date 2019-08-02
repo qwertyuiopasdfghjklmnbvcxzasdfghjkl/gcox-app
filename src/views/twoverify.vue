@@ -41,13 +41,14 @@
                 data: {},
                 locked: false, // 锁
                 disabled: false,
+                query: null
             }
         },
-        watch: {
-
-        },
+        watch: {},
         created() {
             this.data = this.$route.params.data
+            this.query = this.$route.query
+            console.log(this.data)
         },
         methods: {
             ...mapActions(['setApiToken', 'setUserInfo', 'setQuickLoginInfo']),
@@ -56,8 +57,20 @@
                 if (this.locked) {
                     return
                 }
-                this.data.googleCode = this.formData.googleCode
-                userApi.login(this.data, (apiToken) => {
+                let formData = {
+                    googleCode: this.formData.googleCode,
+                    password: this.data.password,
+                    rsaPublicKey: this.data.rsaPublicKey,
+                    username: this.data.username
+                }
+                userApi.getRsaPublicKey((rsaPublicKey) => {
+                    formData.password = utils.encryptPwd(rsaPublicKey, formData.password)
+                    formData.rsaPublicKey = rsaPublicKey
+                    this.login(formData)
+                })
+            },
+            login(formData) {
+                userApi.login(formData, (apiToken) => {
                     window.localStorage.removeItem('$twoverify_username')
                     this.locked = false
                     this.setApiToken(apiToken)
@@ -65,8 +78,8 @@
                     myAPi.addLoginHistory()
                     this.getInfo()
                     Tip({type: 'success', message: this.$t(`user.loginSuccess`)})
-                    if (this.$route.query.curl) {
-                        this.$router.replace({path: this.$route.query.curl})
+                    if (this.query.curl) {
+                        this.$router.replace({path: this.query.curl})
                     } else {
                         this.$router.replace({path: '/'})
                     }
@@ -85,6 +98,13 @@
                     this.setUserInfo(res);
                 })
             },
+            goBack(){
+                if (this.query.curl) {
+                    this.$router.replace({path: this.query.curl})
+                } else {
+                    this.$router.replace({path: '/'})
+                }
+            }
         }
     }
 </script>
@@ -137,9 +157,10 @@
                     color: #A5AAB7;
                     border: none;
                     background-color: transparent;
-                    border-bottom: 0.02rem solid  #73757E;;
+                    border-bottom: 0.02rem solid #73757E;;
                     transition: border 0.3s;
-                    &:hover{
+
+                    &:hover {
                         border-bottom-color: #5CACCF;
                     }
                 }
@@ -178,7 +199,8 @@
             width: 3.12rem
         }
     }
-    .mt200{
+
+    .mt200 {
         margin-top: 2rem;
     }
 </style>

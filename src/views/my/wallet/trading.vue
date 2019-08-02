@@ -11,28 +11,31 @@
             <section class="wallet-feature">
                 <p>{{$t('home.home46')}}</p>
                 <div class="wallet-feature-operation">
-                  <span v-tap="{methods: $root.routeTo, to: 'page-topup'}">
+                  <span v-tap="{methods: withdrawal}">
                       <img src="../../../assets/img/i_tx.png">
                     <em>
                         {{$t('home.home49')}}<!--提现-->
                     </em>
                   </span>
-                    <span v-tap="{methods: withdrawal}">
+                    <span v-tap="{methods: pay}">
                     <img src="../../../assets/img/i_cz.png">
                     <em>
                         {{$t('home.home50')}}
                         <!--充值-->
                     </em>
                   </span>
-                    <span v-tap="{methods: $root.routeTo, to: 'market'}">
+                    <span v-tap="{methods: $root.routeTo, to: 'address-manage'}">
                     <img src="../../../assets/img/i_jy.png">
                     <em>{{$t('home.home51')}}<!--地址--></em>
                   </span>
                 </div>
             </section>
             <div class="total">
-                <p><span>{{$t('home.home47')}}</span><img :src="require('../../../assets/img/eye_open@2x.png')"/></p>
-                <h4 class="">{{currentSymbolInfo|number}}</h4>
+                <p v-tap="{methods:()=>{ showMoney = !showMoney}}">
+                    <span>{{$t('home.home47')}}</span>
+                    <img :src="showMoney ? require('../../../assets/img/eye_open@2x.png'): require('../../../assets/img/eye_closed@2x.png')"/>
+                </p>
+                <h4 class="">{{currentSymbolInfo|number}} BTC</h4>
             </div>
             <div class="list_title">
                 <p>{{$t('home.home53')}}</p>
@@ -46,7 +49,7 @@
             </div>
             <div class="cont_list">
                 <ul>
-                    <li v-for="data in filterSymboltList">
+                    <li v-for="data in filterSymboltList" v-tap="{methods: toWallet, item:data}">
                         <p>{{data.accountName}}</p>
                         <label>
                             <p>{{data.totalBalance | number}}</p>
@@ -64,16 +67,14 @@
 <script>
     import {mapGetters, mapActions} from 'vuex'
     import {MessageBox, Toast} from 'mint-ui'
-    import utils from '@/assets/js/utils'
-    import myApi from '@/api/user'
-    import userApi from '@/api/individual'
-    import walletApi from '@/api/wallet'
+    import market from '@/api/market'
     import loading from '@/components/common/loading'
     import noData from '@/components/common/noData'
     import noMoreData from '@/components/common/noMoreData'
     import numUtils from '@/assets/js/numberUtils'
+
     export default {
-        name: 'page-trading',
+        name: 'trading',
         components: {
             loading,
             noData,
@@ -82,9 +83,9 @@
         data() {
             return {
                 filterTitle: '',
-                showSymbolSlide: false,
                 showZero: false,
                 showSymbolList: false,
+                showMoney: true
             }
         },
         computed: {
@@ -101,99 +102,93 @@
             filterSymboltList() {
                 if (this.symbolList.length) {
                     return this.symbolList.filter(item => {
-                        return item.symbol.toLowerCase().includes(this.filterTitle.toLowerCase())
+                        if (this.showZero) {
+                            let data = []
+                            if (Number(item.totalBalance) > 0) {
+                                // data.push(item)
+                                return item.symbol.toLowerCase().includes(this.filterTitle.toLowerCase())
+                            }
+                        } else {
+                            return item.symbol.toLowerCase().includes(this.filterTitle.toLowerCase())
+                        }
                     })
                 } else {
                     return []
                 }
             },
             currentSymbolInfo() {
-                console.log(this.getBTCValuation)
-                return this.getBTCValuation
-            },
-            sortedDatas () {
-                let ndatas = this.getUserWallets.sort((item1, item2) => {
-                    let m1 = numUtils.BN(item1.totalBalance)
-                    let m2 = numUtils.BN(item2.totalBalance)
-                    if (m1.equals(m2)) {
-                        return item1.symbol < item2.symbol ? -1 : 1
-                    }
-                    return this.sort === 'desc' ? (m1.lt(m2) ? -1 : 1) : (m1.gt(m2) ? -1 : 1)
-                })
-                return ndatas
-            },
-        },
-        watch: {
-            showSymbolList(_n) {
-                if (_n) {
-                    setTimeout(() => {
-                        this.showSymbolSlide = true
-                    }, 100)
+                if (this.showMoney) {
+                    return this.getBTCValuation
                 } else {
-                    this.showSymbolSlide = false
+                    return '******'
                 }
             },
         },
+        watch: {},
         created() {
-            // Indicator.open()
-            console.log(this.symbolList,this.filterSymboltList)
-            this.tatol()
+            console.log(this.getUserInfo)
+            this.getBtcPrice()
         },
         methods: {
-            ...mapActions([]),
-            tatol(){
-                walletApi.myAssets(res=>{
-                    console.log(res)
+            ...mapActions(['setBTCValuation', 'setUSDCNY', 'setSymbol']),
+            getBtcPrice() {
+                market.getBtcPrice(res => {
+                    this.setUSDCNY({
+                        USD: numUtils.BN(res.USD).toFixed(2),
+                        CNY: numUtils.BN(res.CNY).toFixed(2)
+                    })
+                    this.setBTCValuation(numUtils.BN(res.btcAmount).toFixed(8)) // 当前转换人民币
                 })
             },
             withdrawal() { // 前往提现
-                if (!this.currentSymbolInfo || this.currentSymbolInfo.withdrawFlag !== 1) {
+                if (this.getUserInfo.kycState !== 1) {
+                    MessageBox({
+                        title: this.$t('public0.public242'),
+                        message: this.$t('home.home66'), // 请先完成实名验证
+                        confirmButtonText: this.$t('public0.ok')
+                    }).then(action => {
+                        if (action === 'confirm') {
+                            this.$router.push({name: 'realName'})
+                        }
+                    })
                     return
                 }
-                userApi.getUserState((data) => {
-                    if (data.verifyState !== 2) {
-                        MessageBox({
-                            title: this.$t('public0.public242'),
-                            message: this.$t('error_code.KYC_AUTH_FIRST'), // 请先完成实名验证
-                            confirmButtonText: this.$t('public0.ok')
-                        }).then(action => {
-                            if (action === 'confirm') {
-                                this.$router.push({name: 'realName'})
-                            }
-                        })
-                        return
-                    }
-                    if (data.googleState !== 1 && data.mobileAuthState !== 1) {
-                        MessageBox({
-                            title: this.$t('public0.public242'),
-                            message: this.$t('error_code.GOOGLE_CELLPHONE_AUTH_FIRST'), // 请先进行谷歌验证或短信验证
-                            confirmButtonText: this.$t('public0.ok')
-                        }).then(action => {
-                            if (action === 'confirm') {
-                                this.$router.push({name: 'safe'})
-                            }
-                        })
-                        return
-                    }
-                    if (!this.getUserInfo.email && data.mobileAuthState !== 1) {
-                        MessageBox({
-                            title: this.$t('public0.public242'),
-                            message: this.$t('error_code.CELLPHONE_AUTH_FIRST'), // 请先进行短信验证
-                            confirmButtonText: this.$t('public0.ok')
-                        }).then(action => {
-                            if (action === 'confirm') {
-                                this.$router.push({name: 'noteVerif'})
-                            }
-                        })
-                        return
-                    }
-                    this.$router.push({name: 'page-withdrawal', params: {userInfo: this.getUserInfo}})
-                }, (msg) => {
-                    console.error(msg)
-                })
+                if (this.getUserInfo.googleAuthEnable === 0) {
+                    MessageBox({
+                        title: this.$t('public0.public242'),
+                        message: this.$t('error_code.GOOGLE_CELLPHONE_AUTH_FIRST'), // 请先进行谷歌验证或短信验证
+                        confirmButtonText: this.$t('public0.ok')
+                    }).then(action => {
+                        if (action === 'confirm') {
+                            this.$router.push({name: 'safe'})
+                        }
+                    })
+                    return
+                }
+                this.$router.push({name: 'withdrawal-select'})
             },
-            history(){
+            pay() { // 充值
+                console.log(this.getUserInfo)
+                if (this.getUserInfo.googleAuthEnable === 0) {
+                    MessageBox({
+                        title: this.$t('public0.public242'),
+                        message: this.$t('error_code.GOOGLE_CELLPHONE_AUTH_FIRST'), // 请先进行谷歌验证或短信验证
+                        confirmButtonText: this.$t('public0.ok')
+                    }).then(action => {
+                        if (action === 'confirm') {
+                            this.$router.push({name: 'safe'})
+                        }
+                    })
+                } else {
+                    this.$router.push({name: 'topup-select'})
+                }
+            },
+            history() {
                 this.$router.push({name: 'history'})
+            },
+            toWallet(params) {
+                this.setSymbol(params.item.symbol)
+                this.$router.push({name: 'wallet-detail'})
             }
         }
     }
@@ -397,29 +392,35 @@
             font-size: 0.3rem;
         }
     }
-    .list_title{
+
+    .list_title {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-top: 0.5rem;
-        p{
+
+        p {
             font-size: 0.28rem;
         }
-        label{
+
+        label {
             display: inline-flex;
             align-items: center;
-            span{
+
+            span {
                 font-size: 0.24rem;
                 line-height: 0.24rem;
-                color:  #00A0E9;
+                color: #00A0E9;
             }
-            span:first-child{
+
+            span:first-child {
                 margin-right: 0.16rem;
                 position: relative;
                 width: 0.22rem;
                 height: 0.22rem;
                 display: inline-block;
-                input{
+
+                input {
                     position: absolute;
                     width: 100%;
                     height: 100%;
@@ -484,30 +485,36 @@
             justify-content: space-between;
         }
     }
-    .cont_list{
+
+    .cont_list {
         background: #272731;
         margin: 0.2rem -0.3rem;
         padding: 0 0.3rem;
-        ul{
-            li{
+
+        ul {
+            li {
                 height: 0.88rem;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 border-bottom: 0.02rem solid #43434E;
-                &:last-child{
+
+                &:last-child {
                     border-bottom: none;
                 }
-                label{
+
+                label {
                     display: inline-flex;
                     flex-wrap: nowrap;
                     align-items: center;
-                    p{
+
+                    p {
                         padding-right: 0.24rem;
                     }
-                    img{
+
+                    img {
                         width: 0.18rem;
-                        height:0.33rem;
+                        height: 0.33rem;
                         vertical-align: middle;
                     }
                 }

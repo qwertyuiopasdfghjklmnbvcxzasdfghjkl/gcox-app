@@ -64,7 +64,7 @@ export default {
         }
       }
     })
-
+    this.getBtcPrice()
     this.getMarketList()
     this.loadLoginInfo()
     this.checkDeviceready()
@@ -112,6 +112,18 @@ export default {
       } else {
         this.setUserWallets([])
       }
+    },
+    getBtcPrice(){
+      if (!this.getApiToken) {
+        return
+      }
+      marketApi.getBtcPrice(res=>{
+        this.setUSDCNY({
+          USD: numUtils.BN(res.USD).toFixed(2),
+          CNY: numUtils.BN(res.CNY).toFixed(2)
+        })
+        this.setBTCValuation(numUtils.BN(res.btcAmount).toFixed(8)) // 当前转换人民币
+      })
     },
     checkDeviceready(){
       if(window['deviceready']){

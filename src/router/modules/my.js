@@ -1,7 +1,13 @@
 // import My from '@/views/my/index'
 import trading from '@/views/my/wallet/trading'
-import topup from '@/views/my/wallet/topup'
-import withdrawal from '@/views/my/wallet/withdrawal'
+import topup from '@/views/my/wallet/topup/topup'
+import withdrawal from '@/views/my/wallet/withdrawal/withdrawal'
+import withdrawalSelect from '@/views/my/wallet/withdrawal/withdrawal-select'
+import addressManage from '@/views/my/wallet/address/address-manage'
+import address from '@/views/my/wallet/address/address'
+import addAddress from '@/views/my/wallet/address/add-address'
+import topupSelect from '@/views/my/wallet/topup/topup-select'
+import walletDetail from '@/views/my/wallet/wallet-detail'
 
 export default [
     {
@@ -41,7 +47,7 @@ export default [
             {
                 path: 'safe',
                 name: 'safe',
-                component:() => import('@/views/my/safety'),
+                component:() => import('@/views/my/safe/safety'),
                 meta:{login: true}
             },
             {
@@ -87,27 +93,63 @@ export default [
                 }
             },
             {
-                path: 'trading/:symbol', // 类型 etc btc
-                name: trading.name,
+                path: 'trading',
+                name: 'trading',
                 component: trading,
                 meta: {login: true}
             },
             {
-                path: 'topup/:symbol', // 充值
+                path: 'wallet-detail',
+                name: 'wallet-detail',
+                component: walletDetail,
+                meta: {login: true}
+            },
+            {
+                path: 'address-manage',
+                name: 'address-manage',
+                component: addressManage,
+                meta: {login: true}
+            },
+            {
+                path: 'address',
+                name: 'address',
+                component: address,
+                meta: {login: true}
+            },
+            {
+                path: 'add-address',
+                name: 'add-address',
+                component: addAddress,
+                meta: {login: true}
+            },
+            {
+                path: 'topup-select', // 选择充值
+                name: 'topup-select',
+                component: topupSelect,
+                meta: {login: true}
+            },
+            {
+                path: 'topup', // 充值
                 name: topup.name,
                 component: topup,
                 meta: {login: true}
             },
             {
-                path: 'withdrawal/:symbol', //
-                name: withdrawal.name,
+                path: 'withdrawal-select', //
+                name: 'withdrawal-select',
+                component: withdrawalSelect,
+                meta: {login: true}
+            },
+            {
+                path: 'withdrawal', //
+                name: 'withdrawal',
                 component: withdrawal,
                 meta: {login: true}
             },
             {
                 path: 'wallet/history',
                 name: 'history',
-                component: () => import('@/views/my/wallet/history-list'),
+                component: () => import('@/views/my/wallet/history/history-list'),
                 meta:{login:true}
             }
         ]

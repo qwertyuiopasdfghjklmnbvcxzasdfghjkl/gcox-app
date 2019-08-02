@@ -34,13 +34,7 @@ const login = function (formData, success, error) {
     if (res.rst === 1) {
       success && success(res.api_token, res)
     } else {
-      let msg = ''
-      if (res.error) {
-        msg = typeof res.error === 'string' ? res.error : [0]
-      } else {
-        msg = typeof res.msg === 'string' ? res.msg : res.msg[0]
-      }
-      error && error(msg, res.rst)
+      error && error(res.data.error, res.rst)
     }
   }, error)
 }

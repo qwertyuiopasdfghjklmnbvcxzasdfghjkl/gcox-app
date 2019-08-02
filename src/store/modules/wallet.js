@@ -1,12 +1,13 @@
 import JsCookies from 'js-cookie'
 import numUtils from '@/assets/js/numberUtils'
-
+let userWallets = JSON.parse(localStorage.userWallets)
 const state = {
   btcValuation: 0,
   USDCNY: {},
   networkSignal: 0,
   btcValues: {},
-  userWallets: [],
+  userWallets: userWallets,
+  symbol: localStorage.symbol
 }
 const getters = {
   getBTCValuation (state) {
@@ -38,6 +39,9 @@ const getters = {
       return 0
     }
   },
+  getSymbol (state){
+    return state.symbol
+  }
 }
 
 const mutations = {
@@ -55,7 +59,12 @@ const mutations = {
   },
   updateUserWallets (state, userWallets) {
     state.userWallets = userWallets
+    localStorage.userWallets = JSON.stringify(userWallets)
   },
+  updateSymbol(state, symbol){
+    state.symbol = symbol
+    localStorage.symbol = symbol
+  }
 }
 
 const actions = {
@@ -80,6 +89,9 @@ const actions = {
   setUserWallets (context, userWallets) {
     context.commit('updateUserWallets', userWallets)
   },
+  setSymbol(context, symbol){
+    context.commit('updateSymbol',symbol)
+  }
 }
 
 export default {

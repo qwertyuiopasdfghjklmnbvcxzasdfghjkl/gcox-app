@@ -1,9 +1,9 @@
 <template>
     <div class="page">
         <!--<top-back :back="false">-->
-      <!--&lt;!&ndash;<span class="off" v-tap="{methods:goBack}">&ndash;&gt;-->
+        <!--&lt;!&ndash;<span class="off" v-tap="{methods:goBack}">&ndash;&gt;-->
         <!--&lt;!&ndash;<img src="../assets/img/off.png">&ndash;&gt;-->
-      <!--&lt;!&ndash;</span>&ndash;&gt;-->
+        <!--&lt;!&ndash;</span>&ndash;&gt;-->
         <!--</top-back>-->
         <div class="page-main">
             <div class="minInner">
@@ -116,29 +116,30 @@
                                     } else {
                                         this.$router.replace({path: '/'})
                                     }
-                                    return
                                 }
-                                // 二次验证
-                                this.$router.push({
-                                    name: 'twoverify',
-                                    params: {
-                                        data: formData
-                                    },
-                                    query: {curl: this.curl}
-                                })
                             }, (msg, rst) => {
                                 this.locked = true
                                 Tip({
                                     type: 'danger',
                                     message: this.$t(`error_code.${typeof msg === 'string' ? msg : msg[0]}`)
                                 })
-                                if(msg == 'Authentication is required to obtain an access token (anonymous not allowed)'){
+                                // if(msg === 'invalid_totp'){
+                                //     this.$router.push({name: 'verify', params: {email: this.formData.username}})
+                                // }
+
+                                if (msg === 'verify_email_required') {
                                     this.$router.push({name: 'verify', params: {email: this.formData.username}})
+                                } else if (msg === 'invalid_totp') {
+                                    // 二次验证
+                                    this.$router.push({
+                                        name: 'twoverify',
+                                        params: {
+                                            data: this.formData
+                                        },
+                                        query: {curl: this.curl}
+                                    })
                                 }
-                                /*if (rst === 300) {
-                                  this.$router.push({name: 'sendemail', params: {email: this.formData.username}})
-                                  console.log(this.formData.username)
-                                }*/
+
                             })
                         }, () => {
                             this.locked = true

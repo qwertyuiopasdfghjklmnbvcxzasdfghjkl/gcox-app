@@ -36,12 +36,12 @@ axios.interceptors.response.use(function (response) {
     // 用户不存在，退出登录
     window.localStorage.removeItem('userInfo')
     JsCookies.remove('api_token')
-    if(location.href.indexOf('gameSupport')){ //给游戏支持接口缓存状态不刷新页面跳转
-      window.vm.$router.replace({name:'login', query:{curl:window.vm.$route.fullPath}})
-    } else {
-      window.location.reload()
-    }
-
+    // if(location.href.indexOf('gameSupport')){ //给游戏支持接口缓存状态不刷新页面跳转
+    //   window.vm.$router.replace({name:'login', query:{curl:window.vm.$route.fullPath}})
+    // } else {
+    window.location.reload()
+    // }
+    Indicator.close();
     return null
   }
   // 对响应数据做点什么

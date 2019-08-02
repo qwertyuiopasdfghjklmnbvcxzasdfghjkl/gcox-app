@@ -2,13 +2,18 @@
     <div class="page">
         <top-back>{{$t('user.safety')}}</top-back>
         <div class="page-main">
-            <rail-bar v-for="data in data1" :item="data" class="hr"></rail-bar>
+            <div class="mt20">
+                <rail-bar v-for="data in data1" :item="data" class="hr"></rail-bar>
+            </div>
+            <div class="mt20">
+                <rail-bar v-for="data in data2" :item="data" class="hr"></rail-bar>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-    import railBar from '../../components/RailBar'
+    import railBar from '../../../components/RailBar'
     import userApi from '@/api/individual'
 
     export default {
@@ -17,27 +22,32 @@
         },
         data() {
             return {
-                googleState: '',
-                mobileState: '', // 短信验证状态是否绑定
                 data1: [
                     {
                         route: 'changePassword',
-                        name: this.$t('user.changePassword'),
+                        name: this.$t('home.home12'),
+                        small: `<span style="color:#aaaaaa">${this.$t('user.noBind')}</span>`
                     },
                     {
                         route: 'changePaymentPassword',
-                        name: this.$t('user.changePaymentPassword'),
+                        name: this.$t('home.resetPW'),
                     },
                     {
                         route: 'noteVerif',
-                        name: this.$t('auth_warning.warning_SMS_auth'),
-                        small: `<span style="color:#aaaaaa">${this.$t('user.noBind')}</span>`
+                        name: this.$t('home.setPayPW'),
                     }
-                    /*{
-                        route: 'bindGoogle',
-                        name: this.$t('auth_warning.warning_google_auth'),
-                        small: `<span style="color:#aaaaaa">${this.$t('user.noBind')}</span>`
-                    },*/
+                ],
+                data2:[
+                    {
+                        route: 'changePassword',
+                        name: this.$t('home.fingerprintPW'),
+                        rightIcon: true,
+                    },
+                    {
+                        route: 'changePassword',
+                        name: this.$t('home.gesturePW'),
+                        rightIcon: true,
+                    },
                 ]
             }
         },
@@ -67,6 +77,28 @@
 </script>
 
 <style scoped lang="less">
-.page-main {padding-left: 0; padding-right: 0;}
-.hr {border-bottom: 1px solid #eeeeee;}
+    .page-main {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .hr {
+        position: relative;
+
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            z-index: 9;
+            bottom: 0;
+            right: 0.3rem;
+            left: 0.3rem;
+            background: #43434E;
+            height: 0.02rem;
+        }
+
+        &:last-child:after {
+            display: none;
+        }
+    }
 </style>
