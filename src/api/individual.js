@@ -51,9 +51,9 @@ individual.getLoginHistory = getLoginHistory
 
 // 生成谷歌秘钥
 const createGoogleKey = function (success, error) {
-  api.get(`${domain}api/v2/individual/googleAuth`, (res) => {
+  api.get(`${domain}api/v1/gcox/user/get2fa`, (res) => {
     if (res.rst === 1) {
-      success && success(res.data)
+      success && success(res)
     } else {
       error && error(res.msg)
     }
@@ -63,7 +63,7 @@ individual.createGoogleKey = createGoogleKey
 
 // 绑定谷歌验证
 const bindGoogleAuth = function (data, success, error) {
-  api.post(`${domain}api/v2/individual/binding`, data, (res) => {
+  api.post(`${domain}api/v1/gcox/user/enable2fa`, data, (res) => {
     if (res.rst === 1) {
       success && success(res.msg)
     } else {
@@ -127,7 +127,7 @@ individual.loginMobileVerify = loginMobileVerify
 
 // 解除谷歌验证
 const unbindGoogleAuth = function (data, success, error) {
-  api.post(`${domain}api/v2/individual/unbind`, data, (res) => {
+  api.post(`${domain}api/v1/gcox/user/disable2fa`, data, (res) => {
     if (res.rst === 1) {
       success && success(res.msg)
     } else {

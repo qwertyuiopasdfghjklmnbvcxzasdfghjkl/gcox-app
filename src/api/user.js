@@ -54,7 +54,7 @@ user.resend = resend
 
 // 获取用户信息
 const userInfo = function (success, error) {
-  api.get(`${domain}api/v2/user/info`, (res) => {
+  api.get(`${domain}api/v1/gcox/user/info`, (res) => {
     if (res.rst === 1) {
       success && success(res.data)
     } else {
@@ -169,17 +169,23 @@ const sendSMSCode = function (data, success, error) {
 }
 user.sendSMSCode = sendSMSCode
 
-// 手机重置密码
-const mobileResetPwd = function (data, success, error) {
-  api.post(`${domain}api/v2/user/mobileResetPwd`, data, (res) => {
+// 修改登录密码
+const changePwd = function (data, success, error) {
+  api.post(`${domain}api/v1/gcox/user/modifyPwd`, data, (res) => {
     if (res.rst === 1) {
-      success && success(res.data)
+      success && success(res.msg)
     } else {
-      error && error(res.msg)
+      let msg = ''
+      if (res.error) {
+        msg = typeof res.error === 'string' ? res.error : [0]
+      } else {
+        msg = typeof res.msg === 'string' ? res.msg : res.msg[0]
+      }
+      error && error(msg)
     }
   }, error)
 }
-user.mobileResetPwd = mobileResetPwd
+user.changePwd = changePwd
 
 // 生成RSA公钥接口
 const getRsaPublicKey = function (success, error) {
@@ -205,16 +211,5 @@ const fastRegister = function (data, success, error) {
 }
 user.fastRegister = fastRegister
 
-//绑定手机号更新用户为正式用户
-const updateGameFastRegister = function (data, success, error) {
-  api.post(`${domain}/api/v2/user/updateGameFastRegister`, data, (res) => {
-    if (res.rst === 1) {
-      success && success(res.userInfo)
-    } else {
-      error && error(res.msg)
-    }
-  }, error)
-}
-user.updateGameFastRegister = updateGameFastRegister
 
 export default user

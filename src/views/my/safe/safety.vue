@@ -14,8 +14,7 @@
 
 <script>
     import railBar from '../../../components/RailBar'
-    import userApi from '@/api/individual'
-
+    import {mapGetters} from 'vuex'
     export default {
         components: {
             railBar
@@ -24,16 +23,15 @@
             return {
                 data1: [
                     {
-                        route: 'changePassword',
+                        route: 'google-verify',
                         name: this.$t('home.home12'),
-                        small: `<span style="color:#aaaaaa">${this.$t('user.noBind')}</span>`
                     },
                     {
-                        route: 'changePaymentPassword',
+                        route: 'resetPW',
                         name: this.$t('home.resetPW'),
                     },
                     {
-                        route: 'noteVerif',
+                        route: 'set-payPW',
                         name: this.$t('home.setPayPW'),
                     }
                 ],
@@ -48,30 +46,24 @@
                         name: this.$t('home.gesturePW'),
                         rightIcon: true,
                     },
-                ]
+                ],
+                userInfo: {}
             }
+        },
+        computed:{
+            ...mapGetters(['getUserInfo']),
         },
         created() {
-            this.getbindstatue()
+            this.userInfo = this.getUserInfo
+            if(this.userInfo.googleAuthEnable === 1){
+                this.data1[0].small = `<span style="color:#aaaaaa">${this.$t('account.user_center_state_bind')}</span>`
+            }else{
+                this.data1[0].small = `<span style="color:#aaaaaa">${this.$t('user.noBind')}</span>`
+            }
+            console.log(this.userInfo)
         },
         methods: {
-            getbindstatue() {
-                userApi.getUserState((data) => {
-                    this.mobileState = data.mobileAuthState;
-                    this.googleState = data.googleState
 
-                    /*this.googleState === 0 ?
-                        this.data1[3].small = `<span style="color:#aaaaaa">${$t('account.user_center_state_unbind')}</span>` :
-                        this.data1[3].small = `<span style="color:#4AC6C3">${$t('account.user_center_state_bind')}</span>`*/
-
-                    this.mobileState === 0 ?
-                        this.data1[2].small = `<span style="color:#aaaaaa">${this.$t('account.user_center_state_unbind')}</span>` :
-                        this.data1[2].small = `<span style="color:#4AC6C3">${this.$t('account.user_center_state_bind')}</span>`
-
-                }, (msg) => {
-                    console.log(msg)
-                })
-            }
         }
     }
 </script>

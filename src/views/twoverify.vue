@@ -96,6 +96,8 @@
             getInfo() {
                 userApi.userInfo(res => {
                     this.setUserInfo(res);
+                },msg=>{
+                    setTimeout(this.getInfo(),1500)
                 })
             },
             goBack(){

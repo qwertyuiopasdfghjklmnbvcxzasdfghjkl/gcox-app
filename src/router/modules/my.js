@@ -51,15 +51,21 @@ export default [
                 meta:{login: true}
             },
             {
-                path: 'changePassword',
-                name: 'changePassword',
-                component:() => import('@/views/my/change-password'),
+                path: 'google-verify',
+                name: 'google-verify',
+                component:() => import('@/views/my/safe/google-verify'),
                 meta:{login: true}
             },
             {
-                path: 'changePaymentPassword',
-                name: 'changePaymentPassword',
-                component:() => import('@/views/my/change-payment-password'),
+                path: 'resetPW',
+                name: 'resetPW',
+                component:() => import('@/views/my/safe/reset-password'),
+                meta:{login: true}
+            },
+            {
+                path: 'set-payPW',
+                name: 'set-payPW',
+                component:() => import('@/views/my/safe/set-payPW'),
                 meta:{login: true}
             },
             {

@@ -123,10 +123,6 @@
                                     type: 'danger',
                                     message: this.$t(`error_code.${typeof msg === 'string' ? msg : msg[0]}`)
                                 })
-                                // if(msg === 'invalid_totp'){
-                                //     this.$router.push({name: 'verify', params: {email: this.formData.username}})
-                                // }
-
                                 if (msg === 'verify_email_required') {
                                     this.$router.push({name: 'verify', params: {email: this.formData.username}})
                                 } else if (msg === 'invalid_totp') {
@@ -152,6 +148,8 @@
             getInfo() {
                 userApi.userInfo(res => {
                     this.setUserInfo(res);
+                },msg=>{
+                    setTimeout(this.getInfo(),1500)
                 })
             },
             goBack() {

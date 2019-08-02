@@ -953,5 +953,8 @@ export default {
 		"setPayPW":"设置资金密码",
 		"fingerprintPW":"指纹密码",
 		"gesturePW":"手势密码",
+		"google-authentication":"谷歌认证",
+		"google-bind":"启用谷歌验证",
+		"oldPW":"请输入旧密码",
 	}
 }
