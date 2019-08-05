@@ -1,12 +1,14 @@
 <template>
     <div class="page">
-        <top-back>{{$t('user.safety')}}</top-back>
+        <top-back :backPage="'ucenter'">{{$t('user.safety')}}</top-back>
         <div class="page-main">
             <div class="mt20">
                 <rail-bar v-for="data in data1" :item="data" class="hr"></rail-bar>
             </div>
-            <div class="mt20">
+            <div class="mt20 cont">
                 <rail-bar v-for="data in data2" :item="data" class="hr"></rail-bar>
+                <mt-switch v-model="switchFingerprintPW" class="switchT id1"></mt-switch>
+                <mt-switch v-model="switchGesturePW" class="switchT id2"></mt-switch>
             </div>
         </div>
     </div>
@@ -37,17 +39,19 @@
                 ],
                 data2:[
                     {
-                        route: 'changePassword',
+                        disabled: true,
                         name: this.$t('home.fingerprintPW'),
                         rightIcon: true,
                     },
                     {
-                        route: 'changePassword',
+                        disabled: true,
                         name: this.$t('home.gesturePW'),
                         rightIcon: true,
                     },
                 ],
-                userInfo: {}
+                userInfo: {},
+                switchFingerprintPW: false,
+                switchGesturePW: false
             }
         },
         computed:{
@@ -91,6 +95,18 @@
 
         &:last-child:after {
             display: none;
+        }
+    }
+    .cont{
+        position: relative;
+        .switchT{
+            position: absolute;
+            right: 0.3rem;
+            top: 0.15rem;
+            z-index: 9;
+        }
+        .id2{
+            top: 1.05rem;
         }
     }
 </style>

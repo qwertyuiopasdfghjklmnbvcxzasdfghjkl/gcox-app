@@ -211,5 +211,41 @@ const fastRegister = function (data, success, error) {
 }
 user.fastRegister = fastRegister
 
+// 资金密码
+const payPW = function (data, success, error) {
+  api.post(`${domain}api/v1/gcox/user/setTransactionPassword`,data, (res) => {
+    if (res.rst === 1) {
+      success && success(res)
+    } else {
+      error && error(res.msg)
+    }
+  }, error)
+}
+user.payPW = payPW
+
+// kyc 检验
+const kyc = function ( success, error) {
+  api.get(`${domain}api/v1/gcox/user/initiate-kyc`, (res) => {
+    if (res.rst === 1) {
+      success && success(res)
+    } else {
+      error && error(res.msg)
+    }
+  }, error)
+}
+user.kyc = kyc
+
+// kyc 更新
+const updatekyc = function ( success, error) {
+  api.post(`${domain}api/v1/gcox/user/update-kyc-submit-status`, (res) => {
+    if (res.rst === 1) {
+      success && success(res)
+    } else {
+      error && error(res.msg)
+    }
+  }, error)
+}
+user.updatekyc = updatekyc
+
 
 export default user

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-    import railBar from '../../components/RailBar'
+    import railBar from '../../../components/RailBar'
     import {MessageBox} from 'mint-ui'
     import { mapActions, mapGetters } from 'vuex'
     export default {
@@ -28,7 +28,7 @@
                 state: null,
                 data1: [
                     {
-                        route: 'realName',
+                        route: 'kyc',
                         name: this.$t('home.home16'),
                         icon: require('@/assets/img/kyc.png'),
                     }

@@ -17,7 +17,7 @@
                            autocomplete="off">
                 </div>
                 <div class="second-content-row button mt200">
-                    <mt-button type="primary" class="circle" size="large" @click="loginbtn">{{$t('public0.login')}}
+                    <mt-button type="primary" class="circle" :class="{'unlock': locked}" @click="loginbtn">{{$t('public0.login')}}
                         <!--确定--></mt-button>
                 </div>
             </div>
@@ -44,7 +44,14 @@
                 query: null
             }
         },
-        watch: {},
+        watch: {
+            'formData.googleCode'(e){
+                if(e.length >=6){
+                    this.locked = true
+                    this.loginbtn()
+                }
+            }
+        },
         created() {
             this.data = this.$route.params.data
             this.query = this.$route.query
@@ -54,7 +61,7 @@
             ...mapActions(['setApiToken', 'setUserInfo', 'setQuickLoginInfo']),
             loginbtn() {
                 $('input').blur()
-                if (this.locked) {
+                if (!this.locked) {
                     return
                 }
                 let formData = {

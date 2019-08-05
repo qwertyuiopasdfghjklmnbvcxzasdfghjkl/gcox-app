@@ -3,12 +3,12 @@
         <top-back>{{$t('user.msg')}}</top-back>
         <div class="page-main">
             <div class="message-filtration clearfix">
-                <select v-model="param.period">
-                    <option v-for="(item, index) in timeRangeList" :value="item.value" :key="index">{{$t(item.text)}}
-                    </option>
-                </select>
-                <a href="javascript:;" :class="{disabled: unReadLength === 0}" @click="markAllRead">{{$t('message.all_read')}}
-                    <!--全部已读--></a>
+                <!--<select v-model="param.period">-->
+                    <!--<option v-for="(item, index) in timeRangeList" :value="item.value" :key="index">{{$t(item.text)}}-->
+                    <!--</option>-->
+                <!--</select>-->
+                <!--<a href="javascript:;" :class="{disabled: unReadLength === 0}" @click="markAllRead">{{$t('message.all_read')}}-->
+                    <!--&lt;!&ndash;全部已读&ndash;&gt;</a>-->
             </div>
             <div class="loadmore-wrapper">
                 <mt-loadmore
@@ -50,10 +50,10 @@
 </template>
 
 <script>
-    
-    import Msg from './components/msg'
+
+    import Msg from '../components/msg'
     import {Indicator} from 'mint-ui'
-    
+
     import utils from '@/assets/js/utils'
     import msgApi from '@/api/individual'
     import loading from '@/components/common/loading'
@@ -76,7 +76,7 @@
                     {id: 3, value: '1m', text: 'message.last_1m', name: '最近一个月'}
                 ],
                 param: {
-                    period: '1h',
+                    // period: '1h',
                     show: 10,
                     page: 1
                 },
@@ -265,7 +265,7 @@
     .message-filtration a.disabled {
         color: #999;
     }
-    
+
     .message-item {
         padding: .4rem;
         margin-top: .2rem;

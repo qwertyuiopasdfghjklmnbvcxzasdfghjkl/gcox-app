@@ -23,26 +23,27 @@ export default [
                 meta:{nav:true, login:true}
             },
             {
-                path: 'realName',
-                name: 'realName',
-                component:() => import('@/views/my/real-name'),
+                path: 'kyc',
+                name: 'kyc',
+                component:() => import('@/views/my/center/kyc'),
+                meta:{login: true}
+            },
+            {
+                path: 'kyc-form',
+                name: 'kyc-form',
+                component:() => import('@/views/my/center/kyc-form'),
                 meta:{login: true}
             },
             {
                 path: 'message',
                 name: 'message',
-                component:() => import('@/views/my/message'),
+                component:() => import('@/views/my/message/message'),
                 meta:{login: true}
             },
             {
                 path: 'set',
                 name: 'set',
-                component:() => import('@/views/my/set'),
-            },
-            {
-                path: 'setLang',
-                name: 'setLang',
-                component:() => import('@/views/my/set-lang'),
+                component:() => import('@/views/my/set/set'),
             },
             {
                 path: 'safe',
@@ -69,25 +70,19 @@ export default [
                 meta:{login: true}
             },
             {
-                path: 'noteVerif',
-                name: 'noteVerif',
-                component:() => import('@/views/my/note-verif'),
-                meta:{login: true}
-            },
-            {
-                path: 'help',
-                name: 'help',
-                component:() => import('@/views/my/help'),
-            },
-            {
                 path: 'about',
                 name: 'about',
-                component:() => import('@/views/my/about'),
+                component:() => import('@/views/my/about/about'),
+            },
+            {
+                path: 'about-bar',
+                name: 'about-bar',
+                component:() => import('@/views/my/about/bar'),
             },
             {
                 path: 'center',
                 name: 'center',
-                component:() => import('@/views/my/center'),
+                component:() => import('@/views/my/center/center'),
             },
             {
                 path: 'wallet',

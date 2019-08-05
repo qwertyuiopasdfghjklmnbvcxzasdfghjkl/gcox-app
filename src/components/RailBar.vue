@@ -69,7 +69,7 @@
                 height: 0.24rem
             }
         }
-        &.disabled p { color: #999; }
+        /*&.disabled p { color: #999; }*/
     }
     .small {
         color: #fff;

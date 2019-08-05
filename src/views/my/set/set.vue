@@ -13,7 +13,7 @@
 </template>
 
 <script>
-    import railBar from '../../components/RailBar'
+    import railBar from '../../../components/RailBar'
 
     export default {
         name: "set",
