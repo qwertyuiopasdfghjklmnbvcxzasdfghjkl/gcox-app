@@ -12,7 +12,7 @@ export default {
     curPrice () {
       let lastPrice = this.lastPrice
       if (lastPrice && this.getUSDCNY) {
-        
+
         let curMarketBtc = this.getBtcValues[this.baseSymbol]
         if (!curMarketBtc && this.baseSymbol !== 'BTC') {
           return '--'
@@ -26,3 +26,9 @@ export default {
   }
 }
 </script>
+<style>
+  font{
+    display: inline-block;
+    height: 0.32rem;
+  }
+</style>

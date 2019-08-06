@@ -1,29 +1,24 @@
 <template>
     <div class="page">
-        <top-back>{{$t('public0.smsCode')}}<!--短信验证码--></top-back>
+        <top-back :back="false">
+          <span class="off" v-tap="{methods:goBack}">
+            <img src="../assets/img/off.png">
+          </span>
+        </top-back>
         <div class="page-main">
-            <div class="second-form mt20">
-                <!--<h3 class="second-title">-->
-                <!--<i></i>-->
-                <!--</h3>-->
-                <div class="second-content">
-                    <div class="second-content-item" v-tap="{methods:focusVerifyCode}">
-                        <div class="second-content-row SMSLabel">
-                            <span class="f34 ft-c-gray">{{formData.username}}</span>
-                            <mt-button type="primary" class="mini" :disabled="disabled" v-tap="{methods:sendSMSCode}">
-                                {{$t('public0.sendSmsCode')}}<!--发送验证码--> {{disabled ? `（${time}s）` : ''}}
-                            </mt-button>
-                        </div>
-                        <div class="second-content-row verifyCode mt40">
-                            <input id="verifyCode" ref="verifyCode" type="tel" v-model="formData.verifyCode"
-                                   maxlength="6" :placeholder="$t('public0.input')+$t('public0.smsCode')" v-focus
-                                   autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="second-content-row button mt50">
-                        <mt-button type="primary" class="circle" size="large" @click="loginbtn">{{$t('public0.login')}}
-                            <!--确定--></mt-button>
-                    </div>
+            <div class="second-form">
+                <p class="login_logo">
+                    <img src="../assets/img/LOGo@3x.png">
+                </p>
+                <p>{{$t('home.home12')}}</p>
+                <div class="second-content-row verifyCode mt30">
+                    <input id="verifyCode" ref="verifyCode" type="tel" v-model="formData.googleCode"
+                           maxlength="6" :placeholder="$t('home.home11')" v-focus
+                           autocomplete="off">
+                </div>
+                <div class="second-content-row button mt200">
+                    <mt-button type="primary" class="circle" :class="{'unlock': locked}" @click="loginbtn">{{$t('public0.login')}}
+                        <!--确定--></mt-button>
                 </div>
             </div>
         </div>
@@ -40,109 +35,58 @@
         name: 'twoverify',
         data() {
             return {
-                countryCode: '+86',
                 formData: {
-                    verifyType: 0, // 0 是短信 1 是谷歌
-                    username: '',
-                    mobile: '',
-                    verifyCode: ''
+                    googleCode: ''
                 },
+                data: {},
                 locked: false, // 锁
-                type: '',
-                account: '',
-                password: '',
                 disabled: false,
-                time: 60
+                query: null
             }
         },
         watch: {
-            'formData.verifyType'() {
-                this.formData.verifyCode = ''
-                this.$nextTick(() => {
-                    $('#verifyCode').focus()
-                })
-            },
-            type(val) {
-                if (String(val).indexOf('0') !== -1) {
-                    this.formData.verifyType = 0
-                } else {
-                    this.formData.verifyType = 1
+            'formData.googleCode'(e){
+                if(e.length >=6){
+                    this.locked = true
+                    this.loginbtn()
                 }
             }
         },
         created() {
-            let username = this.$route.params.username
-            if (username) {
-                this.formData.username = username
-                window.localStorage.setItem('$twoverify_username', username)
-            } else {
-                username = window.localStorage.getItem('$twoverify_username')
-                if (username) {
-                    this.formData.username = username
-                } else {
-                    this.$router.push({name: 'login'})
-                }
-            }
-            let mobile = this.$route.params.mobile
-            if (mobile) {
-                this.formData.mobile = mobile
-                window.localStorage.setItem('$twoverify_mobile', mobile)
-            } else {
-                mobile = window.localStorage.getItem('$twoverify_mobile')
-                if (mobile) {
-                    this.formData.mobile = mobile
-                }
-            }
-            let type = this.$route.params.type
-            if (type) {
-                this.type = type
-                window.localStorage.setItem('$twoverify_type', type)
-            } else {
-                type = window.localStorage.getItem('$twoverify_type')
-                if (type) {
-                    this.type = type
-                }
-            }
-            let countryCode = this.$route.params.countryCode
-            if (countryCode) {
-                this.countryCode = countryCode
-                window.localStorage.setItem('$twoverify_countryCode', countryCode)
-            } else {
-                countryCode = window.localStorage.getItem('$twoverify_countryCode')
-                if (countryCode) {
-                    this.countryCode = countryCode
-                }
-            }
+            this.data = this.$route.params.data
+            this.query = this.$route.query
+            console.log(this.data)
         },
         methods: {
-            ...mapActions(['setApiToken', 'setUserInfo','setQuickLoginInfo']),
-            focusVerifyCode() {
-                $('#verifyCode').focus()
-            },
+            ...mapActions(['setApiToken', 'setUserInfo', 'setQuickLoginInfo']),
             loginbtn() {
                 $('input').blur()
-                if (this.locked) {
+                if (!this.locked) {
                     return
                 }
-                let m = Number(this.formData.verifyType) === 0 ? 'loginMobileVerify' : 'loginTwo'
-                let formData = Number(this.formData.verifyType) === 0 ? { // 短信验证
-                    smsCode: this.formData.verifyCode,
-                    username: this.formData.username,
-                    mobile: this.formData.mobile
-                } : {
-                    verifyCode: this.formData.verifyCode,
-                    username: this.formData.username
+                let formData = {
+                    googleCode: this.formData.googleCode,
+                    password: this.data.password,
+                    rsaPublicKey: this.data.rsaPublicKey,
+                    username: this.data.username
                 }
-                myAPi[m](formData, (apiToken) => {
+                userApi.getRsaPublicKey((rsaPublicKey) => {
+                    formData.password = utils.encryptPwd(rsaPublicKey, formData.password)
+                    formData.rsaPublicKey = rsaPublicKey
+                    this.login(formData)
+                })
+            },
+            login(formData) {
+                userApi.login(formData, (apiToken) => {
                     window.localStorage.removeItem('$twoverify_username')
                     this.locked = false
                     this.setApiToken(apiToken)
                     this.setQuickLoginInfo(null) //正常登录清除快速登录信息
-                    userApi.userInfo(res => {
-                        this.setUserInfo(res);
-                    })
-                    if (this.$route.query.curl) {
-                        this.$router.replace({path: this.$route.query.curl})
+                    myAPi.addLoginHistory()
+                    this.getInfo()
+                    Tip({type: 'success', message: this.$t(`user.loginSuccess`)})
+                    if (this.query.curl) {
+                        this.$router.replace({path: this.query.curl})
                     } else {
                         this.$router.replace({path: '/'})
                     }
@@ -156,34 +100,19 @@
                     Tip({type: 'danger', message: this.$t(`error_code.${msg}`)})
                 })
             },
-            sendSMSCode() {
-                if (this.disabled) {
-                    return
-                }
-                if (!this.formData.mobile) {
-                    Tip({type: 'danger', message: this.$t('public0.public6')}) // 请输入手机号
-                    return
-                }
-                this.disabled = true
-                myAPi.sendAuthSMSCode({
-                    phoneNumber: this.formData.mobile,
-                    countryCode: this.countryCode
-                }, (res) => {
-                    let timeOut = () => {
-                        this.time--
-                        if (this.time === 0) {
-                            this.disabled = false
-                            this.time = 60
-                            return
-                        }
-                        setTimeout(timeOut, 1000)
-                    }
-                    setTimeout(timeOut, 1000)
-                    Tip({type: 'success', message: this.$t('error_code.SEND_CODE_SUCCESS')})
-                }, (msg) => {
-                    this.disabled = false
-                    Tip({type: 'danger', message: this.$t(`error_code.${msg}`)})
+            getInfo() {
+                userApi.userInfo(res => {
+                    this.setUserInfo(res);
+                },msg=>{
+                    setTimeout(this.getInfo(),1500)
                 })
+            },
+            goBack(){
+                if (this.query.curl) {
+                    this.$router.replace({path: this.query.curl})
+                } else {
+                    this.$router.replace({path: '/'})
+                }
             }
         }
     }
@@ -233,14 +162,16 @@
                 input {
                     height: 0.6rem;
                     width: 100%;
-                    /*padding-left: 0.15rem ;*/
-                    /*padding-right: 0.15rem ;*/
-                    font-size: 0.3rem;
-                    color: #333333;
+                    font-size: 0.24rem;
+                    color: #A5AAB7;
                     border: none;
                     background-color: transparent;
-                    border-bottom: 1px solid #ccc;
-                    /*border-radius: 4px;*/
+                    border-bottom: 0.02rem solid #73757E;;
+                    transition: border 0.3s;
+
+                    &:hover {
+                        border-bottom-color: #5CACCF;
+                    }
                 }
             }
         }
@@ -250,7 +181,35 @@
         .mini {
             background-color: transparent !important;
             color: #4AC6C3;
-            &:disabled {color: #999;}
+
+            &:disabled {
+                color: #999;
+            }
         }
+    }
+
+    .off {
+        position: absolute;
+        left: 0.3rem;
+
+        img {
+            width: 0.27rem;
+            height: 0.27rem;
+        }
+    }
+
+    .login_logo {
+        height: 3.3rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            width: 3.12rem
+        }
+    }
+
+    .mt200 {
+        margin-top: 2rem;
     }
 </style>

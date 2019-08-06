@@ -29,25 +29,32 @@ user.resetTransactionPwd = resetTransactionPwd
 
 // 登录
 const login = function (formData, success, error) {
-  api.post(`${domain}api/v2/user/login`, formData, (res) => {
+  api.post(`${domain}api/v1/gcox/user/login`, formData, (res) => {
+  // api.post(`http://10.0.5.106:9999/api/v2/user/login`, formData, (res) => {
     if (res.rst === 1) {
       success && success(res.api_token, res)
     } else {
-      let msg = ''
-      if (res.error) {
-        msg = typeof res.error === 'string' ? res.error : [0]
-      } else {
-        msg = typeof res.msg === 'string' ? res.msg : res.msg[0]
-      }
-      error && error(msg, res.rst)
+      error && error(res.data.error, res.rst)
     }
   }, error)
 }
 user.login = login
 
+// 重发邮件
+const resend = function (formData, success, error) {
+  api.post(`${domain}/api/v1/gcox/user/resend`, formData, (res) => {
+    if (res.rst === 1) {
+      success && success(res.data, res)
+    } else {
+      error && error(res.msg)
+    }
+  }, error)
+}
+user.resend = resend
+
 // 获取用户信息
 const userInfo = function (success, error) {
-  api.get(`${domain}api/v2/user/info`, (res) => {
+  api.get(`${domain}api/v1/gcox/user/info`, (res) => {
     if (res.rst === 1) {
       success && success(res.data)
     } else {
@@ -59,7 +66,7 @@ user.userInfo = userInfo
 
 // 注册
 const register = function (formData, success, error) {
-  api.post(`${domain}api/v2/user/gameRegister`, formData, (res) => {
+  api.post(`${domain}api/v1/gcox/user/register`, formData, (res) => {
     if (res.rst === 1) {
       success && success(res.msg)
     } else {
@@ -69,27 +76,9 @@ const register = function (formData, success, error) {
 }
 user.register = register
 
-// 修改登录密码
-const changePwd = function (data, success, error) {
-  api.post(`${domain}api/v2/user/changePwd`, data, (res) => {
-    if (res.rst === 1) {
-      success && success(res.msg)
-    } else {
-      let msg = ''
-      if (res.error) {
-        msg = typeof res.error === 'string' ? res.error : [0]
-      } else {
-        msg = typeof res.msg === 'string' ? res.msg : res.msg[0]
-      }
-      error && error(msg)
-    }
-  }, error)
-}
-user.changePwd = changePwd
-
 // 忘记密码 - 发送邮件
 const forgetPwdSendEmail = function (data, success, error) {
-  api.post(`${domain}api/v2/user/resetPwdRequest`, data, (res) => {
+  api.post(`${domain}/api/v1/gcox/user/resetPwd`, data, (res) => {
     if (res.rst === 1) {
       success && success()
     } else {
@@ -104,24 +93,6 @@ const forgetPwdSendEmail = function (data, success, error) {
   }, error)
 }
 user.forgetPwdSendEmail = forgetPwdSendEmail
-
-// 忘记密码 - 重置密码
-const forgetPwdChangePwd = function (data, success, error) {
-  api.post(`${domain}api/v2/user/resetPwd`, data, (res) => {
-    if (res.rst === 1) {
-      success && success()
-    } else {
-      let msg = ''
-      if (res.error) {
-        msg = typeof res.error === 'string' ? res.error : [0]
-      } else {
-        msg = typeof res.msg === 'string' ? res.msg : res.msg[0]
-      }
-      error && error(msg)
-    }
-  }, error)
-}
-user.forgetPwdChangePwd = forgetPwdChangePwd
 
 // 发送邮件 - 激活邮箱
 const reSendEmail = function (data, success, error) {
@@ -198,17 +169,23 @@ const sendSMSCode = function (data, success, error) {
 }
 user.sendSMSCode = sendSMSCode
 
-// 手机重置密码
-const mobileResetPwd = function (data, success, error) {
-  api.post(`${domain}api/v2/user/mobileResetPwd`, data, (res) => {
+// 修改登录密码
+const changePwd = function (data, success, error) {
+  api.post(`${domain}api/v1/gcox/user/modifyPwd`, data, (res) => {
     if (res.rst === 1) {
-      success && success(res.data)
+      success && success(res.msg)
     } else {
-      error && error(res.msg)
+      let msg = ''
+      if (res.error) {
+        msg = typeof res.error === 'string' ? res.error : [0]
+      } else {
+        msg = typeof res.msg === 'string' ? res.msg : res.msg[0]
+      }
+      error && error(msg)
     }
   }, error)
 }
-user.mobileResetPwd = mobileResetPwd
+user.changePwd = changePwd
 
 // 生成RSA公钥接口
 const getRsaPublicKey = function (success, error) {
@@ -234,16 +211,41 @@ const fastRegister = function (data, success, error) {
 }
 user.fastRegister = fastRegister
 
-//绑定手机号更新用户为正式用户
-const updateGameFastRegister = function (data, success, error) {
-  api.post(`${domain}/api/v2/user/updateGameFastRegister`, data, (res) => {
+// 资金密码
+const payPW = function (data, success, error) {
+  api.post(`${domain}api/v1/gcox/user/setTransactionPassword`,data, (res) => {
     if (res.rst === 1) {
-      success && success(res.userInfo)
+      success && success(res)
     } else {
       error && error(res.msg)
     }
   }, error)
 }
-user.updateGameFastRegister = updateGameFastRegister
+user.payPW = payPW
+
+// kyc 检验
+const kyc = function ( success, error) {
+  api.get(`${domain}api/v1/gcox/user/initiate-kyc`, (res) => {
+    if (res.rst === 1) {
+      success && success(res)
+    } else {
+      error && error(res.msg)
+    }
+  }, error)
+}
+user.kyc = kyc
+
+// kyc 更新
+const updatekyc = function ( success, error) {
+  api.post(`${domain}api/v1/gcox/user/update-kyc-submit-status`, (res) => {
+    if (res.rst === 1) {
+      success && success(res)
+    } else {
+      error && error(res.msg)
+    }
+  }, error)
+}
+user.updatekyc = updatekyc
+
 
 export default user

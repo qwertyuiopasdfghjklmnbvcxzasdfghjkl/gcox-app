@@ -13,8 +13,8 @@ require((('@/assets/js/bignumber.min')))
 export default function (opts) {
   opts = opts || {}
   opts.container = opts.container || document.body
-  let riseColor = opts.riseColor || '#0ee7a5' // 绿涨
-  let fallColor = opts.fallColor || '#e76d42' // 红跌
+  let riseColor = opts.riseColor || '#439B64' // 绿涨
+  let fallColor = opts.fallColor || '#E14B26' // 红跌
   let fontColor = opts.fontColor || '#d6dff9' // 字体颜色
   let gridLineColor = opts.gridLineColor  || '#313c5a' // 表格线颜色
   let middleLineColor = opts.middleLineColor || '#cbd4ec' // 中间线颜色
@@ -139,13 +139,13 @@ export default function (opts) {
         var sColorChange = []
         for(var i = 1; i < 7; i += 2){
           sColorChange.push(parseInt('0x' + sColor.slice(i, i + 2)))
-        }  
+        }
         return 'rgba(' + sColorChange.join(',') + ',' + (alpha === undefined ? 1 : alpha) + ')'
     } else {
       return sColor
     }
   }
-  
+
   // 获取自然数
   function getNaturalNumber() {
     let s = this.split('.')
@@ -176,7 +176,7 @@ export default function (opts) {
     s[0] = arr.join(',')
     return s.join('.')
   }
-  
+
   function ChartManager () {
     this._rightWidth = (isAmountShowLeft ? 0 : 100) * _ratio
     this._bottomHeight = 30 * _ratio
@@ -186,7 +186,7 @@ export default function (opts) {
     this._grid = gridCanvas.getContext('2d')
     this._depth = depthCanvas.getContext('2d')
     this._mark = markCanvas.getContext('2d')
-    
+
     let self = this
     markCanvas.addEventListener('mousemove', function (e) {
       let p = markCanvas.getBoundingClientRect ? markCanvas.getBoundingClientRect() : {x: 0, y: 0}
@@ -271,7 +271,7 @@ export default function (opts) {
     // 右边
     ctx.moveTo(this._right + 0.5, 0.5)
     ctx.lineTo(this._right + 0.5, this._bottom + 0.5)
-    
+
     // y分割线
     ySplit.call(this, (y) => {
       ctx.moveTo(0.5, y + 0.5)
@@ -455,7 +455,7 @@ export default function (opts) {
       }
       if (dataType === 'bid') {
         // 买
-        x = Math.min(this._right, x) 
+        x = Math.min(this._right, x)
       } else if (dataType === 'ask') {
         // 卖
         x = Math.max(0, x)

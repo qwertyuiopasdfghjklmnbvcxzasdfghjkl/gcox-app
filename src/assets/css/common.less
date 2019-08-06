@@ -92,12 +92,13 @@ a.underline {
 .ft-c-default{color: #222222;}
 .ft-c-deepGray{color: #333;}
 .ft-c-gray{color: #666666;}
-.ft-c-lightGray{color:#999999}
+.ft-c-lightGray{color:#9da2a9}
 .ft-c-red{color: #ff0000;}
-.ft-c-main{color:#4AC6C3;}
+.ft-c-main{color:#00A0E9;}
 .ft-c-black{color:#000;}
 .ft-c-white{color:#fff;}
 .ft-c-dark {color: #687F9B;}
+.f-c-main{color: #009cdc;}
 
 .blod{font-weight: bold;}
 .disc-input {-webkit-text-security:disc; text-security:disc;}
@@ -239,14 +240,18 @@ a.underline {
 .pr50 {padding-right:.50rem}
 .pr100 {padding-right:1rem}
 
-#app .mint-button {font-size: 0.36rem; height: 0.82rem; padding: 0 0.24rem;}
-#app .mint-button.circle {border-radius: 0.42rem;}
+#app .mint-button {font-size: 0.30rem; height: 0.9rem; margin: 0 .18rem; width: 6.53rem;}
+#app .mint-button.circle {border-radius: 0.1rem;}
 #app .mint-button.mint-button--small{font-size: 0.28rem; height: 0.66rem; }
 #app .mint-button.mint-button--small.circle {border-radius: 0.33rem;}
 #app .mint-button.mini {font-size: 0.24rem; height: 0.54rem; }
 #app .mint-button.mini.circle {border-radius: 0.27rem;}
 #app .mint-button--primary {
-  background-color:#4AC6C3;
+  background-color:#43434E;
+  transition:background 0.3s;
+  &.unlock{
+    background-color:#00A0E9;
+  }
 }
 #app .mint-button--primary.is-plain {
 
@@ -320,4 +325,19 @@ body .mint-msgbox-message {line-height:0.36rem;}
   width: 2px;
   height: 98%;
 }
-
+.blue_but{
+  width:6.54rem;
+  height:0.9rem;
+  margin: 0 auto;
+  background:#00A0E9;
+  border-radius:0.1rem;
+  font-size: 0.3rem;
+  border: none;
+  color: #ffffff;
+}
+input {
+  caret-color: #3885cf;
+}
+::-webkit-input-placeholder{/*Webkit browsers*/
+  color:#9da2a9;
+}

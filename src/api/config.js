@@ -1,6 +1,5 @@
-// let domain = process.env.NODE_ENV === 'development' ? 'm.peax.bitark.io' : location.host.split(':')[0]
-// let domain = process.env.NODE_ENV === 'development' ? 'm.sit.peax.net' : location.host.split(':')[0]
-let domain = process.env.NODE_ENV === 'development' ? 'dev2.peax.net' : location.host.split(':')[0]
+// let domain = process.env.NODE_ENV === 'development' ? 'gcox.dev.koall.io' : location.host.split(':')[0]
+let domain = process.env.NODE_ENV === 'development' ? 'sit.gcox.cc' : location.host.split(':')[0]
 if (process.env.VUE_APP_BASEURL) {
   domain = process.env.VUE_APP_BASEURL
 }

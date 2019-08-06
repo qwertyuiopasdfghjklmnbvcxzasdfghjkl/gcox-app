@@ -21,9 +21,14 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.min.css'
 import '@/assets/js/vee-validate'
 
+import VueClipboard from 'vue-clipboard2'
+
 import {
-  Indicator, Button, Tabbar, TabItem, Loadmore, InfiniteScroll, Popup, Picker, Range, Navbar, TabContainer, TabContainerItem
+  Indicator, Button, Tabbar, TabItem, Loadmore, InfiniteScroll, Popup,
+    Picker, Range, Navbar, TabContainer, TabContainerItem, Switch
 } from 'mint-ui'
+
+import uiInpu from './components/uiInput'
 
 require('./assets/js/cordovaUtils') //引入cordova工具集
 require('./assets/js/directive') //引入全局自定义指令集
@@ -32,6 +37,7 @@ require('./assets/js/prototype') //引入全局自定义过滤器
 
 Vue.use(VueI18n)
 Vue.use(vueTap)
+Vue.use(uiInpu)
 Vue.use(VeeValidate, {events: null })
 Vue.use(VueAwesomeSwiper)
 Vue.component(Button.name, Button)
@@ -45,11 +51,14 @@ Vue.component(Range.name, Range)
 Vue.component(Navbar.name, Navbar)
 Vue.component(TabContainer.name, TabContainer)
 Vue.component(TabContainerItem.name, TabContainerItem)
+Vue.component(Switch.name, Switch);
 
 Vue.component(MaskLayer.name, MaskLayer)
 Vue.component(TopBack.name, TopBack)
 Vue.component(numberKeyboard.name, numberKeyboard)
 Vue.component(SubmitButton.name, SubmitButton)
+
+Vue.use(VueClipboard)
 
 if(process.env.VUE_APP_CURRENTMODE!=='app'){
   // window.vConsole = new VConsole()
@@ -91,7 +100,7 @@ router.beforeEach((to, from, next) => {
           name: 'login',
           query:{curl:to.fullPath}
       });
-  } else if (Cookies.get('api_token') &&  ['login','findPwd','resetpwd'].includes(to.name)) {  // 判断已经登录则不再访问列表中的页面
+  } else if (Cookies.get('api_token') &&  ['login','findPwd','resetpwd', 'twoverify'].includes(to.name)) {  // 判断已经登录则不再访问列表中的页面
       next({
           name: 'find'
       });

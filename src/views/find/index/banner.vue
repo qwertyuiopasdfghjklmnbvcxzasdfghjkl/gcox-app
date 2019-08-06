@@ -3,7 +3,7 @@
         <swiper :options="swiperOption">
             <!-- 幻灯内容 -->
             <swiper-slide v-for="(item,index) in adsense" :key="index">
-                <a :href="item.gameAdvertisementLink" target="_blank">
+                <a :href="item.gameAdvertisementLink">
                     <img :src="item.gameAdvertisementImage">
                 </a>
             </swiper-slide>
@@ -20,11 +20,11 @@
             return {
                 adsense: [
                     {
-                        gameAdvertisementLink: '#',
+                        gameAdvertisementLink: 'javascript:;',
                         gameAdvertisementImage: require('@/assets/img/banner01@3x.png')
                     },
                     {
-                        gameAdvertisementLink: '#',
+                        gameAdvertisementLink: 'javascript:;',
                         gameAdvertisementImage: require('@/assets/img/banner02@3x.png')
                     }
                 ],
@@ -41,7 +41,7 @@
             }
         },
         created() {
-            this.getAdsense()
+            // this.getAdsense()
         },
         methods: {
             getAdsense() {
@@ -56,7 +56,7 @@
 </script>
 <style lang="less" scoped="">
     .banner {
-        /*padding-top: 36.2%;*/
+        padding-top: 36.2%;
         position: relative;
         height: 3.74rem;
         /*border-radius: 0.1rem;*/
@@ -79,12 +79,12 @@
 
         /deep/ .swiper-pagination-bullet {
             background: #fff;
-            opacity: 0.5;
+            opacity: 0;
         }
 
         /deep/ .swiper-pagination-bullet-active {
             background-color: #4AC6C3;
-            opacity: 1;
+            opacity: 0;
         }
     }
 
