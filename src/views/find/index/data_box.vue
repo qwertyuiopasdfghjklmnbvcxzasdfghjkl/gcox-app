@@ -2,7 +2,7 @@
     <div class="data_box">
         <div class="cont">
             <ul>
-                <li v-for="item in getMarketList">
+                <li v-for="item in list">
                     <p class="tit">
                         <span class="f28 ft-c-white">{{item.currencySymbol}}</span>
                         <span class="ft-c-lightGray f24">/{{item.baseSymbol}}</span>
@@ -27,12 +27,20 @@
             return {
                 r_d: require('../../../assets/img/red_down.png'),
                 g_u: require('../../../assets/img/green_up.png'),
-                list: [
-                ]
             }
         },
         computed: {
-            ...mapGetters(['getMarketList'])
+            ...mapGetters(['getMarketList']),
+            list(){
+                let d = JSON.stringify(this.getMarketList)
+                let data = JSON.parse(d)
+                let datas = (data || []).sort((item1, item2) => {
+                    let m1 = numUtils.BN(item1.createdAt)
+                    let m2 = numUtils.BN(item2.createdAt)
+                    return (m1.lt(m2) ? -1 : 1)
+                })
+                return datas
+            }
         },
         methods: {
             percent (item) {

@@ -40,17 +40,17 @@
                         </label>
                         <span class="ml10">
               <label for="service" class="ft-c-lightGray">{{$t('public0.agreeService')}} 《<!--我已阅读并同意--></label>
-              <a class="ft-c-main underline" :href="getAgreementUrl" target="_blank">
+              <router-link class="ft-c-main underline" :to="{name: 'rule',query:{id:1}}">
                 {{$t('home.home25')}}
-              </a>
+              </router-link>
               》《
-              <a class="ft-c-main underline" :href="getAgreementUrl" target="_blank">
+              <router-link class="ft-c-main underline" :to="{name: 'rule',query:{id:1}}">
                 {{$t('home.home26')}}
-              </a>
+              </router-link>
               》《
-              <a class="ft-c-main underline" :href="getAgreementUrl" target="_blank">
+              <router-link class="ft-c-main underline" :to="{name: 'rule',query:{id:1}}">
                 {{$t('home.home27')}}
-              </a>
+              </router-link>
               》
             </span>
                     </div>
@@ -106,13 +106,6 @@
         computed: {
             gtLocked() {
                 return this.formData.email && this.formData.password && this.formData.passwordConfirm && this.checked
-            },
-            getAgreementUrl() {
-                if (this.getLang === 'zh-CN' || this.getLang === 'cht') {
-                    return '#'
-                } else {
-                    return '#'
-                }
             }
         },
         watch: {

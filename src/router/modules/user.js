@@ -10,14 +10,14 @@ export default [
 	  component: () => import('@/views/register')
 	},
 	{
+	  path: '/rule',
+	  name: 'rule',
+	  component: () => import('@/views/register-rule')
+	},
+	{
 	  path: '/verify',
 	  name: 'verify',
 	  component: () => import('@/views/emailVerify')
-	},
-	{
-	  path: '/register/paymentSet',
-	  name: 'paymentSet',
-	  component: () => import('@/views/paymentSet')
 	},
 	{
 	  path: '/findpwd',

@@ -971,5 +971,6 @@ export default {
 		"no-kyc-p": "您还未通过认证。请<span class='f-c-main'>提交</span>您的材料以完成认证",
 		"kyc": "您的KYC认证状态为：已通过",
 		"kyc-p": "恭喜您!您的身份验证已通过！现在，您可以在GCOX平台上交易了",
+		"announcement": '公告'
 	}
 }

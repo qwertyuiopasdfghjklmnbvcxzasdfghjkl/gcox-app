@@ -3,9 +3,9 @@
         <swiper :options="swiperOption">
             <!-- 切换公告 -->
             <swiper-slide v-for="(item,index) in adsense" :key="index">
-                <a :href="item.link" target="_blank">
-                    <p>{{item.cont}}</p>
-                </a>
+                <router-link :to="{name:'notice-detail', query:{id:item.cmsInfoId}}">
+                    <p>{{item.titleCn}}</p>
+                </router-link>
             </swiper-slide>
             <div class="swiper-pagination-p" slot="pagination"></div>
         </swiper>
@@ -18,20 +18,7 @@
     export default {
         data() {
             return {
-                adsense: [
-                    {
-                        link: '#',
-                        cont: 'EOS充提币已恢复正常'
-                    },
-                    {
-                        link: '#',
-                        cont: '喜大普奔拉！GCOX上线啦'
-                    },
-                    {
-                        link: '#',
-                        cont: '我等到花儿都谢啦！喔嚯！！被阴了吧，落地成盒了吧！'
-                    }
-                ],
+                adsense: [],
                 swiperOption: {
                     // 所有配置均为可选（同Swiper配置）
 
@@ -46,12 +33,18 @@
             }
         },
         created() {
-            // this.getAdsense()
+            this.getAdsense()
         },
         methods: {
             getAdsense() {
-                findApi.getAdsense({}, res => {
-                    // this.adsense = res
+                let data = {
+                    firstLevel: 1,
+                    secondLevel: 1,
+                    page: 1,
+                    size: 3
+                }
+                findApi.getCmsList(data, res => {
+                    this.adsense = res.data
                 }, msg => {
                     Tip({type: 'error', message: this.$t(`error_code.${msg}`)})
                 })

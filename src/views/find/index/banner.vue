@@ -3,7 +3,7 @@
         <swiper :options="swiperOption">
             <!-- 幻灯内容 -->
             <swiper-slide v-for="(item,index) in adsense" :key="index">
-                <a :href="item.gameAdvertisementLink" target="_blank">
+                <a :href="item.gameAdvertisementLink">
                     <img :src="item.gameAdvertisementImage">
                 </a>
             </swiper-slide>
@@ -20,11 +20,11 @@
             return {
                 adsense: [
                     {
-                        gameAdvertisementLink: '#',
+                        gameAdvertisementLink: 'javascript:;',
                         gameAdvertisementImage: require('@/assets/img/banner01@3x.png')
                     },
                     {
-                        gameAdvertisementLink: '#',
+                        gameAdvertisementLink: 'javascript:;',
                         gameAdvertisementImage: require('@/assets/img/banner02@3x.png')
                     }
                 ],

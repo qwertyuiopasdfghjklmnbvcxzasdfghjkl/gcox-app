@@ -1,29 +1,20 @@
 <template>
     <div class="page">
-        <!--<search-bar class="mt10" @change="setSearch"></search-bar>-->
         <banner></banner>
         <div>
             <label class="flex">
                 <i class="ico"><img src="../../assets/img/notice.png"></i>
                 <notice></notice>
-                <router-link to="#">更多</router-link>
+                <router-link :to="{name: 'notice'}">更多</router-link>
             </label>
         </div>
         <data-box></data-box>
         <data-list></data-list>
-
-        <!--<div class="page-main" :class="{nodata:!adsense.length}">-->
-
-        <!--</div>-->
     </div>
 </template>
 
 <script>
-    // @ is an alias to /src
     import {mapGetters, mapActions} from 'vuex'
-    import findApi from '@/api/find'
-    import searchBar from './index/search_bar'
-    import JsCookies from 'js-cookie'
     import banner from './index/banner'
     import notice from './index/notice'
     import dataBox from './index/data_box'
@@ -32,7 +23,6 @@
     export default {
         name: 'find',
         components: {
-            searchBar,
             banner,
             notice,
             dataBox,
@@ -46,41 +36,12 @@
         },
         computed: {
             ...mapGetters(['getAdsense']),
-            filterAdsense() {
-                return this.getAdsense.filter(item => {
-                    return item.name.toLowerCase().includes(this.searchKey)
-                })
-            }
         },
-        // beforeRouteEnter(to, from, next) {
-        //     let api_token = JsCookies.get('api_token'),
-        //         isFirstLogin = localStorage.getItem('isFirstLogin') ? false : true
-        //     if (!api_token && isFirstLogin) {
-        //         next({
-        //             name: 'login'
-        //         })
-        //     } else {
-        //         next()
-        //     }
-        // },
         created() {
-            // this.getRecommendGames()
+
         },
         methods: {
             ...mapActions(['setAdsense']),
-            setSearch(key) {
-                this.searchKey = key.toLowerCase()
-            },
-            // getRecommendGames() {
-            //     if (this.getAdsense.length) {
-            //         return
-            //     }
-            //     findApi.getRecommendGames({size: 1}, res => {
-            //         this.setAdsense(res.ad)
-            //     }, msg => {
-            //         Tip({type: 'error', message: this.$t(`error_code.${msg}`)})
-            //     })
-            // }
         }
 
     }

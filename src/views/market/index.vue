@@ -369,10 +369,6 @@
                 this.tabactive = index
             },
             goToExchangePage(item) {
-                // this.$router.push({
-                //     name: 'exchange-market',
-                //     params: {market: `${item.currencySymbol}_${item.baseSymbol}`}
-                // })
                 marketApi.get24hPrice({symbol:`${item.currencySymbol}${item.baseSymbol}`},(data)=>{
                     this.setLast24h(data)
                     this.$router.push({name: 'exchange', params: {market: `${item.currencySymbol}_${item.baseSymbol}`}})
