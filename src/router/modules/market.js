@@ -17,6 +17,18 @@ export default [
         meta: {nav: true}
     },
     {
+        path: '/market/now-deal',
+        name: 'now-deal',
+        component: () => import('@/views/exchange/now-deal'),
+        meta: {login: true}
+    },
+    {
+        path: '/market/history-deal',
+        name: 'history-deal',
+        component: () => import('@/views/exchange/history-deal'),
+        meta: {login: true}
+    },
+    {
         path: '/market/entrustDetail/:orderBookId?',
         name: 'entrustDetail',
         component: () => import('@/views/market/entrustDetail'),

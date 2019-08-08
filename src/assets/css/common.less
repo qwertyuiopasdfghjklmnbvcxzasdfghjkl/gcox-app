@@ -341,3 +341,18 @@ input {
 ::-webkit-input-placeholder{/*Webkit browsers*/
   color:#9da2a9;
 }
+.mint-switch-core{
+  height: 27px;
+  border: none;
+}
+.mint-switch-core::before{
+  height: 27px;
+}
+.mint-switch-core::after{
+  height: 27px;
+  width: 27px;
+}
+.mint-switch-input:checked + .mint-switch-core::after {
+  -webkit-transform: translateX(25px);
+  transform: translateX(25px);
+}

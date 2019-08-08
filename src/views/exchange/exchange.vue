@@ -15,35 +15,29 @@
         <div class="top_checkt">
             <label v-tap="{methods:switchTradeType, name: 'buy'}" :class="{'active': tradeType === 'buy'}">{{$t('exchange.exchange_buy')}}</label>
             <label v-tap="{methods:switchTradeType, name: 'sell'}" :class="{'active': tradeType === 'sell'}">{{$t('exchange.exchange_sell')}}</label>
-            <label>{{$t('trade_record.current_entrust')}}</label>
-            <label>{{$t('trade_record.history_entrust')}}</label>
+            <label v-tap="{methods: toNowDeal}">{{$t('trade_record.current_entrust')}}</label>
+            <label v-tap="{methods: toHistoryDeal}">{{$t('trade_record.history_entrust')}}</label>
         </div>
         <div class="main">
             <section class="exchange-container">
                 <business
                         :pTradeType="tradeType"
-                          :tradeType="tradeType"
-                          :currentSymbol="currentSymbol"
-                          :baseSymbol="baseSymbol"
-                          :accuracy="accuracy"></business>
+                        :tradeType="tradeType"
+                        :currentSymbol="currentSymbol"
+                        :baseSymbol="baseSymbol"
+                        :accuracy="accuracy"></business>
                 <div class="right">
                     <depth v-model="showLatestDeal" :baseSymbol="baseSymbol" :currentSymbol="currentSymbol"
                            v-show="!showLatestDeal" :accuracy="accuracy"></depth>
                 </div>
             </section>
-            <div class="assets mt20">
-                <div class="items header f24">
-                    <span>{{$t('wallet.value_available')}}</span>
-                    <span>{{$t('wallet.value_frozen')}}</span>
-                    <span>{{$t('wallet.value_total')}}</span>
-                </div>
-                <div class="items mt15">
-                    <span>{{wallet.availableBalance|number}}</span>
-                    <span>{{wallet.frozenBalance|number}}</span>
-                    <span>{{wallet.totalBalance|number}}</span>
-                </div>
+            <div class="assets mt30">
+                <lastdeal :currentSymbol="currentSymbol"
+                          :baseSymbol="baseSymbol"
+                          :symbol="symbol"
+                          :accuracy="accuracy"
+                ></lastdeal>
             </div>
-            <entrust :currentSymbol="currentSymbol" :baseSymbol="baseSymbol" :symbol="symbol" class="mt20"></entrust>
         </div>
         <mask-layer :show="showMarkets" @hide="hideMarketList" :isgray="true">
             <transition enter-active-class="animated short slideInLeft">
@@ -65,7 +59,6 @@
                 </div>
             </transition>
         </mask-layer>
-
     </div>
 </template>
 
@@ -75,16 +68,16 @@
     import DataWebSocket from '@/assets/js/websocket'
     import numUtils from '@/assets/js/numberUtils'
     import business from '@/views/exchange/market/business'
-    import entrust from '@/views/exchange/market/entrust'
     import depth from '@/views/exchange/market/depth'
     import cpSwitch from '@/components/switch'
     import marketApi from '@/api/market'
+    import Lastdeal from "./market/lastdeal";
 
     export default {
         name: 'exchange',
         components: {
+            Lastdeal,
             business,
-            entrust,
             depth,
             cpSwitch
         },
@@ -193,7 +186,7 @@
         },
         methods: {
             ...mapActions(['setLast24h', 'tiggerEvents', 'setMarketList']),
-            switchTradeType(active){
+            switchTradeType(active) {
                 this.tradeType = active.name
                 console.log(active)
             },
@@ -339,35 +332,51 @@
                         this.$router.push({path: '/login'})
                     })
                 }
+            },
+            toNowDeal() {
+                this.$router.push({
+                    name: 'now-deal',
+                    params: {currentSymbol: this.currentSymbol, baseSymbol: this.baseSymbol, symbol: this.symbol}
+                })
+            },
+            toHistoryDeal() {
+                this.$router.push({
+                    name: 'history-deal',
+                    params: {currentSymbol: this.currentSymbol, baseSymbol: this.baseSymbol, symbol: this.symbol}
+                })
             }
         }
     }
 </script>
 
 <style lang="less" scoped>
-    .top_checkt{
+    .top_checkt {
         border-bottom: 0.02rem solid #40403E;
         height: 0.8rem;
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
         padding: 0 0.12rem;
-        label{
+
+        label {
             color: #C8C7CC;
             font-size: 0.3rem;
             padding: 0.06rem 0.18rem;
             border-bottom: 0.02rem solid transparent;
             margin-bottom: -0.02rem;
-            &.active{
+
+            &.active {
                 border-bottom-color: #18BAF8;
             }
         }
     }
-    .main{
+
+    .main {
         padding: 0 0.3rem;
         overflow-y: auto;
         height: calc(100vh - 2.7rem);
     }
+
     .icon_favorite {
         margin-right: 0.25rem;
         width: 0.35rem;
@@ -400,7 +409,8 @@
             background-image: url('../../assets/img/tc_meus_b@2x.png');
             margin-left: 0.1rem;
         }
-        .market_title{
+
+        .market_title {
             font-size: 0.4rem;
             line-height: 0.4rem;
         }
@@ -410,8 +420,8 @@
         position: relative;
         width: 5.3rem;
         height: 100vh;
-        color: #0B2725;
-        /*background-color: #F7F7F7;*/
+        color: #ffffff;
+        background-color: #2A2A34;
 
         .search-input {
             font-size: 0.3rem;
@@ -432,8 +442,7 @@
 
         li {
             line-height: 0.8rem;
-            background-color: #fff;
-            margin-bottom: 1px;
+            border-bottom: 0.02rem solid #40403E;
             display: flex;
             justify-content: space-between;
         }
@@ -471,16 +480,16 @@
     .assets {
         margin-left: -0.3rem;
         margin-right: -0.3rem;
-        padding: 0.3rem;
+        /*padding: 0.3rem;*/
         /*background-color: #fff;*/
 
-        .items {
-            display: flex;
-            justify-content: space-between;
+        /*.items {*/
+        /*display: flex;*/
+        /*justify-content: space-between;*/
 
-            &.header {
-                color: #999;
-            }
-        }
+        /*&.header {*/
+        /*color: #999;*/
+        /*}*/
+        /*}*/
     }
 </style>
