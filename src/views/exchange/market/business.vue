@@ -151,6 +151,7 @@
                 return {}
             },
             toBalance() {
+                console.log(this.getUserWallets)
                 for (let i = 0; i < this.getUserWallets.length; i++) {
                     let item = this.getUserWallets[i]
                     if (item.symbol === this.baseSymbol) {
@@ -251,13 +252,13 @@
             getEntrustNewPrice() {
                 this.formData.price = this.toFixed(this.getEntrustNewPrice)
             },
-            '$route.params.market' () { //切换市场后重新初始化websoket
-                this.business.market = this.$route.params.market
-                this.klineSocket.close()
-                this.loading = true
-                this.isFirstKline = true
-                this.InitKlineWebSoket()
-            },
+            // '$route.params.market' () { //切换市场后重新初始化websoket
+            //     this.business.market = this.$route.params.market
+            //     this.klineSocket.close()
+            //     this.loading = true
+            //     this.isFirstKline = true
+            //     this.InitKlineWebSoket()
+            // },
             depthChange () {
                 this.depthChart && this.depthChart.drawDepth(this.depthChange)
             }
@@ -713,7 +714,7 @@
         display: flex;
         flex: 1;
         width: 100%;
-        height: 2rem;
+        height: 3.9rem;
         position: relative;
         overflow: hidden;
     }

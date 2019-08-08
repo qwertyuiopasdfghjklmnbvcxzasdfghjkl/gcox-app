@@ -13,17 +13,13 @@
             <div class="inner">
                 <section class="coin_tab">
                     <ul>
-                        <li :class="[tabactive==='tab-container1'?'activation':'']"
-                            @click="whickTabFun('tab-container1')"><span>{{$t('home.home_favorites')}}<!--自选--></span>
+                        <li :class="{'activation':index===null}"
+                            v-tap="{methods: tab, id:{i:null,symbol:null}}">
+                            <span>{{$t('home.home_favorites')}}<!--自选--></span>
                         </li>
-                        <li :class="[tabactive==='tab-container2'?'activation':'']"
-                            @click="whickTabFun('tab-container2')"><span>BTC</span></li>
-                        <li :class="[tabactive==='tab-container3'?'activation':'']"
-                            @click="whickTabFun('tab-container3')"><span>ETH</span></li>
-                        <li :class="[tabactive==='tab-container4'?'activation':'']"
-                            @click="whickTabFun('tab-container4')"><span>CDCC</span><i></i></li>
-                        <li :class="[tabactive==='tab-container5'?'activation':'']"
-                            @click="whickTabFun('tab-container5')"><span>USDT</span><i></i></li>
+                        <li v-for="(item, i) in baseSymbol"
+                            :class="{'activation':i === index}"
+                            v-tap="{methods: tab, id:{i:i,symbol:item}}"><span>{{item}}</span></li>
                     </ul>
                 </section>
                 <section class="coin_header">
@@ -54,178 +50,41 @@
             </div>
         </div>
 
-        <mt-tab-container v-model="tabactive" :swipeable="true">
-            <!--自选-->
-            <mt-tab-container-item id="tab-container1">
-                <div id="scroll">
-                    <div class="box box-wrap">
-                        <div class="inner">
-                            <section class="coin_content">
-                                <div class="">
-                                    <div class="inner">
-                                        <ul class="item" v-for="(item, index) in favoriteMarkets" :key="index"
-                                            @click="goToExchangePage(item)">
-                                            <!--<li>-->
-                                                <!--<img :src="item.iconBase64?`data:image/png;base64,`+item.iconBase64:item.iconUrl"/>-->
-                                            <!--</li>-->
-                                            <li>
-                                                <h1><span>{{item.currencySymbol}}</span>/<i>{{item.baseSymbol}}</i></h1>
-                                                <h2>24h{{$t('home.home04')}}  {{toFixed(item.dealAmount, 2)}}</h2>
-                                            </li>
-                                            <li>
-                                                <h1>{{toFixed(item.lastPrice, item.accuracy)}}</h1>
-                                                <!--<h2>≈<span><valuation :lastPrice="item.lastPrice"-->
-                                                                      <!--:baseSymbol="item.baseSymbol"/></span></h2>-->
-                                            </li>
-                                            <li>
+        <!---->
+
+        <div id="scroll">
+            <div class="box box-wrap">
+                <div class="inner">
+                    <section class="coin_content">
+                        <div class="">
+                            <div class="inner">
+                                <ul class="item" v-for="(item, index) in marketsList" :key="index"
+                                    @click="goToExchangePage(item)">
+                                    <!--<li>-->
+                                    <!--<img :src="item.iconBase64?`data:image/png;base64,`+item.iconBase64:item.iconUrl"/>-->
+                                    <!--</li>-->
+                                    <li>
+                                        <h1><span>{{item.currencySymbol}}</span>/<i>{{item.baseSymbol}}</i></h1>
+                                        <h2>24h{{$t('home.home04')}} {{toFixed(item.dealAmount, 2)}}</h2>
+                                    </li>
+                                    <li>
+                                        <h1>{{toFixed(item.lastPrice, item.accuracy)}}</h1>
+                                        <!--<h2>≈<span><valuation :lastPrice="item.lastPrice"-->
+                                        <!--:baseSymbol="item.baseSymbol"/></span></h2>-->
+                                    </li>
+                                    <li>
                                                 <span class="c-button c-button-normal" :class="[percent(item).css]">
                                                     {{percent(item).percent}}%
                                                 </span>
-                                            </li>
-                                        </ul>
-                                        <div class="lastspace"></div>
-                                    </div>
-                                </div>
-                            </section>
+                                    </li>
+                                </ul>
+                                <div class="lastspace"></div>
+                            </div>
                         </div>
-                    </div>
+                    </section>
                 </div>
-            </mt-tab-container-item>
-
-            <!--BTC-->
-            <mt-tab-container-item id="tab-container2">
-                <div class="box">
-                    <div class="inner">
-                        <section class="coin_content">
-                            <div class="">
-                                <div class="inner">
-                                    <ul class="item" v-for="(item, index) in btcMarkets" :key="index"
-                                        @click="goToExchangePage(item)">
-                                        <!--<li>-->
-                                            <!--<img :src="item.iconBase64?`data:image/png;base64,`+item.iconBase64:item.iconUrl"/>-->
-                                        <!--</li>-->
-                                        <li>
-                                            <h1><span>{{item.currencySymbol}}</span>/<i>{{item.baseSymbol}}</i></h1>
-                                            <h2>24h{{$t('home.home04')}}  {{toFixed(item.dealAmount, 2)}}</h2>
-                                        </li>
-                                        <li>
-                                            <h1>{{toFixed(item.lastPrice, item.accuracy)}}</h1>
-                                            <!--<h2>≈<span><valuation :lastPrice="item.lastPrice"-->
-                                                                  <!--:baseSymbol="item.baseSymbol"/></span></h2>-->
-                                        </li>
-                                        <li>
-                                            <span class="c-button c-button-normal" :class="[percent(item).css]">
-                                                {{percent(item).percent}}%
-                                            </span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </mt-tab-container-item>
-
-            <!--ETH-->
-            <mt-tab-container-item id="tab-container3">
-                <div class="box">
-                    <div class="inner">
-                        <section class="coin_content">
-                            <div class="">
-                                <div class="inner">
-                                    <ul class="item" v-for="(item, index) in ethMarkets" :key="index"
-                                        @click="goToExchangePage(item)">
-                                        <!--<li>-->
-                                            <!--<img :src="item.iconBase64?`data:image/png;base64,`+item.iconBase64:item.iconUrl"/>-->
-                                        <!--</li>-->
-                                        <li>
-                                            <h1><span>{{item.currencySymbol}}</span>/<i>{{item.baseSymbol}}</i></h1>
-                                            <h2>24h{{$t('home.home04')}}  {{toFixed(item.dealAmount, 2)}}</h2>
-                                        </li>
-                                        <li>
-                                            <h1>{{toFixed(item.lastPrice, item.accuracy)}}</h1>
-                                            <!--<h2>≈<span><valuation :lastPrice="item.lastPrice"-->
-                                                                  <!--:baseSymbol="item.baseSymbol"/></span></h2>-->
-                                        </li>
-                                        <li>
-                                            <span class="c-button c-button-normal" :class="[percent(item).css]">
-                                                {{percent(item).percent}}%
-                                            </span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </mt-tab-container-item>
-
-            <!--CDCC-->
-            <mt-tab-container-item id="tab-container4">
-                <div class="box">
-                    <div class="inner">
-                        <section class="coin_content">
-                            <div class="">
-                                <div class="inner">
-                                    <ul class="item" v-for="(item, index) in cdccMarkets" :key="index"
-                                        @click="goToExchangePage(item)">
-                                        <!--<li>-->
-                                            <!--<img :src="item.iconBase64?`data:image/png;base64,`+item.iconBase64:item.iconUrl"/>-->
-                                        <!--</li>-->
-                                        <li>
-                                            <h1><span>{{item.currencySymbol}}</span>/<i>{{item.baseSymbol}}</i></h1>
-                                            <h2>24h{{$t('home.home04')}}  {{toFixed(item.dealAmount, 2)}}</h2>
-                                        </li>
-                                        <li>
-                                            <h1>{{toFixed(item.lastPrice, item.accuracy)}}</h1>
-                                            <!--<h2>≈<span><valuation :lastPrice="item.lastPrice"-->
-                                                                  <!--:baseSymbol="item.baseSymbol"/></span></h2>-->
-                                        </li>
-                                        <li>
-                                            <span class="c-button c-button-normal" :class="[percent(item).css]">
-                                                {{percent(item).percent}}%
-                                            </span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </mt-tab-container-item>
-
-            <!--USDT-->
-            <mt-tab-container-item id="tab-container5">
-                <div class="box">
-                    <div class="inner">
-                        <section class="coin_content">
-                            <div class="">
-                                <div class="inner">
-                                    <ul class="item" v-for="(item, index) in usdtMarkets" :key="index"
-                                        @click="goToExchangePage(item)">
-                                        <li>
-                                            <h1><span>{{item.currencySymbol}}</span>/<i>{{item.baseSymbol}}</i></h1>
-                                            <h2>24h{{$t('home.home04')}}  {{toFixed(item.dealAmount, 2)}}</h2>
-                                        </li>
-                                        <li>
-                                            <h1>{{toFixed(item.lastPrice, item.accuracy)}}</h1>
-                                            <!--<h2>≈<span><valuation :lastPrice="item.lastPrice"-->
-                                                                  <!--:baseSymbol="item.baseSymbol"/></span></h2>-->
-                                        </li>
-                                        <li>
-                                            <span class="c-button c-button-normal" :class="[percent(item).css]">
-                                                {{percent(item).percent}}%
-                                            </span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </mt-tab-container-item>
-
-        </mt-tab-container>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -249,13 +108,11 @@
                 sortActive: null,
                 sort: null,
                 scroll: false,
-                tabactive: 'tab-container1',
                 markets: [],
-                favoriteMarkets: [],
-                btcMarkets: [],
-                ethMarkets: [],
-                cdccMarkets: [],
-                usdtMarkets: []
+                index: null,
+                baseSymbol: [],
+                symbol: null,
+                marketsList: []
             }
         },
         computed: {
@@ -293,32 +150,12 @@
             }
         },
         watch: {
-            sortMarketDatas() {
-                this.favoriteMarkets = []
-                this.btcMarkets = []
-                this.ethMarkets = []
-                this.cdccMarkets = []
-                this.usdtMarkets = []
-                this.sortMarketDatas.forEach((item) => {
-                    if (item.baseSymbol === 'BTC') {
-                        this.btcMarkets.push(item)
-                    } else if (item.baseSymbol === 'ETH') {
-                        this.ethMarkets.push(item)
-                    } else if (item.baseSymbol === 'CDCC') {
-                        this.cdccMarkets.push(item)
-                    } else if (item.baseSymbol === 'USDT') {
-                        this.usdtMarkets.push(item)
-                    }
-                    if (item.collection) {
-                        // this.tabactive = 'tab-container1'
-                        this.favoriteMarkets.push(item)
-                    }
-                })
+            sortMarketDatas(){
+                this.tab({id:{i:this.index,symbol:this.symbol}})
             }
         },
         created() {
             this.getMarkets()
-            this.fromWaletsysbolm()
         },
         methods: {
             ...mapActions(['setLast24h']),
@@ -330,46 +167,39 @@
                     this.sort = 'asc'
                 }
             },
-            fromWaletsysbolm() { // 钱包跳转过来
-                let sysbomle = this.$route.params.sysbolm
-                if (sysbomle === 'ETH') {
-                    this.whickTabFun('tab-container3')
-                } else if (sysbomle === 'CDCC') {
-                    this.whickTabFun('tab-container4')
-                } else if (sysbomle === 'USDT') {
-                    this.whickTabFun('tab-container5')
-                } else {
-                    this.whickTabFun('tab-container1')
-                }
-            },
             getMarkets() { // 获取市场
-                Indicator.open()
                 marketApi.marketList((res) => {
                     console.log(res)
-                    if (this.getMarketList && !this.getApiToken) {
-                        let datas = this.getMarketList
-                        let tempObj = {}
-                        datas.forEach((item) => {
-                            tempObj[item.market] = item
-                        })
-                        res.forEach((item) => {
-                            let d = tempObj[item.market]
-                            if (d) {
-                                item.collection = d.collection
-                            }
-                        })
-                    }
+                    res.filter(data => {
+                        if (this.baseSymbol.indexOf(data.baseSymbol) === -1) {
+                            this.baseSymbol.push(data.baseSymbol)
+                        }
+                    })
                     this.markets = res
-                    Indicator.close()
                 }, () => {
-                    Indicator.close()
                 })
             },
-            whickTabFun(index) {
-                this.tabactive = index
+            tab(data) {
+                this.index = data.id.i
+                this.symbol = data.id.symbol
+                this.marketsList = []
+                if(this.index === null){
+                    this.sortMarketDatas.filter(res=>{
+                        if(res.collection){
+                            this.marketsList.push(res)
+                        }
+                    })
+                }else{
+                    this.sortMarketDatas.filter(res=>{
+                        if(this.symbol === res.baseSymbol){
+                            this.marketsList.push(res)
+                        }
+                    })
+                }
+                console.log(this.marketsList)
             },
             goToExchangePage(item) {
-                marketApi.get24hPrice({symbol:`${item.currencySymbol}${item.baseSymbol}`},(data)=>{
+                marketApi.get24hPrice({symbol: `${item.currencySymbol}${item.baseSymbol}`}, (data) => {
                     this.setLast24h(data)
                     this.$router.push({name: 'exchange', params: {market: `${item.currencySymbol}_${item.baseSymbol}`}})
                 })
@@ -402,11 +232,12 @@
     @write-20: #cbd4ec;
     @write-374: #ffffff;
     @write-8e9: #A7ACB9;
-    .right{
-        img{
+    .right {
+        img {
             width: 0.34rem;
         }
     }
+
     .mint-tab-container {
         /*position: absolute;*/
         /*top: 2.2rem;*/
@@ -462,11 +293,16 @@
         color: #C8C7CC;
     }
 
+    .coin_tab {
+        overflow-y: hidden;
+    }
+
     .coin_tab ul {
         display: flex;
         justify-content: space-between;
         border-bottom: .01rem solid #40403E;
         padding: 0 0.3rem;
+        overflow-x: auto;
     }
 
     .coin_tab ul li {
@@ -474,6 +310,8 @@
         bottom: 0rem;
         line-height: .75rem;
         height: .75rem;
+        white-space: nowrap;
+        margin-right: 0.1rem;
     }
 
     .coin_tab ul li.activation {
@@ -519,17 +357,20 @@
         flex-shrink: 0;
     }
 
-    .coin_header ul li:first-child{
+    .coin_header ul li:first-child {
         width: 2.9rem
     }
-    .coin_header ul li:nth-child(2){
+
+    .coin_header ul li:nth-child(2) {
         width: 2.4rem;
     }
-    .coin_header ul li:last-child{
+
+    .coin_header ul li:last-child {
         text-align: right;
         flex-shrink: 1;
         width: 1.6rem;
     }
+
     .coin_header ul li i.down {
         display: inline-block;
         width: 0.12rem;
@@ -645,7 +486,8 @@
             color: @write-8e9;
         }
     }
+
     .coin_content ul li:nth-child(3) {
         width: 1.2rem;
-     }
+    }
 </style>
