@@ -14,7 +14,7 @@
             },
             color: {
                 type: String,
-                default: '#AAAAAA'
+                default: '#4e5052'
             },
             bgColor: {
                 type: String,
@@ -34,7 +34,7 @@
         height: .8rem;
         font-size: .24rem;
         line-height: .8rem;
-        color: #8089a3;
+        color: #4e5052;
         text-align: center;
         background-color: #25242A;
     }
@@ -45,7 +45,7 @@
         left: 10%;
         width: 80%;
         height: 1px;
-        background-color: #8089a3;
+        background-color: #4e5052;
         opacity: .5;
     }
 

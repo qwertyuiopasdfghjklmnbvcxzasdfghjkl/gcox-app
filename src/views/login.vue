@@ -1,10 +1,10 @@
 <template>
     <div class="page">
-        <!--<top-back :back="false">-->
-        <!--&lt;!&ndash;<span class="off" v-tap="{methods:goBack}">&ndash;&gt;-->
-        <!--&lt;!&ndash;<img src="../assets/img/off.png">&ndash;&gt;-->
-        <!--&lt;!&ndash;</span>&ndash;&gt;-->
-        <!--</top-back>-->
+        <top-back :back="false">
+        <span class="off" v-tap="{methods:goBack}">
+        <img src="../assets/img/off.png">
+        </span>
+        </top-back>
         <div class="page-main">
             <div class="minInner">
                 <!--<h3 class="login-title">{{$t('public0.login')}}</h3>-->

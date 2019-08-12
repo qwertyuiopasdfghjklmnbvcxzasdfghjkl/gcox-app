@@ -9,7 +9,7 @@
  * onAsksAndBidsCallback: {function} 深度回调函数，默认空
  * onLastTradesCallback: {function} 最新买卖信息回调函数，默认空
  * }
- * 
+ *
  * 横向轴文字 TimelinePlotter.prototype.Draw
  * 纵向轴文字和线 RangePlotter.prototype.Draw
  * 划分区域线(实线) TableLayout.prototype.drawGrid
@@ -26,21 +26,21 @@
  * 横向轴文字区域高度 TemplateMeasuringHandler.onMeasuring
  * 横向选择显示信息 TimelineSelectionPlotter.prototype.Draw
  * 纵向选择显示信息 RangeSelectionPlotter.prototype.Draw
- * 
+ *
  * theme 参数
  * {
  * Positive: 涨柱图颜色
  * Negative: 跌柱图颜色
- * PositiveDark: 
- * NegativeDark: 
- * Unchanged: 
+ * PositiveDark:
+ * NegativeDark:
+ * Unchanged:
  * Background: mainCanvas背景色
  * Cursor: 光标滑动线颜色
  * RangeMark: 右侧范围标记字体颜色
  * Indicator0: MA5字体颜色
  * Indicator1: MA10字体颜色
  * Indicator2: MA30字体颜色
- * Indicator3: 
+ * Indicator3:
  * Indicator4: 未使用
  * Indicator5: 未使用
  * Grid0: mainCanvas表格线颜色
@@ -116,7 +116,7 @@ export default function (opts) {
   container.appendChild(chart_overlayCanvas);
 
   let fontFamily = `${12 * GLOBAL_VAR.ratio}px Microsoft YaHei`
-  
+
   var classId = 0
   function createClass () {
     var j = arguments.length
@@ -2795,7 +2795,7 @@ export default function (opts) {
     this.drawArea(a, b, d);
     b.setChanged(false);
   };
-  
+
   ChartManager.prototype.drawAreaOverlay = function(a, b) {
     var c = this._dataSources[b.getDataSourceName()];
     var d;
@@ -4389,17 +4389,17 @@ export default function (opts) {
   DarkTheme.prototype.__construct = function() {
     let ThemeColor = opts.ThemeColor || {}
     this._colors = [];
-    this._colors[Theme.Color.Positive] = ThemeColor.Positive || "#03c087"; // #ff6203
-    this._colors[Theme.Color.Negative] = ThemeColor.Negative || "#e76d42"; // #44ea37
+    this._colors[Theme.Color.Positive] = ThemeColor.Positive || "#439B64"; // #ff6203
+    this._colors[Theme.Color.Negative] = ThemeColor.Negative || "#DC6041"; // #44ea37
     this._colors[Theme.Color.PositiveDark] = ThemeColor.PositiveDark || "#03c087";
-    this._colors[Theme.Color.NegativeDark] = ThemeColor.NegativeDark || "#e76d42";
+    this._colors[Theme.Color.NegativeDark] = ThemeColor.NegativeDark || "#DC6041";
     this._colors[Theme.Color.Unchanged] = ThemeColor.Unchanged || "#283149";
     this._colors[Theme.Color.Background] = ThemeColor.Background || "#181b2a"; //"#080808"
-    this._colors[Theme.Color.Cursor] = ThemeColor.Cursor || "#aaa";
-    this._colors[Theme.Color.RangeMark] = ThemeColor.RangeMark || "#f9ee30";
-    this._colors[Theme.Color.Indicator0] = ThemeColor.Indicator0 || "#888"; //#ddd
-    this._colors[Theme.Color.Indicator1] = ThemeColor.Indicator1 || "#f9ee30";
-    this._colors[Theme.Color.Indicator2] = ThemeColor.Indicator2 || "#f600ff";
+    this._colors[Theme.Color.Cursor] = ThemeColor.Cursor || "#fff";
+    this._colors[Theme.Color.RangeMark] = ThemeColor.RangeMark || "#F6B400";
+    this._colors[Theme.Color.Indicator0] = ThemeColor.Indicator0 || "#fff"; //#ddd
+    this._colors[Theme.Color.Indicator1] = ThemeColor.Indicator1 || "#F6B400";
+    this._colors[Theme.Color.Indicator2] = ThemeColor.Indicator2 || "#A7003B";
     this._colors[Theme.Color.Indicator3] = ThemeColor.Indicator3 || "#6bf";
     this._colors[Theme.Color.Indicator4] = ThemeColor.Indicator4 || "#a5cf81";
     this._colors[Theme.Color.Indicator5] = ThemeColor.Indicator5 || "#e18b89";
@@ -6209,10 +6209,10 @@ export default function (opts) {
     var h = g.toY(j);
     var d = a.getLeft() + 1;
     Plotter.createPolygon(b, [
-      {x: a.getLeft(), y: h}, 
-      {x: a.getLeft() + 5 * GLOBAL_VAR.ratio, y: h + 10 * GLOBAL_VAR.ratio}, 
-      {x: a.getRight() - 3 * GLOBAL_VAR.ratio, y: h + 10 * GLOBAL_VAR.ratio}, 
-      {x: a.getRight() - 3 * GLOBAL_VAR.ratio, y: h - 10 * GLOBAL_VAR.ratio}, 
+      {x: a.getLeft(), y: h},
+      {x: a.getLeft() + 5 * GLOBAL_VAR.ratio, y: h + 10 * GLOBAL_VAR.ratio},
+      {x: a.getRight() - 3 * GLOBAL_VAR.ratio, y: h + 10 * GLOBAL_VAR.ratio},
+      {x: a.getRight() - 3 * GLOBAL_VAR.ratio, y: h - 10 * GLOBAL_VAR.ratio},
       {x: a.getLeft() + 5 * GLOBAL_VAR.ratio, y: h - 10 * GLOBAL_VAR.ratio}]
     );
     var e = k.getTheme(this.getFrameName());

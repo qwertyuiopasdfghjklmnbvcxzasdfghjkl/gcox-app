@@ -60,24 +60,20 @@
                             <div class="inner">
                                 <ul class="item" v-for="(item, index) in marketsList" :key="index"
                                     @click="goToExchangePage(item)">
-                                    <!--<li>-->
-                                    <!--<img :src="item.iconBase64?`data:image/png;base64,`+item.iconBase64:item.iconUrl"/>-->
-                                    <!--</li>-->
                                     <li>
                                         <h1><span>{{item.currencySymbol}}</span>/<i>{{item.baseSymbol}}</i></h1>
                                         <h2>24h{{$t('home.home04')}} {{toFixed(item.dealAmount, 2)}}</h2>
                                     </li>
                                     <li>
                                         <h1>{{toFixed(item.lastPrice, item.accuracy)}}</h1>
-                                        <!--<h2>≈<span><valuation :lastPrice="item.lastPrice"-->
-                                        <!--:baseSymbol="item.baseSymbol"/></span></h2>-->
                                     </li>
                                     <li>
-                                                <span class="c-button c-button-normal" :class="[percent(item).css]">
-                                                    {{percent(item).percent}}%
-                                                </span>
+                                        <span class="c-button c-button-normal" :class="[percent(item).css]">
+                                            {{percent(item).percent}}%
+                                        </span>
                                     </li>
                                 </ul>
+                                <no-data v-if="!marketsList.length"></no-data>
                                 <div class="lastspace"></div>
                             </div>
                         </div>
@@ -95,14 +91,17 @@
     import numUtils from '@/assets/js/numberUtils'
     import marketApi from '@/api/market'
     import valuation from '@/components/valuation'
+    import NoData from "../../components/common/noData";
 
     Vue.component(TabContainer.name, TabContainer)
     Vue.component(TabContainerItem.name, TabContainerItem)
     export default {
         name: 'page-iconindex',
         components: {
+            NoData,
             valuation
         },
+        props:['form'],
         data() {
             return {
                 sortActive: null,
@@ -150,8 +149,8 @@
             }
         },
         watch: {
-            sortMarketDatas(){
-                this.tab({id:{i:this.index,symbol:this.symbol}})
+            sortMarketDatas() {
+                this.tab({id: {i: this.index, symbol: this.symbol}})
             }
         },
         created() {
@@ -183,15 +182,15 @@
                 this.index = data.id.i
                 this.symbol = data.id.symbol
                 this.marketsList = []
-                if(this.index === null){
-                    this.sortMarketDatas.filter(res=>{
-                        if(res.collection){
+                if (this.index === null) {
+                    this.sortMarketDatas.filter(res => {
+                        if (res.collection) {
                             this.marketsList.push(res)
                         }
                     })
-                }else{
-                    this.sortMarketDatas.filter(res=>{
-                        if(this.symbol === res.baseSymbol){
+                } else {
+                    this.sortMarketDatas.filter(res => {
+                        if (this.symbol === res.baseSymbol) {
                             this.marketsList.push(res)
                         }
                     })
@@ -201,7 +200,11 @@
             goToExchangePage(item) {
                 marketApi.get24hPrice({symbol: `${item.currencySymbol}${item.baseSymbol}`}, (data) => {
                     this.setLast24h(data)
-                    this.$router.push({name: 'exchange', params: {market: `${item.currencySymbol}_${item.baseSymbol}`}})
+                    if(this.form === 'kline'){
+                        this.$router.push({name: 'kline', params: {market: `${item.currencySymbol}_${item.baseSymbol}`}})
+                    }else{
+                        this.$router.push({name: 'exchange', params: {market: `${item.currencySymbol}_${item.baseSymbol}`}})
+                    }
                 })
             },
             percent(item) {

@@ -38,4 +38,9 @@ export default [
         name: 'search',
         component: () => import('@/views/market/search'),
     },
+    {
+        path: '/market/full-screen',
+        name: 'full-screen',
+        component: () => import('@/views/exchange/kline/full-screen'),
+    },
 ]
