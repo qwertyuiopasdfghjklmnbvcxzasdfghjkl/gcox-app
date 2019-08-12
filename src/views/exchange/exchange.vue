@@ -40,22 +40,29 @@
             </div>
         </div>
         <mask-layer :show="showMarkets" @hide="hideMarketList" :isgray="true">
-            <transition enter-active-class="animated short slideInLeft">
+            <transition enter-active-class="animated short slideInRight">
                 <div class="wallet-list-container" v-show="showMarketsSlide">
-                    <p class="pt60 f40 box">{{$t('market.filterToken')}}</p>
-                    <div class="mt55 box">
-                        <input type="search" class="search-input" v-model="filterTitle"
-                               :placeholder="$t('public0.search')"/>
+
+                    <div class="title">
+                        <span v-tap="{methods:toggleMarketList}"></span>
+                        {{$t('home.select-market')}}
                     </div>
-                    <ul class="wallet-list mt20">
-                        <li class="box" v-for="market in filterMarketList"
-                            v-tap="{methods:changeMarket, market:market}">
-                            <p><span class="f34">{{market.currencySymbol}}</span><span style="color: #91A4A3;">/{{market.baseSymbol}}</span>
-                            </p>
-                            <p class="price" :class="upOrDown(market)">{{toFixed(market.lastPrice,
-                                market.accuracy)|number}}</p>
-                        </li>
-                    </ul>
+                    <market :form="'exchange'"></market>
+
+                    <!--<p class="pt60 f40 box">{{$t('market.filterToken')}}</p>-->
+                    <!--<div class="mt55 box">-->
+                        <!--<input type="search" class="search-input" v-model="filterTitle"-->
+                               <!--:placeholder="$t('public0.search')"/>-->
+                    <!--</div>-->
+                    <!--<ul class="wallet-list mt20">-->
+                        <!--<li class="box" v-for="market in filterMarketList"-->
+                            <!--v-tap="{methods:changeMarket, market:market}">-->
+                            <!--<p><span class="f34">{{market.currencySymbol}}</span><span style="color: #91A4A3;">/{{market.baseSymbol}}</span>-->
+                            <!--</p>-->
+                            <!--<p class="price" :class="upOrDown(market)">{{toFixed(market.lastPrice,-->
+                                <!--market.accuracy)|number}}</p>-->
+                        <!--</li>-->
+                    <!--</ul>-->
                 </div>
             </transition>
         </mask-layer>
@@ -71,7 +78,8 @@
     import depth from '@/views/exchange/market/depth'
     import cpSwitch from '@/components/switch'
     import marketApi from '@/api/market'
-    import Lastdeal from "./market/lastdeal";
+    import Lastdeal from "./market/lastdeal"
+    import market from '../market/index'
 
     export default {
         name: 'exchange',
@@ -79,7 +87,8 @@
             Lastdeal,
             business,
             depth,
-            cpSwitch
+            cpSwitch,
+            market
         },
         data() {
             return {
@@ -175,6 +184,9 @@
             },
             symbol() {
                 this.dataSocket && this.dataSocket.switchSymbol(this.symbol)
+            },
+            '$route.params.market'(){
+                this.showMarkets = false
             }
         },
         created() {
@@ -418,21 +430,31 @@
 
     .wallet-list-container {
         position: relative;
-        width: 5.3rem;
+        width: 100vw;
         height: 100vh;
-        color: #ffffff;
-        background-color: #2A2A34;
 
-        .search-input {
-            font-size: 0.3rem;
-            color: #888;
-            width: 100%;
-            height: 0.54rem;
-            line-height: 0.54rem;
-            padding-left: 0.47rem;
-            border: none;
-            background: url('../../assets/img/i_search@2x.png') transparent no-repeat left center;
-            background-size: 0.27rem auto;
+        .title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 0.9rem;
+            text-align: center;
+            background: #32323c;
+            z-index: 9;
+            line-height: 0.9rem;
+            font-size: 0.32rem;
+            color: #ffffff;
+
+            span {
+                width: 0.8rem;
+                height: 0.8rem;
+                position: absolute;
+                left: 0;
+                top: 0.05rem;
+                background: url("../../assets/img/icon_back_b_white@3x.png") no-repeat center;
+                background-size: 0.4rem;
+            }
         }
     }
 
