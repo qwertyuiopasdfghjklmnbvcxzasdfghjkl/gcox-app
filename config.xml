@@ -30,6 +30,7 @@
         </edit-config>
     </platform>
     <platform name="ios">
+        <preference name="DisallowOverscroll" value="true" />
         <allow-intent href="itms:*"/>
         <allow-intent href="itms-apps:*"/>
     </platform>
