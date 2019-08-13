@@ -3,7 +3,7 @@ node_modules
 /dist
 /www
 /plugins
-/platforms/plugins
+/platforms
 
 # local env files
 .env.local
