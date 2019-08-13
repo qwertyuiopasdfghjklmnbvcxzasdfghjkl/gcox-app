@@ -11,7 +11,7 @@
                 <ul class="cont">
                     <li v-for="item in list" v-tap="{methods: toDetail,item}">
                         <label>
-                            <p>{{item.titleCn}}</p>
+                            <p>{{lang === 'en'?item.titleEn:item.titleCn}}</p>
                             <small>{{new Date(item.updatedAt).format()}}</small>
                         </label>
                         <span>
@@ -47,6 +47,7 @@
                 allLoaded: false,
                 noMoreData: false,
                 noData: false,
+                lang: window.localStorage.lang || 'en'
             }
         },
         created() {

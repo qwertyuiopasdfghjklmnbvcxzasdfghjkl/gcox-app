@@ -37,7 +37,7 @@
                 </ul>
             </div>
             <div class="btn">
-                <label class="withdrawal" v-tap="{methods: withdrawal}">{{$t('public0.public999')}}</label>
+                <label class="withdrawal" v-tap="{methods: withdrawal}">{{$t('public0.topup')}}</label>
                 <label class="topup" v-tap="{methods: topup}">{{$t('home.topup')}}</label>
             </div>
         </div>

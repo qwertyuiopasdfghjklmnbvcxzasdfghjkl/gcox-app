@@ -4,7 +4,7 @@
             <!-- 切换公告 -->
             <swiper-slide v-for="(item,index) in adsense" :key="index">
                 <router-link :to="{name:'notice-detail', query:{id:item.cmsInfoId}}">
-                    <p>{{item.titleCn}}</p>
+                    <p>{{lang === 'en'?item.titleEn:item.titleCn}}</p>
                 </router-link>
             </swiper-slide>
             <div class="swiper-pagination-p" slot="pagination"></div>
@@ -29,7 +29,8 @@
                     pagination: {
                         el: '.swiper-pagination-p',
                     },
-                }
+                },
+                lang: window.localStorage.lang || 'en'
             }
         },
         created() {

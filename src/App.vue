@@ -150,8 +150,8 @@
     }
 
     .page.wrap {
-        height: -webkit-calc(~'100vh - 0.95rem');
-        height: calc(~'100vh - 0.95rem');
+        height: -webkit-calc(~'100vh - 0.98rem');
+        height: calc(~'100vh - 0.98rem');
     }
 </style>
 <style type="text/css">

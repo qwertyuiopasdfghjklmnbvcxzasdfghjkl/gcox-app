@@ -3,9 +3,9 @@
         <top-back>{{$t('home.announcement')}}</top-back>
         <div class="page-main">
             <div class="cont">
-                <h2 class="title">{{detail.titleCn}}</h2>
+                <h2 class="title">{{lang === 'en'?detail.titleEn:detail.titleCn}}</h2>
                 <small class="time">{{new Date(detail.updatedAt).format()}}</small>
-                <div v-html="detail.bodyCn"></div>
+                <div v-html="lang === 'en'?detail.bodyEn:detail.bodyCn"></div>
             </div>
         </div>
     </div>
@@ -21,7 +21,10 @@
                     titleCn: null,
                     updatedAt: null,
                     bodyCn: null,
-                }
+                    bodyEn: null,
+                    titleEn: null,
+                },
+                lang: window.localStorage.lang || 'en'
             }
         },
         created() {
