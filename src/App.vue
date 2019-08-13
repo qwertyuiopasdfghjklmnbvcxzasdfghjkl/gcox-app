@@ -4,7 +4,7 @@
             <router-view :class="{wrap:$route.meta.nav}"/>
         </transition>
         <!--<update ref="update"></update>-->
-        <init-slides></init-slides>
+        <!--<init-slides></init-slides>-->
         <nav-footer v-show="$route.meta.nav"></nav-footer>
     </div>
 </template>

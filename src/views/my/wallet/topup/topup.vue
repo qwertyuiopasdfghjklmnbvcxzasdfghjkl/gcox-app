@@ -136,6 +136,10 @@
                  padding: 0.1rem;
                  background: #ffffff;
                  margin: 0.4rem auto;
+                img{
+                    width: 3rem;
+                    height: 3rem;
+                }
              }
             .two{
                 text-align: center;
