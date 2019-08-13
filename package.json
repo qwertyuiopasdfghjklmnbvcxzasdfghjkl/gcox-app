@@ -12,11 +12,15 @@
   "dependencies": {
     "axios": "^0.18.0",
     "cordova-android": "^8.0.0",
+    "cordova-ios": "^5.0.1",
+    "cordova-plugin-app-update": "git+ssh://git@c.koall.io:ko-plugins/cordova-plugin-app-update.git",
+    "cordova-plugin-appversion": "^1.0.0",
     "cordova-plugin-whitelist": "^1.3.4",
     "core-js": "^2.6.5",
     "js-cookie": "^2.2.0",
     "js-md5": "^0.7.3",
     "mint-ui": "^2.2.13",
+    "phonegap-plugin-barcodescanner": "^8.1.0",
     "qrcode": "^1.3.3",
     "v-tap": "^3.0.3",
     "vconsole": "^3.3.0",
@@ -49,10 +53,16 @@
   ],
   "cordova": {
     "plugins": {
-      "cordova-plugin-whitelist": {}
+      "cordova-plugin-whitelist": {},
+      "phonegap-plugin-barcodescanner": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
+      "cordova-plugin-appversion": {},
+      "cordova-plugin-app-update": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ]
   }
 }
