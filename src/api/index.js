@@ -10,7 +10,7 @@ axios.defaults.baseURL = DOMAIN
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
   var apiToken = JsCookies.get('api_token')
-  var lang = localStorage.getItem('lang') || 'zhCHS'
+  var lang = localStorage.getItem('lang') || 'en'
   apiToken && (config.headers.common['api_token'] = apiToken)
   config.headers.common['uuid'] = userApi.uuid
   config.headers.common['lang'] = lang

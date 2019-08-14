@@ -8,7 +8,7 @@ try {
 } catch (ex) {}
 
 const state = {
-  lang: window.localStorage.getItem('lang') || 'zh-CN', //语言包
+  lang: window.localStorage.getItem('lang') || 'en', //语言包
   api_token: JsCookies.get('api_token'),
   userInfo: userInfo || {},
   quickLoginInfo: quickLoginInfo,

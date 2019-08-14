@@ -520,4 +520,11 @@
             }
         }
     }
+    /*@media (min-width: 320px)and (max-width: 414px){*/
+        /*.cont{*/
+            /*transform: rotate(90deg);*/
+            /*width: 100vh;*/
+            /*height: 100vw;*/
+        /*}*/
+    /*}*/
 </style>

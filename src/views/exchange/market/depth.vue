@@ -418,7 +418,7 @@
             position: relative;
             border: 0.02rem solid #40403E;
             font-size: 0.2rem;
-            min-width: 1.6rem;
+            width: 1.6rem;
             text-align: center;
             p {
                 padding-right: 0.3rem;
