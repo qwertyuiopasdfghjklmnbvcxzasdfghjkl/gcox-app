@@ -57,6 +57,7 @@ export default {
 			setTimeout(()=>{
 				api.getLatestVersion(res=>{
 					this.info = res
+					console.log(res)
 					if(this.promptUpdate && this.version>this.getVersion){
 						this.show = true
 					} else if(key) {
@@ -102,7 +103,7 @@ export default {
 	transform: translate(-50%, -50%);
 	border-radius: 4px;
 	.top {
-		height: 2.32rem; 
+		height: 2.32rem;
 		background: url('../assets/img/updata_bg.png') no-repeat center top;
 		background-size:100% auto;
 	}

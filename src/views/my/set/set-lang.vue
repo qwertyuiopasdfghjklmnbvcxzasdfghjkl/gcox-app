@@ -26,7 +26,7 @@
                         value: 'zh-CN'
                     },
                     {
-                        label: 'en',
+                        label: 'English',
                         value: 'en'
                     }
                 ]

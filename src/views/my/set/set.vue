@@ -87,7 +87,7 @@
         .switchT{
             position: absolute;
             right: 0.3rem;
-            top: 0.14rem;
+            top: 0.18rem;
             z-index: 999;
         }
     }
