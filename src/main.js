@@ -79,8 +79,8 @@ let $ajax = axios.create({
 
 Vue.prototype.$ajax = $ajax
 
-let LangEn = window.localStorage.en //英文包
-let LangZhCN = window.localStorage['zh-CN'] //简体中文包
+let LangEn = JSON.parse(window.localStorage.en || '[]') //英文包
+let LangZhCN = JSON.parse(window.localStorage['zh-CN'] || '[]') //简体中文包
 let lang = window.localStorage.lang || 'en'
 
 let i18n = window.$i18n = new VueI18n({
@@ -129,7 +129,7 @@ router.beforeEach((to, from, next) => {
 langApi.getLanguage(lang, (res) => {
     i18n.locale = lang
     i18n.setLocaleMessage(lang, res)
-    window.localStorage[lang] = res
+    window.localStorage[lang] = JSON.stringify(res)
     window.vm = new Vue({
         i18n,
         methods:Methods,
