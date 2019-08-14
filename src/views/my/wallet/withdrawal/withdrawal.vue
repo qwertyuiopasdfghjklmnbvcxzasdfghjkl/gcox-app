@@ -158,7 +158,7 @@
                         password: this.form.password,
                         googleCode: this.form.googleCode,
                         lang: window.localStorage.getItem('lang') === 'zh-CN' ? 'cn' : 'en',
-                        withdrawFast: true,
+                        withdrawFast: false,
                         type: 0
                     }
                     this.lock = false
