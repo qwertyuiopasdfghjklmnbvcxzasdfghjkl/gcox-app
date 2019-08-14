@@ -9,6 +9,7 @@
                             v-model="form.address"
                             :title="$t('home.address')"
                     ></ui-input>
+                    <i class="scanning" v-tap="{methods: scanQRCode}"></i>
                 </div>
                 <div class="cont">
                     <ui-input
@@ -38,6 +39,7 @@
     import {mapGetters} from 'vuex'
     import UiInput from "../../../../components/uiInput";
     import wallet from '../../../../api/wallet'
+    import cordovaUtils from '@/assets/js/cordovaUtils'
 
     export default {
         components: {UiInput},
@@ -75,7 +77,12 @@
                         Tip({type: 'danger', message: msg})
                     })
                 }
-            }
+            },
+            scanQRCode() {
+                cordovaUtils.scanQRCode((addr) => {
+                    this.form.address = addr
+                })
+            },
         }
     }
 </script>
@@ -85,6 +92,18 @@
         .cont {
             height: 1.25rem;
             padding-top: 0.3rem;
+            position: relative;
+            .scanning{
+                position: absolute;
+                right: 0;
+                top: 0.4rem;
+                z-index: 9;
+                width: 0.5rem;
+                height: 0.5rem;
+                background: url("../../../../assets/img/scanner.png") no-repeat center;
+                background-size: 0.5rem;
+                display: inline-block;
+            }
         }
     }
 

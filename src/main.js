@@ -9,8 +9,7 @@ import VConsole   from 'vconsole'
 import VueI18n from 'vue-i18n' //多语言处理模块
 import vueTap from 'v-tap'
 import Methods from './assets/js/methods'
-import LangEn from './lang/en' //英文包
-import LangZhCN from './lang/zh-CN' //简体中文包
+
 import MaskLayer from '@/components/common/mask'
 import TopBack from '@/components/common/top_back'
 import numberKeyboard from '@/components/common/numberKeyboard'
@@ -20,12 +19,12 @@ import VeeValidate from 'vee-validate' // 验证
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.min.css'
 import '@/assets/js/vee-validate'
-
+import langApi from '@/api/language'
 import VueClipboard from 'vue-clipboard2'
 
 import {
   Indicator, Button, Tabbar, TabItem, Loadmore, InfiniteScroll, Popup,
-    Picker, Range, Navbar, TabContainer, TabContainerItem, Switch
+    Picker, Range, Navbar, TabContainer, TabContainerItem, Switch, Radio
 } from 'mint-ui'
 
 import uiInpu from './components/uiInput'
@@ -52,6 +51,7 @@ Vue.component(Navbar.name, Navbar)
 Vue.component(TabContainer.name, TabContainer)
 Vue.component(TabContainerItem.name, TabContainerItem)
 Vue.component(Switch.name, Switch);
+Vue.component(Radio.name, Radio);
 
 Vue.component(MaskLayer.name, MaskLayer)
 Vue.component(TopBack.name, TopBack)
@@ -61,7 +61,7 @@ Vue.component(SubmitButton.name, SubmitButton)
 Vue.use(VueClipboard)
 
 if(process.env.VUE_APP_CURRENTMODE!=='app'){
-  // window.vConsole = new VConsole()
+  window.vConsole = new VConsole()
 }
 
 //全局引入提示函数
@@ -79,8 +79,12 @@ let $ajax = axios.create({
 
 Vue.prototype.$ajax = $ajax
 
+let LangEn = JSON.parse(window.localStorage.en || '[]') //英文包
+let LangZhCN = JSON.parse(window.localStorage['zh-CN'] || '[]') //简体中文包
+let lang = window.localStorage.lang || 'en'
+
 let i18n = window.$i18n = new VueI18n({
-  locale: store.state.common.lang,
+  locale: lang || 'en',
   messages: {
     'en': LangEn,
     'zh-CN': LangZhCN,
@@ -122,11 +126,25 @@ router.beforeEach((to, from, next) => {
 
 });
 
-window.vm = new Vue({
-  i18n,
-  methods:Methods,
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+langApi.getLanguage(lang, (res) => {
+    i18n.locale = lang
+    i18n.setLocaleMessage(lang, res)
+    window.localStorage[lang] = JSON.stringify(res)
+    window.vm = new Vue({
+        i18n,
+        methods:Methods,
+        router,
+        store,
+        render: h => h(App)
+    }).$mount('#app')
+},msg=>{
+    window.vm = new Vue({
+        i18n,
+        methods:Methods,
+        router,
+        store,
+        render: h => h(App)
+    }).$mount('#app')
+})
+
 

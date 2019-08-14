@@ -85,9 +85,14 @@
                 ],
                 data4: [
                     {
-                        route: 'share',
+                        disabled: true,
                         icon: require('@/assets/img/ic_fx@3x.png'),
                         name: this.$t('home.home07'),
+                        method: ()=>{
+                            addListeners('click',()=>{
+                                this.share()
+                            })
+                        }
                     },
                     {
                         route: 'about',
@@ -117,7 +122,9 @@
             routeTo() {
                 this.$router.push('center')
             },
-
+            share(){
+                console.log('ddd')
+            }
             // getMessageList () {
             //     // if (!this.isLogin) {
             //     //     this.messageList = []

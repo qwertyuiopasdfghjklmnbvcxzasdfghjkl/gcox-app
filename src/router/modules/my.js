@@ -46,6 +46,11 @@ export default [
                 component:() => import('@/views/my/set/set'),
             },
             {
+                path: 'set-lang',
+                name: 'set-lang',
+                component:() => import('@/views/my/set/set-lang'),
+            },
+            {
                 path: 'safe',
                 name: 'safe',
                 component:() => import('@/views/my/safe/safety'),

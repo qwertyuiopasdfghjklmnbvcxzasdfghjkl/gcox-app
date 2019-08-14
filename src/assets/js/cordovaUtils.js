@@ -106,6 +106,25 @@ const getDeviceLang = function(){
 }
 api.getDeviceLang = getDeviceLang
 
+const share = function(obj){
+  var params = {
+    // dialogTitle:this.$t('wallet.shareAddress'),
+    contentTitle: obj.title,
+    contentText: obj.text
+  }
+  console.log('Share info=====',params)
+  window['cordova'] && cordova.exec((res)=>{
+    res = JSON.parse(res)
+    console.log('ShareResult=====',res)
+    if(res.code=='0'){
+      // Toast(this.$t('activity.walletDetail.shareSuccess'))
+    }
+  }, (error)=>{
+    console.log(error)
+  }, 'TinkeyApi', 'Share', [JSON.stringify(params)])
+}
+api.share = share
+
 document.addEventListener("deviceready", function () {
   window.deviceready = true //标识app壳启动完毕
   console.log('设备已就绪')

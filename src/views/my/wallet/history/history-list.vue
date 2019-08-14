@@ -52,7 +52,7 @@
                                 <p>{{getRechargeState(item.status).value}}</p>
                             </li>
                         </ul>
-                        <noMoreData v-if="noMoreData" :bgColor="'#F7F7F7'"/>
+                        <noMoreData v-if="noMoreData"/>
                         <noData v-if="noData"/>
                     </mt-loadmore>
                 </div>

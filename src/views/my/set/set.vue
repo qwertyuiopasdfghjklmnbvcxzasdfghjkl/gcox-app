@@ -9,6 +9,9 @@
             <mt-switch v-model="switchT" class="switchT"></mt-switch>
             <!--<mt-switch v-model="switchT"></mt-switch>-->
         </div>
+        <div class="cont mt20">
+            <rail-bar :item="data3"></rail-bar>
+        </div>
     </div>
 </template>
 
@@ -25,12 +28,12 @@
                 switchT: null,
                 data1: [
                     {
-                        route: 'setLang',
+                        route: '',
                         name: this.$t('home.home13'),
                         small: `<span style="color:#aaaaaa">0KB</span>`
                     },
                     {
-                        route: 'setLang',
+                        route: '',
                         name: this.$t('home.home14'),
                     }
                 ],
@@ -38,6 +41,10 @@
                         route: '',
                         name: this.$t('home.home15'),
                         rightIcon: true,
+                    },
+                data3: {
+                        route: 'set-lang',
+                        name: this.$t('user.lang'),
                     }
             }
         },

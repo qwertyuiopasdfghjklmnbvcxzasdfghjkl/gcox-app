@@ -1,6 +1,6 @@
 <template>
     <div class="page">
-        <top-back>{{$t('public0.public999')}}</top-back>
+        <top-back>{{$t('public0.topup')}}</top-back>
 
         <div class="page-main">
             <div class="symbol">
@@ -10,7 +10,7 @@
             <div class="inner_text">
                 <p>{{$t('home.notice')}}：<!--温馨提示--></p>
                 <ol>
-                    <li>{{$t('public0.public229')}}<!--您可以在充值提现历史记录页面跟踪状态。--></li>
+                    <li>{{$t('public0.text001')}}<!--您可以在充值提现历史记录页面跟踪状态。--></li>
                 </ol>
             </div>
             <div class="content">
@@ -20,7 +20,7 @@
                             <i><img src="../../../../assets/img/tc_meus_b@2x.png"/></i><!--提现地址--></label>
                         <p class="address mt10">
                             <input type="text" v-validate="'required'" name="selToAddress" maxlength="100"
-                                   v-model="form.toAddress" :placeholder="$t('public0.public45')" autocomplete="off"/>
+                                   v-model="form.toAddress" :placeholder="$t('public0.public-new-address')" autocomplete="off"/>
                             <i class="scanning" v-tap="{methods: scanQRCode}"></i>
                             <!--<span class="user-address" v-show="isFocus && !toAddress && userAddress" @click="toAddress = userAddress">{{userAddress}}</span>-->
                         </p>
@@ -158,7 +158,7 @@
                         password: this.form.password,
                         googleCode: this.form.googleCode,
                         lang: window.localStorage.getItem('lang') === 'zh-CN' ? 'cn' : 'en',
-                        withdrawFast: true,
+                        withdrawFast: false,
                         type: 0
                     }
                     this.lock = false

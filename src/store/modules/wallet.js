@@ -1,6 +1,6 @@
 import JsCookies from 'js-cookie'
 import numUtils from '@/assets/js/numberUtils'
-let userWallets = JSON.parse(localStorage.userWallets) || []
+let userWallets = JSON.parse(localStorage.userWallets || '[]')
 const state = {
   btcValuation: 0,
   USDCNY: {},

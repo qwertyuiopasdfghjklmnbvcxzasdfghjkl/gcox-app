@@ -76,7 +76,9 @@
                     </a>
                 </li>
                 <li class="full_screen">
-                    <router-link :to="{name: 'full-screen'}">{{$t('exchange.advanced_full_screen')}}</router-link>
+                    <router-link :to="{name: 'full-screen',params:{market:business.market}}">
+                        {{$t('exchange.advanced_full_screen')}}
+                    </router-link>
                 </li>
             </ul>
             <div class="acpanel">

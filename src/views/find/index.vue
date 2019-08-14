@@ -5,7 +5,7 @@
             <label class="flex">
                 <i class="ico"><img src="../../assets/img/notice.png"></i>
                 <notice></notice>
-                <router-link :to="{name: 'notice'}">更多</router-link>
+                <router-link :to="{name: 'notice'}">{{$t('public0.more')}}</router-link>
             </label>
         </div>
         <data-box></data-box>
