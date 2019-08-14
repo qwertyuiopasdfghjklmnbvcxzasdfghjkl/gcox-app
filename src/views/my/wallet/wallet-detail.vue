@@ -109,7 +109,7 @@
                         confirmButtonText: this.$t('public0.ok')
                     }).then(action => {
                         if (action === 'confirm') {
-                            this.$router.push({name: 'realName'})
+                            this.$router.push({name: 'kyc'})
                         }
                     })
                     return

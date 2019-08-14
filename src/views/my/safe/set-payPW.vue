@@ -100,7 +100,7 @@
                     showCancelButton: true
                 }).then(action => {
                     if (action === 'confirm') {
-                        this.$router.push({name: 'realName'})
+                        this.$router.push({name: 'kyc'})
                     }else{
                         this.$router.push({name: 'safe'})
                     }

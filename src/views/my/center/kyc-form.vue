@@ -68,6 +68,9 @@
 </script>
 
 <style scoped lang="less">
+    .page{
+        background: #ffffff;
+    }
     .iframe{
         width: 100vw;
         height: calc(100vh - 0.9rem);

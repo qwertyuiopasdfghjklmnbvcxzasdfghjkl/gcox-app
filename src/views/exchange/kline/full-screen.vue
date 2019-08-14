@@ -413,6 +413,9 @@
         height: 100vh;
         flex-wrap: wrap;
         font-size: 0.2rem;
+        position: absolute;
+        top: 0;
+        left: 0;
 
         .top {
             background: #2a2e37;

@@ -141,18 +141,18 @@
                 })
             },
             withdrawal() { // 前往提现
-                if (this.getUserInfo.kycState !== 1) {
-                    MessageBox({
-                        title: this.$t('public0.public242'),
-                        message: this.$t('home.home66'), // 请先完成实名验证
-                        confirmButtonText: this.$t('public0.ok')
-                    }).then(action => {
-                        if (action === 'confirm') {
-                            this.$router.push({name: 'realName'})
-                        }
-                    })
-                    return
-                }
+                // if (this.getUserInfo.kycState !== 1) {
+                //     MessageBox({
+                //         title: this.$t('public0.public242'),
+                //         message: this.$t('home.home66'), // 请先完成实名验证
+                //         confirmButtonText: this.$t('public0.ok')
+                //     }).then(action => {
+                //         if (action === 'confirm') {
+                //             this.$router.push({name: 'kyc'})
+                //         }
+                //     })
+                //     return
+                // }
                 if (this.getUserInfo.googleAuthEnable === 0) {
                     MessageBox({
                         title: this.$t('public0.public242'),
