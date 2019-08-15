@@ -5,11 +5,11 @@
             <div class="mt20">
                 <rail-bar v-for="data in data1" :item="data" class="hr"></rail-bar>
             </div>
-            <div class="mt20 cont">
-                <rail-bar v-for="data in data2" :item="data" class="hr"></rail-bar>
-                <mt-switch v-model="switchFingerprintPW" class="switchT id1"></mt-switch>
-                <mt-switch v-model="switchGesturePW" class="switchT id2"></mt-switch>
-            </div>
+            <!--<div class="mt20 cont">-->
+                <!--<rail-bar v-for="data in data2" :item="data" class="hr"></rail-bar>-->
+                <!--<mt-switch v-model="switchFingerprintPW" class="switchT id1"></mt-switch>-->
+                <!--<mt-switch v-model="switchGesturePW" class="switchT id2"></mt-switch>-->
+            <!--</div>-->
         </div>
     </div>
 </template>

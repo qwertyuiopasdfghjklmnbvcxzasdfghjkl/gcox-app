@@ -48,7 +48,13 @@
                 console.log(this.state, this.getUserInfo())
             },
             KYCstate(i){
-                let As =['home.home17','dddd']
+                let As ={
+                    "0": "public0.public39",
+                    "1": "public0.public38", // 已通过
+                    "-1": "public0.public151",
+                    "-2": "account.user_fail",
+                    "-3": "account.user_fail",
+                }
                 return As[i]
             },
             loginOut () {

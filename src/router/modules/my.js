@@ -51,6 +51,11 @@ export default [
                 component:() => import('@/views/my/set/set-lang'),
             },
             {
+                path: 'net',
+                name: 'net',
+                component:() => import('@/views/my/set/net'),
+            },
+            {
                 path: 'safe',
                 name: 'safe',
                 component:() => import('@/views/my/safe/safety'),

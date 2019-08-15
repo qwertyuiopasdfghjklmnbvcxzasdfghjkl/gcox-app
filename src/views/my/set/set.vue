@@ -2,13 +2,12 @@
     <div class="page">
         <top-back>{{$t('user.set')}}</top-back>
         <div class="mt20">
-            <rail-bar v-for="data in data1" :item="data" class="hr"></rail-bar>
+            <rail-bar v-for="data in data1" :item="data" class="hr" @on-click="clear()"></rail-bar>
         </div>
-        <div class="cont mt20">
-            <rail-bar :item="data2" class=""></rail-bar>
-            <mt-switch v-model="switchT" class="switchT"></mt-switch>
-            <!--<mt-switch v-model="switchT"></mt-switch>-->
-        </div>
+        <!--<div class="cont mt20">-->
+            <!--<rail-bar :item="data2" class=""></rail-bar>-->
+            <!--<mt-switch v-model="switchT" class="switchT"></mt-switch>-->
+        <!--</div>-->
         <div class="cont mt20">
             <rail-bar :item="data3"></rail-bar>
         </div>
@@ -30,10 +29,11 @@
                     {
                         route: '',
                         name: this.$t('home.home13'),
-                        small: `<span style="color:#aaaaaa">0KB</span>`
+                        small: `<span style="color:#aaaaaa">0KB</span>`,
+                        disabled: true
                     },
                     {
-                        route: '',
+                        route: 'net',
                         name: this.$t('home.home14'),
                     }
                 ],
@@ -48,10 +48,14 @@
                     }
             }
         },
+        created(){
+            console.log(window.localStorage)
+        },
         methods: {
             sw(){
                 console.log(this.switchT)
-            }
+            },
+            clear(){}
         }
     }
 </script>
