@@ -24,6 +24,7 @@
         methods:{
             reto(){
                 if(this.item.disabled){
+                    this.$emit('on-click')
                     return
                 }
                 this.$router.push({name: this.item.route})

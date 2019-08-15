@@ -18,7 +18,7 @@ export default{
 	    return {
 	    	isFirst:localStorage.getItem('isFirst') ? false : true,
 	    	canStart:false,
-	    	slides:[require('@/assets/img/slides/s1.jpg'),require('@/assets/img/slides/s2.png')],
+	    	slides:[require('@/assets/img/slides/landing-page.jpg')],
 	        swiperOption: {
 	            speed: 400,
 	            observer:true,
@@ -43,10 +43,10 @@ export default{
 	},
 	methods:{
 	    start(){
-	    	if(this.canStart){
-	    		localStorage.setItem('isFirst', true)
-	    		this.isFirst = false
-	    	}
+	    	localStorage.setItem('isFirst', true)
+			this.isFirst = false
+	    	// if(this.canStart){
+	    	// }
 	    }
 	}
 }
