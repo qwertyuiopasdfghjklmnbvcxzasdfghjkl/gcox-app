@@ -123,7 +123,7 @@
             share(){
                 // GCOX全球领先的数字资产交易平台
                 //
-                navigator.share('https://exchange.gcox.com',this.$t('home.shar-title'))
+                navigator.share(this.$t('home.shar-title')+'https://exchange.gcox.com',this.$t('home.shar-title'))
             }
             // getMessageList () {
             //     // if (!this.isLogin) {

@@ -162,6 +162,12 @@ export default [
                 name: 'history',
                 component: () => import('@/views/my/wallet/history/history-list'),
                 meta:{login:true}
+            },
+            {
+                path: 'wallet/history-detail',
+                name: 'history-detail',
+                component: () => import('@/views/my/wallet/history/history-detail'),
+                meta:{login:true}
             }
         ]
     },

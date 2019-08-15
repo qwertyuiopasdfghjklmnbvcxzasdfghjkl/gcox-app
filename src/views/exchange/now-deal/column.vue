@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="data-title">
-                <p>{{$t('market.amount')}}<!--数量-->
+                <p>{{$t('exchange.exchange_amount')}}<!--数量-->
                     <span>{{toFixed(data.finishedAmount)|number}} / {{toFixed(data.totalAmount)|number}}</span>
                 </p>
                 <p>{{$t('exchange.exchange_price')}}<!--价格--> <span>{{toFixed(data.price)|number}}</span></p>

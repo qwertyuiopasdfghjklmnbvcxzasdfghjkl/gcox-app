@@ -119,11 +119,11 @@
                                 }
                             }, (msg, rst) => {
                                 this.locked = true
-                                Tip({
-                                    type: 'danger',
-                                    message: this.$t(`error_code.${typeof msg === 'string' ? msg : msg[0]}`)
-                                })
                                 if (msg === 'verify_email_required') {
+                                    Tip({
+                                        type: 'danger',
+                                        message: this.$t(`error_code.${typeof msg === 'string' ? msg : msg[0]}`)
+                                    })
                                     this.$router.push({name: 'verify', params: {email: this.formData.username}})
                                 } else if (msg === 'invalid_totp') {
                                     // 二次验证
@@ -135,7 +135,6 @@
                                         query: {curl: this.curl}
                                     })
                                 }
-
                             })
                         }, () => {
                             this.locked = true
