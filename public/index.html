@@ -5,7 +5,7 @@
     <meta name="aplus-terminal" content="1">
     <meta name="apple-mobile-web-app-title" content="">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="viewport" content="viewport-fit=cover,width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="format-detection" content="telephone=no, address=no">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title>GOCX</title>
@@ -15,11 +15,32 @@
 </head>
 <body style="background: #25242A">
 <noscript>
-    <strong>We're sorry but x-game doesn't work properly without JavaScript enabled. Please enable it to
+    <strong>We're sorry but GCOX doesn't work properly without JavaScript enabled. Please enable it to
         continue.</strong>
 </noscript>
 <div id="app"></div>
 <!-- built files will be auto injected -->
+<script type="text/javascript">
+    function receiveMessage(event) {
+        if (typeof event.data === "string") {
+            var data = window.JSON.parse(event.data);
+            if (data.transactionReference) {
+                //jumio kyc 事件监听
+                console.log('Netverify Web was loaded in an iframe.');
+                console.log('auth token:', data.authorizationToken);
+                console.log('transaction reference:', data.transactionReference);
+                console.log('customer internal reference:', data.customerInternalReference);
+                console.log('event type:', data.eventType);
+                console.log('date-time:', data.dateTime);
+                console.log('event value:', data.payload.value);
+                console.log('event metainfo:', data.payload.metainfo);
+                window.onJumioResult && window.onJumioResult(data);
+            }
+        }
+    }
+
+    window.addEventListener("message", receiveMessage, false);
+</script>
 <script type="text/javascript" src="./static/js/gt.js"></script>
 <script type="text/javascript" src="./static/js/jsencrypt.min.js"></script>
 <script type="text/javascript" src="./static/js/jquery-3.3.1.min.js"></script>

@@ -58,7 +58,8 @@
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
       "cordova-plugin-appversion": {},
-      "cordova-plugin-app-update": {}
+      "cordova-plugin-app-update": {},
+      "nl.madebymark.share": {}
     },
     "platforms": [
       "android",

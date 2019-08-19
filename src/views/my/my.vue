@@ -32,7 +32,7 @@
                 <rail-bar v-for="data in data3" :item="data" class="hr"></rail-bar>
             </div>
             <div class="mt20">
-                <rail-bar v-for="data in data4" :item="data" class="hr"></rail-bar>
+                <rail-bar v-for="data in data4" :item="data" class="hr" @on-click="share()"></rail-bar>
             </div>
         </div>
     </div>
@@ -89,9 +89,7 @@
                         icon: require('@/assets/img/ic_fx@3x.png'),
                         name: this.$t('home.home07'),
                         method: ()=>{
-                            addListeners('click',()=>{
-                                this.share()
-                            })
+
                         }
                     },
                     {
@@ -123,7 +121,9 @@
                 this.$router.push('center')
             },
             share(){
-                console.log('ddd')
+                // GCOX全球领先的数字资产交易平台
+                //
+                navigator.share(this.$t('home.shar-title')+'    https://exchange.gcox.com',this.$t('home.shar-title'))
             }
             // getMessageList () {
             //     // if (!this.isLogin) {

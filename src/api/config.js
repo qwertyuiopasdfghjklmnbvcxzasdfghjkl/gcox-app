@@ -1,5 +1,5 @@
-let domain = process.env.NODE_ENV === 'development' ? 'gcox.dev.koall.io' : location.host.split(':')[0]
-// let domain = process.env.NODE_ENV === 'development' ? 'sit.gcox.cc' : location.host.split(':')[0]
+// let domain = process.env.NODE_ENV === 'development' ? 'gcox.dev.koall.io' : location.host.split(':')[0]
+let domain = process.env.NODE_ENV === 'development' ? 'sit.gcox.cc' : location.host.split(':')[0]
 if (process.env.VUE_APP_BASEURL) {
   domain = process.env.VUE_APP_BASEURL
 }
@@ -12,7 +12,7 @@ const config = {
   http: http,
   url: `${http}${domain}`,
   protocol: protocol,
-  brand: 'PeaX',
+  brand: 'GCOX',
   version:'1.0.0'
 }
 

@@ -100,7 +100,7 @@
                     showCancelButton: true
                 }).then(action => {
                     if (action === 'confirm') {
-                        this.$router.push({name: 'realName'})
+                        this.$router.push({name: 'kyc'})
                     }else{
                         this.$router.push({name: 'safe'})
                     }
@@ -115,7 +115,7 @@
                     data.transactionPassword = this.formData.newPassword
                     data.totp = this.formData.googleCode
                     user.payPW(data, res=>{
-                        Tip({type: 'success', message: this.$t(`error_code.${res}`)})
+                        Tip({type: 'success', message: res.msg})
                         this.$router.push({name: 'safe'})
                     },msg=>{
                         Tip({type: 'danger', message: this.$t(`error_code.${msg}`)})

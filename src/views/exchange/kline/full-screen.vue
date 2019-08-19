@@ -2,7 +2,7 @@
     <div class="cont">
         <div class="top">
             <span>{{symbol_display}}</span>
-            <span>{{time.format()}}</span>
+            <span class="time">{{time.format()}}</span>
             <router-link :to="{name: 'kline', params: {market: `${currentSymbol}_${baseSymbol}`}}"></router-link>
         </div>
         <div class="left">
@@ -238,6 +238,7 @@
             }
         },
         created() {
+            screen.orientation.lock('landscape');
             this.business.market = this.$route.params.market || this.getInitMarket
             this.InitKlineWebSoket()
             this.$nextTick(() => {
@@ -245,7 +246,10 @@
             })
             this.getSymbolInfo()
             console.log(this.getUserWallets)
-            setTimeout(()=>{this.time = new Date()},1000)
+            setInterval(()=>{this.time = new Date()},1000)
+        },
+        beforeDestroy(){
+            screen.orientation.unlock();
         },
         methods: {
             ...mapActions(['setLast24h', 'tiggerEvents', 'setMarketList']),
@@ -413,6 +417,9 @@
         height: 100vh;
         flex-wrap: wrap;
         font-size: 0.2rem;
+        position: absolute;
+        top: 0;
+        left: 0;
 
         .top {
             background: #2a2e37;
@@ -430,6 +437,12 @@
                 height: 0.4rem;
                 display: inline-block;
                 background-size: 0.2rem;
+            }
+            .time{
+                font-size: 0.14rem;
+                text-align: right;
+                flex: 1;
+                margin-right: 0.2rem;
             }
         }
 

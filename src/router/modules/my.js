@@ -51,6 +51,11 @@ export default [
                 component:() => import('@/views/my/set/set-lang'),
             },
             {
+                path: 'net',
+                name: 'net',
+                component:() => import('@/views/my/set/net'),
+            },
+            {
                 path: 'safe',
                 name: 'safe',
                 component:() => import('@/views/my/safe/safety'),
@@ -156,6 +161,12 @@ export default [
                 path: 'wallet/history',
                 name: 'history',
                 component: () => import('@/views/my/wallet/history/history-list'),
+                meta:{login:true}
+            },
+            {
+                path: 'wallet/history-detail',
+                name: 'history-detail',
+                component: () => import('@/views/my/wallet/history/history-detail'),
                 meta:{login:true}
             }
         ]

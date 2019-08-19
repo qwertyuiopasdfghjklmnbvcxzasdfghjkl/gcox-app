@@ -88,6 +88,7 @@
     import {mapGetters} from 'vuex'
     import wallet from '@/api/wallet'
     import cordovaUtils from '@/assets/js/cordovaUtils'
+    import numUtils from '@/assets/js/numberUtils'
 
     export default {
         name: 'page-withdrawal',
@@ -114,7 +115,7 @@
             },
             lastAmount() {
                 if (this.form.amount) {
-                    return this.form.amount - this.symbolInfo.procedureFee
+                    return numUtils.minus(this.form.amount, this.symbolInfo.procedureFee)
                 } else {
                     return 0
                 }

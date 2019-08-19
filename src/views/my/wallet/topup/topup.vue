@@ -52,8 +52,8 @@
             this.$nextTick(() => {
                     utils.qrcode(this.$refs.qrcode, {
                         text: this.symbolInfo.address,
-                        width: 190,
-                        height: 190
+                        width: 145,
+                        height: 145
                     })
                 }
             )

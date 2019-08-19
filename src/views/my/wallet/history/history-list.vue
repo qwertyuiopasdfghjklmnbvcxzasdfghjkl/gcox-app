@@ -12,26 +12,23 @@
                 <label>{{$t('home.home56')}}<i><img src="../../../../assets/img/tc_meus_b@2x.png"/></i></label>
                 <div>
                     <span @click="symbol = ''" :class="{'active': !symbol}">{{$t('home.home59')}}</span>
-                    <span @click="symbol = 'BTC'" :class="{'active': symbol === 'BTC'}">BTC</span>
-                    <span @click="symbol = 'ETH'" :class="{'active': symbol === 'ETH'}">ETH</span>
-                    <span @click="symbol = 'BCH'" :class="{'active': symbol === 'BCH'}">BCH</span>
-                    <span @click="symbol = 'LTC'" :class="{'active': symbol === 'LTC'}">LTC</span>
+                    <span v-for="item in symbolList" @click="symbol = item" :class="{'active': symbol === item}">{{item}}</span>
                 </div>
             </div>
             <div class="list">
                 <label>{{$t('home.home57')}}<i><img src="../../../../assets/img/tc_meus_b@2x.png"/></i></label>
                 <div>
-                    <span @click="state = 0" :class="{'active': state === 0}">{{$t('home.home59')}}</span>
-                    <span @click="state = 1" :class="{'active': state === 1}">{{$t('home.home60')}}</span>
-                    <span @click="state = 2" :class="{'active': state === 2}">{{$t('home.home61')}}</span>
+                    <span @click="status = ''" :class="{'active': status === ''}">{{$t('home.home59')}}</span>
+                    <span @click="status = 1" :class="{'active': status === 1}">{{$t('home.home60')}}</span>
+                    <span @click="status = 2" :class="{'active': status === 2}">{{$t('home.home61')}}</span>
                 </div>
             </div>
             <div class="list">
                 <label>{{$t('home.home58')}}<i><img src="../../../../assets/img/tc_meus_b@2x.png"/></i></label>
                 <div>
-                    <span @click="time = 0" :class="{'active': time === 0}">{{$t('home.home59')}}</span>
-                    <span @click="time = 1" :class="{'active': time === 1}">{{$t('home.home60')}}</span>
-                    <span @click="time = 2" :class="{'active': time === 2}">{{$t('home.home61')}}</span>
+                    <span @click="time = 7" :class="{'active': time === 7}">7 {{$t('exchange.exchange_day')}}</span>
+                    <span @click="time = 30" :class="{'active': time === 30}">30{{$t('exchange.exchange_day')}}</span>
+                    <span @click="time = 180" :class="{'active': time === 180}">180{{$t('exchange.exchange_day')}}</span>
                 </div>
             </div>
         </div>
@@ -44,7 +41,7 @@
                             :bottom-all-loaded="allLoaded"
                             ref="loadmore">
                         <ul class="tab_list">
-                            <li v-for="item in list">
+                            <li v-for="item in list" v-tap="{methods: todetail, params:{data: item, form: 1}}">
                                 <div>
                                     <h4><span>{{item.symbol}}</span><span>{{item.amount}}</span></h4>
                                     <p>{{new Date(item.updatedAt).format()}}</p>
@@ -65,7 +62,7 @@
                             :bottom-all-loaded="allWithdrawalLoaded"
                             ref="loadmoreWithdrawal">
                         <ul class="tab_list">
-                            <li v-for="item in listWithdrawal">
+                            <li v-for="item in listWithdrawal" v-tap="{methods: todetail, params:{data: item, form: 2}}">
                                 <div>
                                     <h4><span>{{item.symbol}}</span><span>{{item.amount}}</span></h4>
                                     <p>{{new Date(item.updatedAt).format()}}</p>
@@ -87,6 +84,7 @@
     import noData from '@/components/common/noData'
     import noMoreData from '@/components/common/noMoreData'
     import wallet from '../../../../api/wallet'
+    import {mapGetters, mapActions} from 'vuex'
 
     export default {
         name: "history-list",
@@ -99,19 +97,25 @@
             return {
                 selected: 'tab1',
                 symbol: '',
-                state: 0,
-                time: 0,
+                status: '',
+                time: 7,
                 allLoaded: false,
                 allWithdrawalLoaded: false,
                 params: {
                     direction: 1,
                     page: 0,
-                    pageSize: 10
+                    pageSize: 10,
+                    symbol: '',
+                    time: '7days',
+                    status: '',
                 },
                 paramsWithdrawal: {
                     direction: 2,
                     page: 1,
-                    pageSize: 10
+                    pageSize: 10,
+                    symbol: '',
+                    time: '7days',
+                    status: '',
                 },
                 sport: '',
                 sportWithdrawal: '',
@@ -121,12 +125,57 @@
                 noMoreDataWithdrawal: false,
                 noData: false,
                 noDataWithdrawal: false,
+                symbolList: []
+            }
+        },
+        computed:{
+            paramsChange(){
+                return{
+                    direction: 1,
+                    page: 1,
+                    pageSize: 10,
+                    symbol: this.symbol,
+                    time: this.time+'days',
+                    status: this.status
+                }
+            },
+            paramsChange2(){
+                return{
+                    direction: 2,
+                    page: 1,
+                    pageSize: 10,
+                    symbol: this.symbol,
+                    time: this.time+'days',
+                    status: this.status
+                }
+            }
+        },
+        watch:{
+            paramsChange(){
+                this.params = this.paramsChange
+                this.list = []
+                this.getList()
+            },
+            paramsChange2(){
+                this.paramsWithdrawal = this.paramsChange2
+                this.listWithdrawal = []
+                this.getWithdrawalList()
             }
         },
         created() {
             this.getWithdrawalList()
+            console.log(this.getMarketList())
+            this.getMarkets()
         },
         methods: {
+            ...mapGetters(['getMarketList']),
+            getMarkets() { // 获取市场
+                this.getMarketList().filter(data => {
+                    if (this.symbolList.indexOf(data.baseSymbol) === -1) {
+                        this.symbolList.push(data.baseSymbol)
+                    }
+                })
+            },
             loadBottom() { // 获取下一页
                 this.sport = 'bottom'
                 this.params.page++;
@@ -142,7 +191,7 @@
                         })
                         this.$refs.loadmore.onBottomLoaded();
                         if (this.list.length >= res.total) { // 没有更多数据
-                            this.noMoreData = true
+                            this.list.length ? this.noMoreData = true : this.noMoreData = false
                             this.allLoaded = true
                         }
                     } else if (this.sport === 'top') { // 下拉刷新
@@ -251,6 +300,12 @@
                         }
                 }
             },
+            todetail(d){
+               console.log(d.params)
+                let data = d.params.data
+                let form = d.params.form
+                this.$router.push({name: 'history-detail',params:{data: data, form: form}})
+            }
         }
     }
 </script>

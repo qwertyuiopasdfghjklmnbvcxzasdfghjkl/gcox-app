@@ -136,10 +136,8 @@
 
     .btn {
         width: 100%;
-        position: absolute;
-        bottom: 1.56rem;
         display: block;
-        margin: 0 -0.3rem;
+        margin: 1rem -0.3rem;
         padding: 0.3rem;
     }
 
