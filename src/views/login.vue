@@ -134,6 +134,11 @@
                                         },
                                         query: {curl: this.curl}
                                     })
+                                }else{
+                                    Tip({
+                                        type: 'danger',
+                                        message: this.$t(`error_code.${typeof msg === 'string' ? msg : msg[0]}`)
+                                    })
                                 }
                             })
                         }, () => {

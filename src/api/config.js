@@ -12,7 +12,7 @@ const config = {
   http: http,
   url: `${http}${domain}`,
   protocol: protocol,
-  brand: 'PeaX',
+  brand: 'GCOX',
   version:'1.0.0'
 }
 

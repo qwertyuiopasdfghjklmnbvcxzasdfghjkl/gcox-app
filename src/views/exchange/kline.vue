@@ -77,7 +77,7 @@
                 </li>
                 <li class="full_screen">
                     <router-link :to="{name: 'full-screen',params:{market:business.market}}">
-                        {{$t('exchange.advanced_full_screen')}}
+                        {{$t('exchange.advanced_full_screen')}} <span><img src="../../assets/img/full.png"/></span>
                     </router-link>
                 </li>
             </ul>
@@ -687,12 +687,14 @@
             flex: 1;
             text-align: right;
             a{
-                padding: 0.08rem 0.12rem;
+                padding: 0.08rem;
                 font-size: 0.24rem;
-                padding-right: 0.4rem;
-                background: url("../../assets/img/full.png") no-repeat 0.67rem .1rem;
-                background-size: 0.24rem;
                 border: 0.02rem solid #43434E;
+                span{
+                    img{
+                        width: 0.24rem;
+                    }
+                }
             }
         }
     }

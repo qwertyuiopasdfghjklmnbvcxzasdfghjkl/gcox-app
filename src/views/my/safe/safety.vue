@@ -5,11 +5,11 @@
             <div class="mt20">
                 <rail-bar v-for="data in data1" :item="data" class="hr"></rail-bar>
             </div>
-            <!--<div class="mt20 cont">-->
-                <!--<rail-bar v-for="data in data2" :item="data" class="hr"></rail-bar>-->
-                <!--<mt-switch v-model="switchFingerprintPW" class="switchT id1"></mt-switch>-->
+            <div class="mt20 cont">
+                <rail-bar v-for="data in data2" :item="data" class="hr"></rail-bar>
+                <mt-switch v-model="switchFingerprintPW" class="switchT id1"></mt-switch>
                 <!--<mt-switch v-model="switchGesturePW" class="switchT id2"></mt-switch>-->
-            <!--</div>-->
+            </div>
         </div>
     </div>
 </template>
@@ -17,6 +17,7 @@
 <script>
     import railBar from '../../../components/RailBar'
     import {mapGetters} from 'vuex'
+
     export default {
         components: {
             railBar
@@ -37,37 +38,74 @@
                         name: this.$t('home.setPayPW'),
                     }
                 ],
-                data2:[
+                data2: [
                     {
                         disabled: true,
                         name: this.$t('home.fingerprintPW'),
                         rightIcon: true,
                     },
-                    {
-                        disabled: true,
-                        name: this.$t('home.gesturePW'),
-                        rightIcon: true,
-                    },
+                    // {
+                    //     disabled: true,
+                    //     name: this.$t('home.gesturePW'),
+                    //     rightIcon: true,
+                    // },
                 ],
                 userInfo: {},
                 switchFingerprintPW: false,
                 switchGesturePW: false
             }
         },
-        computed:{
+        computed: {
             ...mapGetters(['getUserInfo']),
+        },
+        watch: {
+            switchFingerprintPW(e) {
+                if (e) {
+                    this.fingerPrint()
+                }
+            }
         },
         created() {
             this.userInfo = this.getUserInfo
-            if(this.userInfo.googleAuthEnable === 1){
+            if (this.userInfo.googleAuthEnable === 1) {
                 this.data1[0].small = `<span style="color:#aaaaaa">${this.$t('account.user_center_state_bind')}</span>`
-            }else{
+            } else {
                 this.data1[0].small = `<span style="color:#aaaaaa">${this.$t('user.noBind')}</span>`
             }
             console.log(this.userInfo)
         },
         methods: {
+            fingerPrint() {
+                Fingerprint.isAvailable(isAvailableSuccess, isAvailableError);
 
+                function isAvailableSuccess(result) {
+                    /*
+                    result depends on device and os.
+                    iPhone X will return 'face' other Android or iOS devices will return 'finger'
+                    */
+                    console.log("Fingerprint available", result);
+                    this.fingerShow()
+                }
+
+                function isAvailableError(message) {
+                    // 'message' will be an object with an error code and message
+                    console.log(message);
+                }
+            },
+            fingerShow() {
+                Fingerprint.show({
+                    clientId: "Fingerprint-Demo",
+                    clientSecret: "password"
+                }, successCallback, errorCallback);
+
+                function successCallback() {
+                    alert("Authentication successfull");
+                }
+
+                function errorCallback(err) {
+                    alert("Authentication invalid " + err);
+                }
+            }
         }
     }
 </script>
@@ -97,15 +135,18 @@
             display: none;
         }
     }
-    .cont{
+
+    .cont {
         position: relative;
-        .switchT{
+
+        .switchT {
             position: absolute;
             right: 0.3rem;
             top: 0.15rem;
             z-index: 9;
         }
-        .id2{
+
+        .id2 {
             top: 1.05rem;
         }
     }

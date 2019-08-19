@@ -69,6 +69,7 @@
             this.getMarketList()
             this.loadLoginInfo()
             this.checkDeviceready()
+            screen.orientation.lock('portrait');
         },
         mounted() {
             $('#app').on('click', 'input', (e) => {

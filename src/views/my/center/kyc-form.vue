@@ -20,7 +20,6 @@
         },
         created() {
             this.url = this.$route.params.url
-            this.listener()
             window.onJumioResult = data => {
                 if (data.payload.value === 'success' || data.payload.value === 'error') {
                     let postData = {
@@ -42,27 +41,7 @@
         },
         methods:{
             ...mapActions(['setUserInfo']),
-            listener(){
-                window.addEventListener("message", this.receiveMessage, false);
-            },
-            receiveMessage(event) {
-                console.log(event)
-                if (typeof event.data === "string") {
-                    var data = JSON.parse(event.data);
-                    if (data.transactionReference) {
-                        //jumio kyc 事件监听
-                        console.log('Netverify Web was loaded in an iframe.');
-                        console.log('auth token:', data.authorizationToken);
-                        console.log('transaction reference:', data.transactionReference);
-                        console.log('customer internal reference:', data.customerInternalReference);
-                        console.log('event type:', data.eventType);
-                        console.log('date-time:', data.dateTime);
-                        console.log('event value:', data.payload.value);
-                        console.log('event metainfo:', data.payload.metainfo);
-                        window.onJumioResult && window.onJumioResult(data);
-                    }
-                }
-            }
+            listener(){},
         }
     }
 </script>
