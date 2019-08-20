@@ -33,6 +33,7 @@
         <preference name="DisallowOverscroll" value="true" />
         <allow-intent href="itms:*"/>
         <allow-intent href="itms-apps:*"/>
+        <preference name="StatusBarStyle" value="lightcontent" />
         <splash height="2732" src="resources/android/icon/gcox.png" width="2732"></splash>
     </platform>
 </widget>
