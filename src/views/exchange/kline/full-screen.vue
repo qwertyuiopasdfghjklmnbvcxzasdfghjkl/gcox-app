@@ -425,7 +425,7 @@
         .top {
             background: #2a2e37;
             flex-shrink: 0;
-            height: 0.6rem;
+            height: 0.8rem;
             width: 100vh;
             display: flex;
             align-items: center;
@@ -434,13 +434,16 @@
 
             a {
                 background: url("../../../assets/img/out-full.png") no-repeat center;
-                width: 0.4rem;
-                height: 0.4rem;
+                width: 0.8rem;
+                height: 0.8rem;
                 display: inline-block;
-                background-size: 0.2rem;
+                background-size: 0.4rem;
+            }
+            span{
+                font-size: 0.32rem;
             }
             .time{
-                font-size: 0.14rem;
+                font-size: 0.2rem;
                 text-align: right;
                 flex: 1;
                 margin-right: 0.2rem;
@@ -449,8 +452,9 @@
 
         .left {
             width: calc(100vh - 1.6rem);
-            height: calc(100vw - 1.2rem);
+            height: calc(100vw - 1.6rem);
             position: relative;
+            z-index: -1;
             .kline{
                 width: 100%;
                 height: 100%;
@@ -462,13 +466,12 @@
 
         .right {
             width: 1.6rem;
-            height: calc(100vw - 1.2rem);
+            height: calc(100vw - 1.6rem);
 
             ul {
                 display: flex;
                 flex-flow: column;
                 text-align: center;
-                font-size: 0.14rem;
                 height: 100%;
                 align-items: center;
 
@@ -478,7 +481,7 @@
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    max-height: 0.5rem;
+                    max-height: 0.8rem;
                 }
             }
         }
@@ -486,7 +489,7 @@
         .foot {
             background: #2a2e37;
             flex-shrink: 0;
-            height: 0.6rem;
+            height: 0.8rem;
             width: 100vh;
             padding: 0 0.2rem;
 
@@ -495,32 +498,31 @@
                 flex-wrap: nowrap;
                 align-items: center;
                 justify-content: space-between;
-                font-size: 0.16rem;
-                height: 0.6rem;
+                height: 0.8rem;
 
                 li {
                     width: 1.8rem;
                     position: relative;
                     text-align: center;
                     height: 100%;
-                    line-height: 0.6rem;
+                    line-height: 0.8rem;
 
                     label {
                         position: absolute;
-                        bottom: 0.6rem;
+                        bottom: 0.8rem;
                         left: 0;
                         display: none;
                         flex-flow: column;
                         text-align: center;
                         z-index: 9;
                         width: 100%;
-                        line-height: 0.6rem;
+                        line-height: 0.8rem;
                         background: #2a2e37;
                     }
 
                     p {
                         background: url("../../../assets/img/tc_meus_b@2x.png") no-repeat 1.4rem center;
-                        background-size: 0.12rem;
+                        background-size: 0.2rem;
                     }
                     &.active{
                         border-bottom: 0.02rem solid #00A0E9;
