@@ -413,19 +413,20 @@
     .cont {
         background: #141420;
         display: flex;
-        width: 100vw;
-        height: 100vh;
+        width: 100vh;
+        height: 100vw;
+        top: calc((100vh - 100vw)/2);
+        left: calc((100vw - 100vh)/2);
         flex-wrap: wrap;
-        font-size: 0.2rem;
+        font-size: 0.28rem;
         position: absolute;
-        top: 0;
-        left: 0;
+        transform: rotate(90deg);
 
         .top {
             background: #2a2e37;
             flex-shrink: 0;
-            height: 0.4rem;
-            width: 100vw;
+            height: 0.6rem;
+            width: 100vh;
             display: flex;
             align-items: center;
             padding: 0 0.2rem;
@@ -447,8 +448,8 @@
         }
 
         .left {
-            width: calc(100vw - 1rem);
-            height: calc(100vh - 0.8rem);
+            width: calc(100vh - 1.6rem);
+            height: calc(100vw - 1.2rem);
             position: relative;
             .kline{
                 width: 100%;
@@ -460,8 +461,8 @@
         }
 
         .right {
-            width: 1rem;
-            height: calc(100vh - 0.8rem);
+            width: 1.6rem;
+            height: calc(100vw - 1.2rem);
 
             ul {
                 display: flex;
@@ -485,8 +486,8 @@
         .foot {
             background: #2a2e37;
             flex-shrink: 0;
-            height: 0.4rem;
-            width: 100vw;
+            height: 0.6rem;
+            width: 100vh;
             padding: 0 0.2rem;
 
             ul {
@@ -495,30 +496,30 @@
                 align-items: center;
                 justify-content: space-between;
                 font-size: 0.16rem;
-                height: 0.4rem;
+                height: 0.6rem;
 
                 li {
-                    width: 0.8rem;
+                    width: 1.8rem;
                     position: relative;
                     text-align: center;
                     height: 100%;
-                    line-height: 0.4rem;
+                    line-height: 0.6rem;
 
                     label {
                         position: absolute;
-                        bottom: 0.4rem;
+                        bottom: 0.6rem;
                         left: 0;
                         display: none;
                         flex-flow: column;
                         text-align: center;
                         z-index: 9;
                         width: 100%;
-                        line-height: 0.4rem;
+                        line-height: 0.6rem;
                         background: #2a2e37;
                     }
 
                     p {
-                        background: url("../../../assets/img/tc_meus_b@2x.png") no-repeat 0.66rem center;
+                        background: url("../../../assets/img/tc_meus_b@2x.png") no-repeat 1.4rem center;
                         background-size: 0.12rem;
                     }
                     &.active{
