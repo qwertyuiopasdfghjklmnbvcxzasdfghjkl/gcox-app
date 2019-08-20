@@ -1,7 +1,7 @@
 module.exports = {
   assetsDir: 'static',
   baseUrl: '',
-  outputDir: "dist",
+  outputDir: "www",
   runtimeCompiler: undefined,
   productionSourceMap: false,
   parallel: undefined,
