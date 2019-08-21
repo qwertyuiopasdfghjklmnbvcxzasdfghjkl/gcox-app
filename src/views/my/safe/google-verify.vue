@@ -89,8 +89,8 @@ import utils from '../../../assets/js/utils'
                     this.key = res.msg
                     var qrCode = `otpauth://totp/${window.location.host}:${this.userInfo.username}?secret=${res.msg}&digits=6&issuer=${window.location.host}&period=30`
                     utils.qrcode(this.$refs.qrcode, {
-                        width: 150,
-                        height: 150,
+                        width: 132,
+                        height: 132,
                         text: qrCode
                     })
                 }, (msg) => {
