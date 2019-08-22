@@ -55,6 +55,7 @@
                 user: {},
                 isUseCDCCPay: false,
                 messageList: null,
+                title: null,
                 userState: { // 用户状态信息
                     coinState: 0,
                     googleState: 0,
@@ -123,7 +124,9 @@
             share(){
                 // GCOX全球领先的数字资产交易平台
                 //
-                navigator.share(this.$t('home.shar-title')+'    https://exchange.gcox.com',this.$t('home.shar-title'))
+                this.title = this.$t('home.shar-title')
+                console.log(this.title, this.$t('home.shar-title'))
+                navigator.share(this.title+'\nhttps://exchange.gcox.com',this.$t('home.shar-title'))
             }
             // getMessageList () {
             //     // if (!this.isLogin) {

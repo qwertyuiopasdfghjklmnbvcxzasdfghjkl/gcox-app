@@ -52,8 +52,8 @@
             this.$nextTick(() => {
                     utils.qrcode(this.$refs.qrcode, {
                         text: this.symbolInfo.address,
-                        width: 145,
-                        height: 145
+                        width: 150,
+                        height: 150
                     })
                 }
             )
@@ -136,9 +136,11 @@
                  padding: 0.1rem;
                  background: #ffffff;
                  margin: 0.4rem auto;
-                img{
-                    width: 3rem;
-                    height: 3rem;
+                /deep/ canvas{
+                    max-width: 100%;
+                }
+                /deep/ img {
+                    max-width: 100%;
                 }
              }
             .two{
