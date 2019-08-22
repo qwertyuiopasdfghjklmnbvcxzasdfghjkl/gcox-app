@@ -50,7 +50,7 @@
 
 <script>
     import UiInput from "../../../components/uiInput";
-    import {mapGetters} from 'vuex'
+    import {mapGetters, mapActions} from 'vuex'
     import user from '../../../api/user'
     import utils from '@/assets/js/utils'
 
@@ -105,6 +105,7 @@
             this.userInfo = this.getUserInfo
         },
         methods: {
+            ...mapActions(['setApiToken']),
             submit() {
                 if(this.lock){
                     this.lock = false
@@ -122,9 +123,11 @@
                             localStorage.removeItem('userInfo')
                             localStorage.removeItem('headerImg')
                             this.$router.push({name: 'login'})
+                            console.log('1')
                         },msg=>{
                             Tip({type: 'danger', message: this.$t(`error_code.${msg}`)})
                             this.lock = true
+                            console.log('2')
                         })
                     })
                 }
