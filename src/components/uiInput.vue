@@ -3,11 +3,12 @@
         <label>
             <span v-html="placeholder ? '':_t" :class="{'hover':active}" :style="style"></span>
             <input
+                    ref="input"
                     :type="type"
                     @focus="focus()"
                     @blur="blur()"
                     @input="ent()"
-                    v-model="text"
+                    :value="text"
                     :maxlength="maxlength"
                     :placeholder="placeholder? _t: ''">
         </label>
@@ -37,17 +38,23 @@
             title: {
                 type: String,
                 default: null
-            }
+            },
+            value: null,
         },
         data() {
             return {
-                text: null,
+                text: this.value,
                 active: false,
                 _t:null,
                 style: {},
             }
         },
-        watch: {},
+        watch: {
+            value(){
+                this.focus()
+                this.text = this.value
+            }
+        },
         created(){
             this._t = this.label
         },
@@ -77,6 +84,7 @@
                 this.$emit('blur', this.text);
             },
             ent() {
+                this.text = this.$refs.input.value
                 this.$emit('input', this.text);
             }
         }

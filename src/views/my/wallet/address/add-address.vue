@@ -9,7 +9,7 @@
                             v-model="form.address"
                             :title="$t('home.address')"
                     ></ui-input>
-                    <i class="scanning" v-tap="{methods: scanQRCode}"></i>
+                    <i class="scanning" v-tap="{methods: scanQR}"></i>
                 </div>
                 <div class="cont">
                     <ui-input
@@ -78,9 +78,10 @@
                     })
                 }
             },
-            scanQRCode() {
+            scanQR() {
                 cordovaUtils.scanQRCode((addr) => {
                     this.form.address = addr
+                    console.log(addr, this.form.address)
                 })
             },
         }
