@@ -68,8 +68,8 @@
       "nl.madebymark.share": {}
     },
     "platforms": [
-      "android",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }

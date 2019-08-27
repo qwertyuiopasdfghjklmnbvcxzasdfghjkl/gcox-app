@@ -40,10 +40,8 @@
 <script>
     import { mapActions, mapGetters } from 'vuex'
     import railBar from '../../components/RailBar'
-    import userApi from '@/api/user'
     import avatar from '@/assets/img/user_img@2x.png'
-    import userInfoApi from '@/api/individual'
-    import {MessageBox} from 'mint-ui'
+    import config from '../../api/config'
 
     export default {
         components: {
@@ -97,7 +95,7 @@
                         route: 'about',
                         icon: require('@/assets/img/ic_gy@3x.png'),
                         name: this.$t('user.about'),
-                        small: `<span style="color:#ffffff">V1.0.0</span>`,
+                        small: `<span style="color:#ffffff">${config.version}</span>`,
                         method:()=>{
 
                         }
