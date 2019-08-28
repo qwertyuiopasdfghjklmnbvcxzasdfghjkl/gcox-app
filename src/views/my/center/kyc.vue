@@ -1,6 +1,6 @@
 <template>
 <div class="page">
-    <top-back>{{$t('home.home16')}}</top-back>
+    <top-back :back-page="'center'">{{$t('home.home16')}}</top-back>
     <div class="page-main">
         <div class="cont">
             <img :src="imgSrc[getUserInfo.kycState]"/>

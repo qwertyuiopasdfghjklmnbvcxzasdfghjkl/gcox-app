@@ -29,6 +29,9 @@ import {
 
 import uiInpu from './components/uiInput'
 
+import * as Sentry from '@sentry/browser';
+import * as Integrations from '@sentry/integrations';
+
 require('./assets/js/cordovaUtils') //引入cordova工具集
 require('./assets/js/directive') //引入全局自定义指令集
 require('./assets/js/filter') //引入全局自定义过滤器
@@ -124,6 +127,11 @@ router.beforeEach((to, from, next) => {
   }
 
 
+});
+
+Sentry.init({
+    dsn: 'https://309881394af8420ca13e4b34795d2a08@sentry.io/1538269',
+    integrations: [new Integrations.Vue({Vue, attachProps: true})],
 });
 
 langApi.getLanguage(lang, (res) => {

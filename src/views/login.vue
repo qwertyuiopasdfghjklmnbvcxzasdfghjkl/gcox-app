@@ -103,6 +103,7 @@
                         userApi.getRsaPublicKey((rsaPublicKey) => {
                             formData.password = utils.encryptPwd(rsaPublicKey, formData.password)
                             formData.rsaPublicKey = rsaPublicKey
+                            console.log(formData,this.formData)
                             userApi.login(formData, (apiToken, res) => {
                                 this.locked = true
                                 if (apiToken) {

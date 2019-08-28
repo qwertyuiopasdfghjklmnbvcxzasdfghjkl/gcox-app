@@ -174,7 +174,7 @@
                     userApi.register(formData, (msg) => {
                         this.locked = true
                         Tip({type: 'success', message: this.$t(`error_code.${msg}`)})
-                        this.$router.push({name: 'login', params: formData})
+                        this.$router.push({name: 'verify', params: {email: this.formData.email}})
                     }, (msg) => {
                         this.locked = true
                         Tip({type: 'danger', message: this.$t(`error_code.${msg}`)})

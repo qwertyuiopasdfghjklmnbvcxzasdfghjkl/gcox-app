@@ -29,11 +29,15 @@
                 type: Boolean,
                 default: false
             },
+            params: {
+                type: [Object, Array],
+                default: ()=>{}
+            },
         },
         methods: {
             goBack() {
                 if (this.backPage) {
-                    this.$router.replace({name: this.backPage})
+                    this.$router.replace({name: this.backPage,params: this.params})
                 } else {
                     this.$router.back()
                 }

@@ -7,14 +7,19 @@
     "build": "vue-cli-service build --mode app",
     "build-dev": "vue-cli-service build --mode dev",
     "build-sit": "vue-cli-service build --mode sit",
-    "build-app": "vue-cli-service build --mode app"
+    "build-app": "vue-cli-service build --mode app",
+    "build-android": "cordova build android"
   },
   "dependencies": {
+    "@sentry/browser": "^5.6.2",
+    "@sentry/integrations": "^5.6.1",
     "axios": "^0.18.0",
     "cordova-android": "^8.0.0",
     "cordova-ios": "^5.0.1",
     "cordova-plugin-app-update": "git+ssh://git@c.koall.io:ko-plugins/cordova-plugin-app-update.git",
     "cordova-plugin-appversion": "^1.0.0",
+    "cordova-plugin-share": "^0.1.3",
+    "cordova-plugin-statusbar": "^2.4.3",
     "cordova-plugin-whitelist": "^1.3.4",
     "core-js": "^2.6.5",
     "js-cookie": "^2.2.0",
@@ -36,10 +41,10 @@
     "@vue/cli-plugin-babel": "^3.0.5",
     "@vue/cli-service": "^3.0.5",
     "babel-plugin-component": "^1.1.1",
+    "cordova-plugin-whitelist": "^1.3.4",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
-    "vue-template-compiler": "^2.5.21",
-    "cordova-plugin-whitelist": "^1.3.4"
+    "vue-template-compiler": "^2.5.21"
   },
   "postcss": {
     "plugins": {
@@ -59,11 +64,12 @@
       },
       "cordova-plugin-appversion": {},
       "cordova-plugin-app-update": {},
+      "cordova-plugin-statusbar": {},
       "nl.madebymark.share": {}
     },
     "platforms": [
-      "android",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }

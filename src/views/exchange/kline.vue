@@ -1,6 +1,6 @@
 <template>
     <div class="page">
-        <top-back :backPage="'exchange'">
+        <top-back :backPage="'exchange'" :params="{market:this.business.market}">
             <div class="market-select" v-tap="{methods:toggleMarketList}">
                 <span class="">{{symbol_display}}</span><i class="icon_select"></i>
             </div>

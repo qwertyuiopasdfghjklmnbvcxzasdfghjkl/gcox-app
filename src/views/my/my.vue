@@ -40,10 +40,8 @@
 <script>
     import { mapActions, mapGetters } from 'vuex'
     import railBar from '../../components/RailBar'
-    import userApi from '@/api/user'
     import avatar from '@/assets/img/user_img@2x.png'
-    import userInfoApi from '@/api/individual'
-    import {MessageBox} from 'mint-ui'
+    import config from '../../api/config'
 
     export default {
         components: {
@@ -55,6 +53,7 @@
                 user: {},
                 isUseCDCCPay: false,
                 messageList: null,
+                title: null,
                 userState: { // 用户状态信息
                     coinState: 0,
                     googleState: 0,
@@ -96,7 +95,7 @@
                         route: 'about',
                         icon: require('@/assets/img/ic_gy@3x.png'),
                         name: this.$t('user.about'),
-                        small: `<span style="color:#ffffff">V1.0.0</span>`,
+                        small: `<span style="color:#ffffff">${config.version}</span>`,
                         method:()=>{
 
                         }
@@ -123,7 +122,9 @@
             share(){
                 // GCOX全球领先的数字资产交易平台
                 //
-                navigator.share(this.$t('home.shar-title')+'    https://exchange.gcox.com',this.$t('home.shar-title'))
+                this.title = this.$t('home.shar-title')
+                console.log(this.title, this.$t('home.shar-title'))
+                navigator.share(this.title+'\nhttps://exchange.gcox.com',this.$t('home.shar-title'))
             }
             // getMessageList () {
             //     // if (!this.isLogin) {

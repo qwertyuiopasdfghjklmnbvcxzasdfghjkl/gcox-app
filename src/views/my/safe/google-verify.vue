@@ -157,6 +157,12 @@ import utils from '../../../assets/js/utils'
                 margin: 0.2rem;
                 padding: 0.1rem;
             }
+            /deep/ canvas{
+                max-width: 100%;
+            }
+            /deep/ img {
+                max-width: 100%;
+            }
         }
     }
 

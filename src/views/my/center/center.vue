@@ -1,6 +1,6 @@
 <template>
     <div class="page">
-        <top-back>
+        <top-back :back-page="'ucenter'">
             <span>{{$t('user.center')}}<!--个人中心--></span>
         </top-back>
 

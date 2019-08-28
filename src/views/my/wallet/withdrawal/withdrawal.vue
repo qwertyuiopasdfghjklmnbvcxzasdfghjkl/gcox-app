@@ -144,6 +144,7 @@
             scanQRCode() {
                 cordovaUtils.scanQRCode((addr) => {
                     this.form.toAddress = addr
+                    console.log(addr)
                 })
             },
             walletWithdraw() {
