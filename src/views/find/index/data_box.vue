@@ -2,7 +2,7 @@
     <div class="data_box">
         <div class="cont">
             <ul>
-                <li v-for="item in list">
+                <li v-for="item in list" @click="goToExchangePage(item)">
                     <p class="tit">
                         <span class="f28 ft-c-white">{{item.currencySymbol}}</span>
                         <span class="ft-c-lightGray f24">/{{item.baseSymbol}}</span>
@@ -18,8 +18,9 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
+    import { mapGetters, mapActions } from 'vuex'
     import numUtils from '@/assets/js/numberUtils'
+    import marketApi from '@/api/market'
 
     export default {
         name: "data_box",
@@ -43,6 +44,7 @@
             }
         },
         methods: {
+            ...mapActions(['setLast24h']),
             percent (item) {
                 if (numUtils.BN(item.openingPrice).equals(0)) {
                     return {percent: '0.00'}
@@ -61,7 +63,13 @@
             },
             toFixed (v1, fixed) {
                 return numUtils.BN(v1).toFixed(fixed !== undefined ? fixed : 8)
-            }
+            },
+            goToExchangePage(item) {
+                marketApi.get24hPrice({symbol: `${item.currencySymbol}${item.baseSymbol}`}, (data) => {
+                    this.setLast24h(data)
+                    this.$router.push({name: 'exchange', params: {market: `${item.currencySymbol}_${item.baseSymbol}`}})
+                })
+            },
         }
     }
 </script>

@@ -109,6 +109,10 @@
             submit() {
                 if(this.lock){
                     this.lock = false
+                    if(this.formData.password !== this.formData.passwordConfirm){
+                        this.confirmPasswordError = false
+                        return
+                    }
                     let form = {}
                     user.getRsaPublicKey(rsaPublicKey=>{
                         form.password = utils.encryptPwd(rsaPublicKey, this.formData.password)
