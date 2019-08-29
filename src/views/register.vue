@@ -177,7 +177,7 @@
                         this.$router.push({name: 'verify', params: {email: this.formData.email}})
                     }, (msg) => {
                         this.locked = true
-                        Tip({type: 'danger', message: this.$t(`error_code.${msg}`)})
+                        Tip({type: 'danger', message: this.$t(`${msg}`)})
                     })
                 }, () => {
                     this.locked = true

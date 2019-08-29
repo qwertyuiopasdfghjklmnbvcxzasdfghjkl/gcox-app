@@ -1,6 +1,6 @@
 <template>
     <div class="page">
-        <top-back :back="false">
+        <top-back :back="false"  v-tap="{methods: showC}">
         <span class="off" v-tap="{methods:goBack}">
         <img src="../assets/img/off.png">
         </span>
@@ -54,6 +54,7 @@
     import myAPi from '@/api/individual'
     import config from '@/api/config'
     import UiInput from "../components/uiInput";
+    import VConsole   from 'vconsole'
 
     export default {
         name: 'login',
@@ -70,7 +71,8 @@
                     password: ''
                 },
                 account: '',
-                password: ''
+                password: '',
+                vi: 0
             }
         },
         beforeRouteEnter(to, from, next) {
@@ -103,7 +105,7 @@
                         userApi.getRsaPublicKey((rsaPublicKey) => {
                             formData.password = utils.encryptPwd(rsaPublicKey, formData.password)
                             formData.rsaPublicKey = rsaPublicKey
-                            console.log(formData,this.formData)
+                            console.log(new Date().getTime())
                             userApi.login(formData, (apiToken, res) => {
                                 this.locked = true
                                 if (apiToken) {
@@ -160,6 +162,17 @@
             goBack() {
                 this.$router.back()
             },
+            showC(){ // 偷偷连按五次打开调试
+                this.vi ++
+                let timer
+                clearTimeout(timer)
+                timer = setTimeout(()=>{
+                    this.vi = 0
+                },1000)
+                if(this.vi === 5){
+                    window.vConsole = new VConsole()
+                }
+            }
         }
     }
 </script>
