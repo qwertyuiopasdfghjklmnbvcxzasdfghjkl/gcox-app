@@ -65,7 +65,7 @@
       "cordova-plugin-appversion": {},
       "cordova-plugin-app-update": {},
       "cordova-plugin-statusbar": {},
-      "nl.madebymark.share": {}
+      "cordova-plugin-share": {}
     },
     "platforms": [
       "ios",
