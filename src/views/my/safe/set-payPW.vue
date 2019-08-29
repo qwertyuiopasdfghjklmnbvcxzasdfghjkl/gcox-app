@@ -84,6 +84,7 @@
                     title: this.$t('public0.public242'),
                     message: this.$t('error_code.GOOGLE_CELLPHONE_AUTH_FIRST'), // 请先进行谷歌验证或短信验证
                     confirmButtonText: this.$t('public0.ok'),
+                    cancelButtonText: this.$t('usercontent.user31'),
                     showCancelButton: true
                 }).then(action => {
                     if (action === 'confirm') {
@@ -97,6 +98,7 @@
                     title: this.$t('public0.public242'),
                     message: this.$t('home.home66'), // 请先完成实名验证
                     confirmButtonText: this.$t('public0.ok'),
+                    cancelButtonText: this.$t('usercontent.user31'),
                     showCancelButton: true
                 }).then(action => {
                     if (action === 'confirm') {

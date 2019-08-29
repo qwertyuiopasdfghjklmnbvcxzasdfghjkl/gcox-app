@@ -122,14 +122,21 @@
 
             },
             cancalAll() {
-                MessageBox.confirm(this.$t('trade_record.trade_record_repeal') + '?').then(action => {
-                    market.cancelAll(() => {
-                        this.cdatas = []
-                        Tip({type: 'success', message: this.$t('account.user_center_Successful')}) // 操作成功
-                    }, (msg) => {
-                        Tip({type: 'danger', message: this.$t(`error_code.${msg}`)})
-                    })
-                }, (cacel) => {
+                MessageBox({
+                    title: this.$t('public0.public242'),
+                    message: this.$t('trade_record.trade_record_repeal') + '?',
+                    confirmButtonText: this.$t('public0.ok'),
+                    cancelButtonText: this.$t('usercontent.user31'),
+                    showCancelButton: true
+                }).then(action => {
+                    if (action === 'confirm') {
+                        market.cancelAll(() => {
+                            this.cdatas = []
+                            Tip({type: 'success', message: this.$t('account.user_center_Successful')}) // 操作成功
+                        }, (msg) => {
+                            Tip({type: 'danger', message: this.$t(`error_code.${msg}`)})
+                        })
+                    }
                 })
             }
         }
