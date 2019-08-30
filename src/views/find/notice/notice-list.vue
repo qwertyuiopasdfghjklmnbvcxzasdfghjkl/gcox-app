@@ -7,6 +7,12 @@
                     :top-method="loadTop"
                     :bottom-method="loadBottom"
                     :bottom-all-loaded="allLoaded"
+                    :top-pull-text="$t('home.top-pull-text')"
+                    :top-drop-text="$t('home.drop-text')"
+                    :top-loading-text="$t('home.loading-text')"
+                    :bottom-pull-text="$t('home.bottom-pull-text')"
+                    :bottom-drop-text="$t('home.drop-text')"
+                    :bottom-loading-text="$t('home.loading-text')"
                     ref="loadmore">
                 <ul class="cont">
                     <li v-for="item in list" v-tap="{methods: toDetail,item}">

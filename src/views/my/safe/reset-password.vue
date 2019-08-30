@@ -109,7 +109,7 @@
             submit() {
                 if(this.lock){
                     this.lock = false
-                    if(this.formData.password !== this.formData.passwordConfirm){
+                    if(this.formData.passwordNew !== this.formData.passwordConfirm){
                         this.confirmPasswordError = false
                         return
                     }
