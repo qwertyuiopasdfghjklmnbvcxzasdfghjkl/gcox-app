@@ -5,8 +5,8 @@ let domain = process.env.NODE_ENV === 'development' ? 'gcox.dev.koall.io' : loca
 if (process.env.VUE_APP_BASEURL) {
   domain = process.env.VUE_APP_BASEURL
 }
-// const https = process.env.HTTPS === true
-const https = true
+const https = process.env.HTTPS === true
+// const https = true
 const protocol = window.location.protocol === 'https:' || https ? 'wss://': 'ws://'
 const http = window.location.protocol === 'https:' || https ? 'https://' : 'http://'
 const config = {
