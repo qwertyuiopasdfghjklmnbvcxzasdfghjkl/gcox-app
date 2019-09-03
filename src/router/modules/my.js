@@ -8,6 +8,8 @@ import address from '@/views/my/wallet/address/address'
 import addAddress from '@/views/my/wallet/address/add-address'
 import topupSelect from '@/views/my/wallet/topup/topup-select'
 import walletDetail from '@/views/my/wallet/wallet-detail'
+import error from '../../views/error'
+import success from '../../views/success'
 
 export default [
     {
@@ -170,5 +172,15 @@ export default [
                 meta:{login:true}
             }
         ]
+    },
+    {
+        path: '/error',
+        name: 'error',
+        component: error
+    },
+    {
+        path: '/success',
+        name: 'success',
+        component: success
     },
 ]

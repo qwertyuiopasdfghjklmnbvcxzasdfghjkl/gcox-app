@@ -125,7 +125,7 @@
                 this.title = this.$t('home.shar-title')
                 console.log(this.title, this.$t('home.shar-title'))
                 navigator.share(this.title+'\nhttps://exchange.gcox.com',this.$t('home.shar-title'))
-            }
+            },
             // getMessageList () {
             //     // if (!this.isLogin) {
             //     //     this.messageList = []
@@ -142,6 +142,9 @@
             //         }
             //     })
             // }
+            showC(){
+
+            }
         }
     }
 </script>

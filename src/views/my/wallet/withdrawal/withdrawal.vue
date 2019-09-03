@@ -34,7 +34,6 @@
                         <label>{{$t('account.user_Draw_the_number')}}<!--提现数量--></label>
                         <p class="mt10">
                             <input type="number" v-model="form.amount"
-                                   v-validate="'required|isLessMin|isMoreMax'"
                                    name="amount"
                                    @blur="amount"
                                    :placeholder="$t('account.user_minimum_number_of_cash').format(`：${symbolInfo.minWithdraw} ${symbol}`)"/>
@@ -177,13 +176,13 @@
                 this.$router.push({name:'address'})
             },
             amount(){
-                if(this.symbolInfo.availableBalance < this.symbolInfo.procedureFee){
+                if(Number(this.symbolInfo.availableBalance) < Number(this.symbolInfo.procedureFee)){
                     this.form.amount = 0
                     Tip({type: 'danger', message: this.$t('exchange.exchange_Insufficient_balance')})
-                }else if (this.form.amount < this.symbolInfo.procedureFee) {
+                }else if (Number(this.form.amount) < Number(this.symbolInfo.procedureFee)) {
                     this.form.amount = this.symbolInfo.procedureFee
                     Tip({type: 'danger', message: this.$t('home.small-fee')}) // 提币数量不可以少于手续费
-                } else if (this.form.amount > this.symbolInfo.availableBalance) {
+                } else if (Number(this.form.amount) > Number(this.symbolInfo.availableBalance)) {
                     this.form.amount = this.symbolInfo.availableBalance
                     Tip({type: 'danger', message: this.$t('public0.public47')}) //转出额度不能大于可用余额
                 }

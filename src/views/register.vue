@@ -40,17 +40,17 @@
                         </label>
                         <span class="ml10">
               <label for="service" class="ft-c-lightGray">{{$t('public0.agreeService')}} 《<!--我已阅读并同意--></label>
-              <router-link class="ft-c-main underline" :to="{name: 'rule',query:{id:1}}">
+              <a href="https://gcoxgroup.com/wallet_tnc.html" target="_blank">
                 {{$t('home.home25')}}
-              </router-link>
+              </a>
               》《
-              <router-link class="ft-c-main underline" :to="{name: 'rule',query:{id:1}}">
+              <a href="https://gcoxgroup.com/privacy_policy.html" target="_blank">
                 {{$t('home.home26')}}
-              </router-link>
+              </a>
               》《
-              <router-link class="ft-c-main underline" :to="{name: 'rule',query:{id:1}}">
+              <a href="https://gcoxgroup.com/terms_of_use.html" target="_blank">
                 {{$t('home.home27')}}
-              </router-link>
+              </a>
               》
             </span>
                     </div>
@@ -177,7 +177,7 @@
                         this.$router.push({name: 'verify', params: {email: this.formData.email}})
                     }, (msg) => {
                         this.locked = true
-                        Tip({type: 'danger', message: this.$t(`error_code.${msg}`)})
+                        Tip({type: 'danger', message: this.$t(`${msg}`)})
                     })
                 }, () => {
                     this.locked = true

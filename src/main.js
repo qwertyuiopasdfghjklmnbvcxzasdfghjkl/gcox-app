@@ -62,10 +62,10 @@ Vue.component(numberKeyboard.name, numberKeyboard)
 Vue.component(SubmitButton.name, SubmitButton)
 
 Vue.use(VueClipboard)
-
-if(process.env.VUE_APP_CURRENTMODE!=='app'){
-  window.vConsole = new VConsole()
-}
+//
+// if(process.env.VUE_APP_CURRENTMODE!=='app'){
+//window.vConsole = new VConsole()
+// }
 
 //全局引入提示函数
 window.Tip = require('@/components/common/tip').default

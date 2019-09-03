@@ -35,7 +35,7 @@ export default function (opts) {
     }
   }
   function createWebSocket () {
-    let ws = new WebSocket(`${Config.protocol}${Config.domain}/ws${port}`)
+    let ws = new WebSocket(`wss://ws-exchange.gcox.com/ws${port}`)
     ws.onopen = function () {
       console.log(`open websocket:${port}`)
       this.send(1)

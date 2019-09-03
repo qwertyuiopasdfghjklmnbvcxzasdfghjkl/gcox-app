@@ -39,6 +39,12 @@
                             :top-method="loadTop"
                             :bottom-method="loadBottom"
                             :bottom-all-loaded="allLoaded"
+                            :top-pull-text="$t('home.top-pull-text')"
+                            :top-drop-text="$t('home.drop-text')"
+                            :top-loading-text="$t('home.loading-text')"
+                            :bottom-pull-text="$t('home.bottom-pull-text')"
+                            :bottom-drop-text="$t('home.drop-text')"
+                            :bottom-loading-text="$t('home.loading-text')"
                             ref="loadmore">
                         <ul class="tab_list">
                             <li v-for="item in list" v-tap="{methods: todetail, params:{data: item, form: 1}}">
@@ -60,6 +66,12 @@
                             :top-method="loadWithdrawalTop"
                             :bottom-method="loadWithdrawalBottom"
                             :bottom-all-loaded="allWithdrawalLoaded"
+                            :top-pull-text="$t('home.top-pull-text')"
+                            :top-drop-text="$t('home.drop-text')"
+                            :top-loading-text="$t('home.loading-text')"
+                            :bottom-pull-text="$t('home.bottom-pull-text')"
+                            :bottom-drop-text="$t('home.drop-text')"
+                            :bottom-loading-text="$t('home.loading-text')"
                             ref="loadmoreWithdrawal">
                         <ul class="tab_list">
                             <li v-for="item in listWithdrawal" v-tap="{methods: todetail, params:{data: item, form: 2}}">
