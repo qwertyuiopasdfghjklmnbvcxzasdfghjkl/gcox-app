@@ -1,6 +1,6 @@
 <template>
     <div class="page">
-        <banner></banner>
+        <!--<banner></banner>-->
         <div>
             <label class="flex">
                 <i class="ico"><img src="../../assets/img/notice.png"></i>
