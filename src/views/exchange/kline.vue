@@ -11,11 +11,11 @@
             <div class="info mt20">
                 <div>
                     <p class="f50">
-                        {{toFixed(getLast24h.close)|number}}
+                        {{toFixed(getLast24h.close)}}
                     </p>
                     <p class="fabi mt10 f30 price"
                        :class="{down:Number(getLast24h.percent)<0,up:Number(getLast24h.percent)>0}">
-                        <span>{{toFixed(getLast24h.rfvol)|number}}</span>
+                        <span>{{toFixed(getLast24h.rfvol)}}</span>
                         <span class="ml25">{{getLast24h.percent}}%</span>
                     </p>
                     <p class="mt10">
@@ -25,10 +25,10 @@
                 </div>
                 <div>
                     <p class="mt10">
-                        <span class="">{{$t('market.low')}}</span><!--24h最低价--><span>{{toFixed(getLast24h.bottom)|number}}</span>
+                        <span class="">{{$t('market.low')}}</span><!--24h最低价--><span>{{toFixed(getLast24h.bottom)}}</span>
                     </p>
                     <p class="mt10">
-                        <span class="">{{$t('market.high')}}</span><!--24h最高价--><span>{{toFixed(getLast24h.high)|number}}</span>
+                        <span class="">{{$t('market.high')}}</span><!--24h最高价--><span>{{toFixed(getLast24h.high)}}</span>
                     </p>
                 </div>
             </div>
