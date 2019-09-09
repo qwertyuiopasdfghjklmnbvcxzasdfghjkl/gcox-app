@@ -1,6 +1,7 @@
 <template>
     <div class="page">
-        <!--<banner></banner>-->
+        <download v-if="system === 0" :phone="phone"></download>
+        <banner></banner>
         <div>
             <label class="flex">
                 <i class="ico"><img src="../../assets/img/notice.png"></i>
@@ -19,10 +20,13 @@
     import notice from './index/notice'
     import dataBox from './index/data_box'
     import dataList from './index/data_list'
+    import Download from "./index/download";
+    import Utils from "../../assets/js/utils"
 
     export default {
         name: 'find',
         components: {
+            Download,
             banner,
             notice,
             dataBox,
@@ -31,14 +35,22 @@
         data() {
             return {
                 adsense: [],
-                searchKey: ''
+                searchKey: '',
+                system: 0,
+                phone: null
             }
         },
         computed: {
             ...mapGetters(['getAdsense']),
         },
         created() {
-
+            if(window['cordova']){
+                this.system = 1
+                console.log('我是app首页！')
+            }else{
+                console.log(Utils.getPhonePlatform())
+                this.phone = Utils.getPhonePlatform()
+            }
         },
         methods: {
             ...mapActions(['setAdsense']),

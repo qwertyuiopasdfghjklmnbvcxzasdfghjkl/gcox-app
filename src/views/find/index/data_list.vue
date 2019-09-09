@@ -146,13 +146,13 @@
             justify-content: space-between;
 
             li {
-                width: 1.88rem;
+                width: 2rem;
                 padding-bottom: 0.2rem;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 color: #A7ACB9;
-                font-size: 0.28rem;
+                font-size: 0.26rem;
                 border-bottom: 0.02rem solid transparent;
                 padding-top: 0.3rem;
 

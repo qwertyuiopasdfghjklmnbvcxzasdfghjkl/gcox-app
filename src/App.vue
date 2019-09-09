@@ -4,7 +4,7 @@
             <router-view :class="{wrap:$route.meta.nav}"/>
         </transition>
         <!--<update ref="update"></update>-->
-        <init-slides></init-slides>
+        <init-slides v-if="system === 1"></init-slides>
         <nav-footer v-show="$route.meta.nav"></nav-footer>
     </div>
 </template>
@@ -14,21 +14,23 @@
     import initSlides from '@/components/initSlides'
     import update from '@/components/update'
     import {mapGetters, mapActions} from 'vuex'
-    import config from '@/api/config'
     import GlobalWebSocket from '@/assets/js/websocket'
     import utils from '@/assets/js/utils'
     import numUtils from '@/assets/js/numberUtils'
     import cordovaUtils from '@/assets/js/cordovaUtils'
     import marketApi from '@/api/market'
     import walletApi from '@/api/wallet'
-    import userApi from '@/api/user'
-    import {MessageBox} from 'mint-ui'
 
     export default {
         components: {
             navFooter,
             initSlides,
             update
+        },
+        data(){
+            return{
+                system: 0
+            }
         },
         computed: {
             ...mapGetters(['getApiToken', 'getQuickLoginInfo'])
@@ -61,7 +63,6 @@
                             CNY: numUtils.BN(res.USDCNY).toFixed(2)
                         })
                         this.setBTCValuation(numUtils.BN(res.totalAmount).toFixed(8)) // 当前转换人民币
-
                     }
                 }
             })
@@ -70,6 +71,12 @@
             this.loadLoginInfo()
             this.checkDeviceready()
             screen.orientation.lock('portrait');
+            if(window['cordova']){
+                this.system = 1
+                console.log('我是app首页！')
+            }else{
+                console.log('我是h5首页！')
+            }
         },
         mounted() {
             $('#app').on('click', 'input', (e) => {
