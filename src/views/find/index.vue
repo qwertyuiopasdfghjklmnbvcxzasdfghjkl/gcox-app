@@ -1,7 +1,7 @@
 <template>
     <div class="page">
         <download v-if="(system === 0)&&phone!=='ios'" :phone="phone"></download>
-        <banner></banner>
+        <!--<banner></banner>-->
         <div>
             <label class="flex">
                 <i class="ico"><img src="../../assets/img/notice.png"></i>
