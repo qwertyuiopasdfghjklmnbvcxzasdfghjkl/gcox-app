@@ -21,6 +21,7 @@
         created() {
             this.url = this.$route.params.url
             window.onJumioResult = data => {
+                console.log(data)
                 if (data.payload.value === 'success' || data.payload.value === 'error') {
                     let postData = {
                         idScanStatus: data.payload.value.toUpperCase(),
@@ -28,6 +29,7 @@
                         jumioIdScanReference: data.transactionReference,
                         errorCode: data.payload.value === 'error' ? data.payload.metainfo.code : ""
                     }
+
                     user.updatekyc(postData,res=>{
                         user.userInfo(info=>{
                             this.setUserInfo(info)

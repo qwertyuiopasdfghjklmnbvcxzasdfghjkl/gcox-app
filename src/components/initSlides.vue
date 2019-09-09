@@ -39,7 +39,10 @@ export default{
 			if(self.slides.length === (this.activeIndex + 1)){
 				self.canStart = true
 			}
-		})
+		});
+		if(this.slides.length === 1){
+			setTimeout(()=>{this.start()},3000)
+		}
 	},
 	methods:{
 	    start(){

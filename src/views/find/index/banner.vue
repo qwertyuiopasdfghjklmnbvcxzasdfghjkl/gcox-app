@@ -14,6 +14,7 @@
 
 <script>
     import findApi from '@/api/find'
+    import config from "../../../api/config"
 
     export default {
         data() {
@@ -37,16 +38,30 @@
                     pagination: {
                         el: '.swiper-pagination',
                     },
-                }
+                },
+                lang: window.localStorage.lang || 'en'
             }
         },
         created() {
-            // this.getAdsense()
+            this.getAdsense()
         },
         methods: {
             getAdsense() {
-                findApi.getAdsense({}, res => {
-                    // this.adsense = res
+                findApi.getBanner({type:2}, res => {
+                    let enAdsense = [];
+                    res.filter(next=>{
+                        let data ={}
+                        if(this.lang === 'zh-CN'){
+                            data.gameAdvertisementImage =config.url+next.activityImgUrl;
+                        }else{
+                            data.gameAdvertisementImage =config.url+next.activityImgUrlEn;
+                        }
+                        data.gameAdvertisementLink =next.jumpAddress;
+                        enAdsense.push(data)
+                    })
+                    if(enAdsense.length>0){
+                        this.adsense = enAdsense
+                    }
                 }, msg => {
                     Tip({type: 'error', message: this.$t(`error_code.${msg}`)})
                 })
