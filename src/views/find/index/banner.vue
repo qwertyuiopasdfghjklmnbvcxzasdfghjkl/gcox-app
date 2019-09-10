@@ -20,14 +20,14 @@
         data() {
             return {
                 adsense: [
-                    {
-                        gameAdvertisementLink: 'javascript:;',
-                        gameAdvertisementImage: require('@/assets/img/banner01@3x.png')
-                    },
-                    {
-                        gameAdvertisementLink: 'javascript:;',
-                        gameAdvertisementImage: require('@/assets/img/banner02@3x.png')
-                    }
+                    // {
+                    //     gameAdvertisementLink: 'javascript:;',
+                    //     gameAdvertisementImage: require('@/assets/img/banner01@3x.png')
+                    // },
+                    // {
+                    //     gameAdvertisementLink: 'javascript:;',
+                    //     gameAdvertisementImage: require('@/assets/img/banner02@3x.png')
+                    // }
                 ],
                 swiperOption: {
                     // 所有配置均为可选（同Swiper配置）
