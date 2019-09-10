@@ -164,9 +164,10 @@
                 return this.$t('exchange.exchange_market_price') // 市价
             },
             depthChange () {
+                console.log(this.filterAsks,this.filterBids)
                 return {
                     asks: this.filterAsks,
-                    bids: this.filterBids
+                    bids: this.filterBids,
                 }
             },
             filterAsks () {
@@ -243,7 +244,13 @@
                 }
             },
             symbol() {
-                this.updateValue = true
+                this.updateValue = true;
+                console.log('bz')
+                // this.business.market = this.$route.params.market
+                this.klineSocket.close()
+                this.loading = true
+                this.isFirstKline = true
+                this.InitKlineWebSoket()
             },
             percent(newVal) {
                 this.switchPercent(newVal)
@@ -252,13 +259,13 @@
             getEntrustNewPrice() {
                 this.formData.price = this.toFixed(this.getEntrustNewPrice)
             },
-            // '$route.params.market' () { //切换市场后重新初始化websoket
-            //     this.business.market = this.$route.params.market
-            //     this.klineSocket.close()
-            //     this.loading = true
-            //     this.isFirstKline = true
-            //     this.InitKlineWebSoket()
-            // },
+            '$route.params.market' () { //切换市场后重新初始化websoket
+                console.log('ly')
+                // this.asks = [];
+                // this.bids = [];
+
+                console.log(this.depthChange)
+            },
             depthChange () {
                 this.depthChart && this.depthChart.drawDepth(this.depthChange)
             }
@@ -289,11 +296,12 @@
                     gridLineColor: "#25242A",
                     middleLineColor: "#25242A",
                     xSplitLen: 10,
-                    ySplitLen: 10,
+                    // ySplitLen: 10,
                     fontColor: '#8A8A9F'
                 })
             },
             InitKlineWebSoket () { // 初始化K线websoket
+                console.log(this.symbol)
                 this.klineSocket = KLineWebSocket({
                     symbol: this.symbol,
                     period: '1m',
