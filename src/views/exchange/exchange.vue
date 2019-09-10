@@ -49,20 +49,6 @@
                     </div>
                     <market :form="'exchange'"></market>
 
-                    <!--<p class="pt60 f40 box">{{$t('market.filterToken')}}</p>-->
-                    <!--<div class="mt55 box">-->
-                        <!--<input type="search" class="search-input" v-model="filterTitle"-->
-                               <!--:placeholder="$t('public0.search')"/>-->
-                    <!--</div>-->
-                    <!--<ul class="wallet-list mt20">-->
-                        <!--<li class="box" v-for="market in filterMarketList"-->
-                            <!--v-tap="{methods:changeMarket, market:market}">-->
-                            <!--<p><span class="f34">{{market.currencySymbol}}</span><span style="color: #91A4A3;">/{{market.baseSymbol}}</span>-->
-                            <!--</p>-->
-                            <!--<p class="price" :class="upOrDown(market)">{{toFixed(market.lastPrice,-->
-                                <!--market.accuracy)|number}}</p>-->
-                        <!--</li>-->
-                    <!--</ul>-->
                 </div>
             </transition>
         </mask-layer>
