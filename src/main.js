@@ -125,8 +125,6 @@ router.beforeEach((to, from, next) => {
         next()
       }
   }
-
-
 });
 
 Sentry.init({
