@@ -10,30 +10,35 @@
         </div>
         <div class="right">
             <ul>
-                <li v-tap="{methods: setkline,t: 'CandleStick'}">CandleStick</li>
+                <li :class="{'showline': showline === 'CandleStick'}" v-tap="{methods: setkline,t: 'CandleStick'}">CandleStick</li>
                 <!--<li v-tap="{methods: setkline,t: 'CandleStickHLC'}">CandleStickHLC</li>-->
-                <li v-tap="{methods: setkline,t: 'OHLC'}">OHLC</li>
-                <li v-tap="{methods: setIndice,t: 'VOL'}">VOL</li>
-                <li v-tap="{methods: setIndice,t: 'MACD'}">MACD</li>
-                <li v-tap="{methods: setIndice,t: 'KDJ'}">KDJ</li>
-                <li v-tap="{methods: setIndice,t: 'RSI'}">RSI</li>
+                <li :class="{'showline': showline === 'OHLC'}" v-tap="{methods: setkline,t: 'OHLC'}">OHLC</li>
+                <li class="showline" v-tap="{methods: setIndice,t: 'VOL'}">VOL</li>
+                <li :class="{'showline': showlineb === 'MACD'}" v-tap="{methods: setIndice,t: 'MACD'}">MACD</li>
+                <li :class="{'showline': showlineb === 'KDJ'}" v-tap="{methods: setIndice,t: 'KDJ'}">KDJ</li>
+                <li :class="{'showline': showlineb === 'RSI'}" v-tap="{methods: setIndice,t: 'RSI'}">RSI</li>
             </ul>
         </div>
         <div class="foot">
             <ul>
-                <li v-tap="{methods:setPeriod, t:'1m'}" :class="{active: period === '1m'}">{{$t('exchange.exchange_time')}}</li>
-                <li v-tap="{methods:setPeriod, t:'1d'}" :class="{active: period === '1d'}">{{$t('exchange.exchange_1D')}}</li>
-                <li v-tap="{methods:setPeriod, t:'1w'}" :class="{active: period === '1w'}">{{$t('exchange.exchange_1W')}}</li>
+                <li v-tap="{methods:setPeriod, t:'1m'}" :class="{active: period === '1m'}">
+                    {{$t('exchange.exchange_time')}}
+                </li>
+                <li v-tap="{methods:setPeriod, t:'1d'}" :class="{active: period === '1d'}">
+                    {{$t('exchange.exchange_1D')}}
+                </li>
+                <li v-tap="{methods:setPeriod, t:'1w'}" :class="{active: period === '1w'}">
+                    {{$t('exchange.exchange_1W')}}
+                </li>
                 <li :class="{active: period.indexOf('h')!== -1}">
-                    <p>
-                        <!--<span v-if="period=='1h'">1{{$t('exchange.exchange_hour')}}</span>-->
+                    <p @click="toggle()">
                         <span v-if="period=='2h'">2{{$t('exchange.exchange_hour')}}</span>
                         <span v-else-if="period=='4h'">4{{$t('exchange.exchange_hour')}}</span>
                         <span v-else-if="period=='6h'">6{{$t('exchange.exchange_hour')}}</span>
                         <span v-else-if="period=='12h'">12{{$t('exchange.exchange_hour')}}</span>
                         <span v-else>1{{$t('exchange.exchange_hour')}}</span>
                     </p>
-                    <label>
+                    <label v-if="showSelect">
                         <span v-tap="{methods:setPeriod, t:'1h'}" :class="{active:period=='1h'}">1{{$t('exchange.exchange_hour')}}
                             <!--1小时--></span>
                         <span v-tap="{methods:setPeriod, t:'2h'}" :class="{active:period=='2h'}">2{{$t('exchange.exchange_hour')}}
@@ -46,15 +51,14 @@
                             <!--12小时--></span>
                     </label>
                 </li>
-                <li  :class="{active: period.indexOf('m')!== -1}">
-                    <p>
-                        <!--<span v-if="period=='1m'">1{{$t('exchange.exchange_min')}}</span>-->
+                <li :class="{active: period.indexOf('m')!== -1}">
+                    <p @click="toggleMin()">
                         <span v-if="period=='5m'">5{{$t('exchange.exchange_min')}}</span>
                         <span v-else-if="period=='15m'">15{{$t('exchange.exchange_min')}}</span>
                         <span v-else-if="period=='30m'">30{{$t('exchange.exchange_min')}}</span>
                         <span v-else>1{{$t('exchange.exchange_min')}}</span>
                     </p>
-                    <label>
+                    <label v-if="showSelectMin">
                         <span v-tap="{methods:setPeriod, t:'1m'}" :class="{active:period=='1m'}">1{{$t('exchange.exchange_min')}}
                             <!--分时--></span>
                         <span v-tap="{methods:setPeriod, t:'5m'}" :class="{active:period=='5m'}">5{{$t('exchange.exchange_min')}}
@@ -92,6 +96,9 @@
                 depthChart: null,
                 isMore: false,
                 showSelect: false,
+                showSelectMin: false,
+                showline: 'CandleStick',
+                showlineb: 'VOL',
                 select: 2,
                 label: 1,
                 period: chartSettings ? chartSettings.charts.period : '1m', // 分时线时期
@@ -238,17 +245,20 @@
             }
         },
         created() {
-            screen.orientation.lock('landscape');
-            this.business.market = this.$route.params.market || this.getInitMarket
+            // screen.orientation.lock('landscape');
+            console.log(window.localStorage.market, this.$route.params.market, this.getInitMarket)
+            this.business.market = this.$route.params.market || this.getInitMarket || window.localStorage.market
             this.InitKlineWebSoket()
             this.$nextTick(() => {
                 this.initECharts()
             })
             this.getSymbolInfo()
-            console.log(this.getUserWallets)
-            setInterval(()=>{this.time = new Date()},1000)
+            // console.log(this.getUserWallets)
+            setInterval(() => {
+                this.time = new Date()
+            }, 1000)
         },
-        beforeDestroy(){
+        beforeDestroy() {
             screen.orientation.unlock();
         },
         methods: {
@@ -269,7 +279,7 @@
             },
             getSymbolInfo() {
                 marketApi.getSymbolIntroduce(this.currentSymbol, res => {
-                    console.log(res)
+                    // console.log(res)
                     this.symbolInfo = res
                 })
             },
@@ -290,22 +300,18 @@
             buyOrSell(args) {
                 this.$router.push({name: 'exchange', params: {market: this.business.market, action: args.t}})
             },
-            toggleDepth(args) {
-                this.isKline = args.type
-                if (this.isKline) {
-                    if (this.select === 1) {
-                        this.select++
-                    } else {
-                        this.showSelect = !this.showSelect
-                    }
-                } else {
-                    this.showSelect = false
-                    this.select = 1
-                }
+            toggle() {
+                this.showSelect = !this.showSelect
+                this.showSelectMin = false
+            },
+            toggleMin() {
+                this.showSelectMin = !this.showSelectMin
+                this.showSelect = false
             },
             setPeriod(args) { //设置K线周期
                 this.period = args.t
                 this.showSelect = false
+                this.showSelectMin = false
             },
             initECharts() {
                 this.kLineChart = KLineChart({
@@ -314,7 +320,7 @@
                     scale: 2,
                     hideDepth: true,
                     fixedNumber: this.accuracy.fixedNumber,
-                    Template:{displayVolume: false},
+                    Template: {displayVolume: false},
                     ThemeColor: {
                         Background: '#201f25',
                         Cursor: '#555963',
@@ -359,7 +365,7 @@
                                 this.isFirstKline = false
                                 this.klineData = newArray
                             }
-                        console.log(this.klineData)
+                            // console.log(this.klineData)
 
                         } else if (res.dataType === 'LastOrderBook') {
                             // 深度数据
@@ -396,10 +402,12 @@
             setIndice(args) { //设置技术指标
                 this.isMore = false
                 this.kLineChart.switch_indic(args.t)
+                this.showlineb = args.t
             },
-            setkline(val){
+            setkline(val) {
                 this.$nextTick(() => {
-                    this.kLineChart && this.kLineChart.switch_chartStyle(val.t)
+                    this.kLineChart && this.kLineChart.switch_chartStyle(val.t);
+                    this.showline = val.t
                 })
             },
             toFixed(value, fixed) {
@@ -410,17 +418,9 @@
 </script>
 
 <style scoped lang="less">
+
+
     .cont {
-        background: #141420;
-        display: flex;
-        width: 100vh;
-        height: 100vw;
-        top: calc((100vh - 100vw)/2);
-        left: calc((100vw - 100vh)/2);
-        flex-wrap: wrap;
-        font-size: 0.28rem;
-        position: absolute;
-        transform: rotate(90deg);
 
         .top {
             background: #2a2e37;
@@ -439,10 +439,12 @@
                 display: inline-block;
                 background-size: 0.4rem;
             }
-            span{
+
+            span {
                 font-size: 0.32rem;
             }
-            .time{
+
+            .time {
                 font-size: 0.2rem;
                 text-align: right;
                 flex: 1;
@@ -455,7 +457,8 @@
             height: calc(100vw - 1.6rem);
             position: relative;
             z-index: -1;
-            .kline{
+
+            .kline {
                 width: 100%;
                 height: 100%;
                 background-color: transparent;
@@ -482,6 +485,9 @@
                     align-items: center;
                     justify-content: center;
                     max-height: 0.8rem;
+                    &.showline{
+                        color: #00A0E9;
+                    }
                 }
             }
         }
@@ -511,7 +517,7 @@
                         position: absolute;
                         bottom: 0.8rem;
                         left: 0;
-                        display: none;
+                        display: flex;
                         flex-flow: column;
                         text-align: center;
                         z-index: 9;
@@ -524,23 +530,86 @@
                         background: url("../../../assets/img/tc_meus_b@2x.png") no-repeat 1.4rem center;
                         background-size: 0.2rem;
                     }
-                    &.active{
+
+                    &.active {
                         border-bottom: 0.02rem solid #00A0E9;
                     }
-                    &:hover{
+                }
+            }
+        }
+    }
+
+    /* 竖屏 */
+    @media screen and (orientation: portrait) {
+        .cont {
+            background: #141420;
+            display: flex;
+            width: 100vh;
+            height: 100vw;
+            top: calc((100vh - 100vw) / 2);
+            left: calc((100vw - 100vh) / 2);
+            flex-wrap: wrap;
+            font-size: 0.28rem;
+            position: absolute;
+            transform: rotate(90deg);
+        }
+    }
+
+    /* 横屏 */
+    @media screen and (orientation: landscape) {
+        .cont {
+            background: #141420;
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            flex-wrap: wrap;
+            font-size: 0.14rem;
+            position: absolute;
+            transform: rotate(0deg);
+            .top{
+                width: 100vw;
+                height: 0.4rem;
+                span{
+                    font-size: 0.16rem;
+                }
+                .time{
+                    font-size: 0.1rem;
+                }
+                a{
+                    width: 0.4rem;
+                    height: 0.4rem;
+                    background-size: 0.2rem;
+                }
+            }
+            .left{
+                width: calc(100vw - 1rem);
+                height: calc(100vh - 0.8rem);
+            }
+            .right{
+                width: 1rem;
+                height: calc(100vh - 0.8rem);
+            }
+            .foot{
+                width: 100vw;
+                height: 0.4rem;
+                ul{
+                    height: 0.4rem;
+                    li{
+                        line-height: 0.4rem;
+                        border-bottom: 0.02rem solid transparent;
+                        p{
+                        background: url("../../../assets/img/tc_meus_b@2x.png") no-repeat 1rem center;
+                            background-size: 0.1rem;
+                        }
                         label{
-                            display: flex;
+                            bottom: 0.4rem;
+                            line-height: 0.4rem;
                         }
                     }
                 }
             }
         }
     }
-    /*@media (min-width: 320px)and (max-width: 414px){*/
-        /*.cont{*/
-            /*transform: rotate(90deg);*/
-            /*width: 100vh;*/
-            /*height: 100vw;*/
-        /*}*/
-    /*}*/
 </style>

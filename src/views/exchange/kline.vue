@@ -350,6 +350,7 @@
         },
         created() {
             this.business.market = this.$route.params.market || this.getInitMarket
+            window.localStorage.market = this.business.market
             this.InitKlineWebSoket()
             this.$nextTick(() => {
                 this.initECharts()
