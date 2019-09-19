@@ -25,9 +25,9 @@
                             <!--<span class="user-address" v-show="isFocus && !toAddress && userAddress" @click="toAddress = userAddress">{{userAddress}}</span>-->
                         </p>
                     </li>
-                    <li v-if="symbol==='EOS'">
+                    <li v-if="symbol==='EOS' || symbol==='XRP'">
                         <label>{{$t('account.user_center_history_note')}}<!--提现备注--></label>
-                        <p class="mt10"><input type="text" maxlength="1000" v-model="memo"
+                        <p class="mt10"><input type="text" maxlength="1000" v-model="form.memo"
                                                :placeholder="'Memo,'+$t('public0.public237')"/></p>
                     </li>
                     <li class="add_num">
