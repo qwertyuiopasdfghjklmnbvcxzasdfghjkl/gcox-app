@@ -6,8 +6,10 @@ let domain = process.env.NODE_ENV === 'development' ? 'exchange-staging.gcox.com
 if (process.env.VUE_APP_BASEURL) {
   domain = process.env.VUE_APP_BASEURL
 }
-// const https = process.env.HTTPS === true
-const https = true
+let https = window.location.protocol === 'https:'?true:false
+if (process.env.VUE_APP_HTTPS==='true') {
+  https = true
+}
 const protocol = window.location.protocol === 'https:' || https ? 'wss://': 'ws://'
 const http = window.location.protocol === 'https:' || https ? 'https://' : 'http://'
 const config = {
