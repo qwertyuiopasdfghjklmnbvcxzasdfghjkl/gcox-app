@@ -18,6 +18,7 @@
     import railBar from '../../../components/RailBar'
     import {MessageBox} from 'mint-ui'
     import { mapActions, mapGetters } from 'vuex'
+    import userApi from '@/api/user'
     export default {
         name: 'page-myInfo',
         components: {
@@ -67,10 +68,14 @@
                     cancelButtonText: this.$t('public0.no')
                 }).then(action => {
                     if (action === 'confirm') {
-                        this.setApiToken(null);
-                        localStorage.removeItem('userInfo')
-                        localStorage.removeItem('headerImg')
-                        this.$router.push({name: 'find'})
+                        userApi.logout(res=>{
+                            this.setApiToken(null);
+                            localStorage.removeItem('userInfo')
+                            localStorage.removeItem('headerImg')
+                            this.$router.push({name: 'find'})
+                        }, msg=>{
+                            console.log(msg)
+                        })
                     }
                 })
             },
