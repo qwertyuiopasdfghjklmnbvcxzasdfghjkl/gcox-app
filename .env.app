@@ -1,4 +1,4 @@
 NODE_ENV='production'
 VUE_APP_CURRENTMODE='app'
 VUE_APP_BASEURL='gcox.com'
-HTTPS=true
+VUE_APP_HTTPS='true'

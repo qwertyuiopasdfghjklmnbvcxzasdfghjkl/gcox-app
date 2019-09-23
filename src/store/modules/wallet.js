@@ -7,9 +7,13 @@ const state = {
   networkSignal: 0,
   btcValues: {},
   userWallets: userWallets,
-  symbol: localStorage.symbol
+  symbol: localStorage.symbol,
+  sysParams:{} //System params
 }
 const getters = {
+  getSysParams(state){
+    return state.sysParams
+  },
   getBTCValuation (state) {
     return state.btcValuation
   },
@@ -45,6 +49,9 @@ const getters = {
 }
 
 const mutations = {
+  updateSysParams (state, sysParams) {
+    state.sysParams = sysParams
+  },
   updateBTCValuation (state, btcValuation) {
     state.btcValuation = btcValuation
   },
@@ -68,6 +75,9 @@ const mutations = {
 }
 
 const actions = {
+  setSysParams (context, sysParams) {
+    context.commit('updateSysParams', sysParams)
+  },
   setBTCValuation (context, btcValuation) {
     context.commit('updateBTCValuation', btcValuation)
   },

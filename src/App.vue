@@ -66,6 +66,7 @@
                     }
                 }
             })
+            this.getSysparams()
             this.getBtcPrice()
             this.getMarketList()
             this.loadLoginInfo()
@@ -84,7 +85,16 @@
             })
         },
         methods: {
-            ...mapActions(['setBTCValuation', 'setUSDCNY', 'setNetworkSignal', 'setBtcValues', 'setMarketList', 'setUserWallets', 'setMarketConfig', 'setApiToken', 'setUserInfo', 'setVersion']),
+            ...mapActions(['setBTCValuation', 'setUSDCNY', 'setNetworkSignal', 'setBtcValues', 'setMarketList', 'setUserWallets', 'setMarketConfig', 'setApiToken', 'setUserInfo', 'setVersion', 'setSysParams']),
+            getSysparams(){
+              marketApi.rateSysparams(res=>{
+                let params = {}
+                for(let item of res){
+                  params[item.code] = item
+                }
+                this.setSysParams(params)
+              })
+            },
             getMarketList() {
                 //获取市场列表并初始化BTC币种与其它币种最新交易价格
                 marketApi.marketList((res) => {
