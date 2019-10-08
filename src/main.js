@@ -133,6 +133,8 @@ Sentry.init({
 });
 window.console.log = ()=>{};
 window.console.error = ()=>{};
+window.console.warn = ()=>{}
+// window.console.clear()
 langApi.getLanguage(lang, (res) => {
     i18n.locale = lang
     i18n.setLocaleMessage(lang, res)

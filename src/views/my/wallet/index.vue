@@ -13,7 +13,7 @@
             <p class="f34">{{data.symbol}}</p>
             <p class="ft-c-lightGray">{{data.caption}}</p>
           </div>
-          <div class="ellipsis f30">{{data.totalBalance|number}}</div>
+          <div class="ellipsis f30">{{data.totalBalance}}</div>
         </li>
       </ul>
     </div>

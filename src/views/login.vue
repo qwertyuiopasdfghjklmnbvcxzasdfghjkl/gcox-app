@@ -1,9 +1,12 @@
 <template>
     <div class="page">
-        <top-back :back="false"  v-tap="{methods: showC}">
-        <span class="off" v-tap="{methods:goBack}">
-        <img src="../assets/img/off.png">
-        </span>
+        <top-back :back="false" v-tap="{methods: showC}">
+            <span class="off" v-tap="{methods:goBack}">
+                <img src="../assets/img/off.png">
+            </span>
+            <span class="right" v-tap="{methods:goSet}">
+                <img src="../assets/img/ic_sz@3x.png">
+            </span>
         </top-back>
         <div class="page-main">
             <div class="minInner">
@@ -54,7 +57,7 @@
     import myAPi from '@/api/individual'
     import config from '@/api/config'
     import UiInput from "../components/uiInput";
-    import VConsole   from 'vconsole'
+    import VConsole from 'vconsole'
 
     export default {
         name: 'login',
@@ -137,7 +140,7 @@
                                         },
                                         query: {curl: this.curl}
                                     })
-                                }else{
+                                } else {
                                     Tip({
                                         type: 'danger',
                                         message: this.$t(`error_code.${typeof msg === 'string' ? msg : msg[0]}`)
@@ -155,21 +158,24 @@
             getInfo() {
                 userApi.userInfo(res => {
                     this.setUserInfo(res);
-                },msg=>{
-                    setTimeout(this.getInfo(),1500)
+                }, msg => {
+                    setTimeout(this.getInfo(), 1500)
                 })
             },
             goBack() {
                 this.$router.back()
             },
-            showC(){ // 偷偷连按五次打开调试
-                this.vi ++
+            goSet(){
+                this.$router.push({name: 'set-lang'})
+            },
+            showC() { // 偷偷连按五次打开调试
+                this.vi++
                 let timer
                 clearTimeout(timer)
-                timer = setTimeout(()=>{
+                timer = setTimeout(() => {
                     this.vi = 0
-                },1000)
-                if(this.vi === 5){
+                }, 1000)
+                if (this.vi === 5) {
                     window.vConsole = new VConsole()
                 }
             }
@@ -178,6 +184,20 @@
 </script>
 
 <style lang="less" scoped>
+    .right{
+        position: absolute;
+        top: 0;
+        right:0;
+        z-index: 99;
+        height: 0.8rem;
+        width: 0.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img{
+            width: 0.4rem;
+        }
+    }
     .login-title {
         margin-top: 0.5rem;
         color: #9DAAAA;
@@ -249,8 +269,13 @@
 
     .off {
         position: absolute;
-        left: 0.3rem;
-
+        width: 0.8rem;
+        height: 0.9rem;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         img {
             width: 0.27rem;
             height: 0.27rem;
