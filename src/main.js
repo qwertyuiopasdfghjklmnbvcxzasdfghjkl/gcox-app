@@ -127,10 +127,10 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-Sentry.init({
-    dsn: 'https://309881394af8420ca13e4b34795d2a08@sentry.io/1538269',
-    integrations: [new Integrations.Vue({Vue, attachProps: true})],
-});
+// Sentry.init({
+//     dsn: 'https://309881394af8420ca13e4b34795d2a08@sentry.io/1538269',
+//     integrations: [new Integrations.Vue({Vue, attachProps: true})],
+// });
 window.console.log = ()=>{};
 window.console.error = ()=>{};
 window.console.warn = ()=>{}
