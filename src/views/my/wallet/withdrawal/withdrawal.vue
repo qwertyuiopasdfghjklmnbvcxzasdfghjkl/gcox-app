@@ -19,8 +19,7 @@
                         <label class="address" v-tap="{methods: getAddress}">{{$t('account.user_Pick_up_address')}}
                             <i><img src="../../../../assets/img/tc_meus_b@2x.png"/></i><!--提现地址--></label>
                         <p class="address mt10">
-                            <input type="text" v-validate="'required'" name="selToAddress" maxlength="100"
-                                   v-model="form.toAddress" :placeholder="$t('public0.public-new-address')" autocomplete="off"/>
+                            <input type="text" v-validate="'required'" name="selToAddress" v-model="form.toAddress" :placeholder="$t('public0.public-new-address')" autocomplete="off"/>
                             <i class="scanning" v-tap="{methods: scanQRCode}"></i>
                             <!--<span class="user-address" v-show="isFocus && !toAddress && userAddress" @click="toAddress = userAddress">{{userAddress}}</span>-->
                         </p>
