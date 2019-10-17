@@ -131,7 +131,7 @@
             }
         },
         computed: {
-            ...mapGetters(['getApiToken', 'getMarketConfig', 'getLast24h', 'getEntrustNewPrice', 'getUserWallets']),
+            ...mapGetters(['getApiToken', 'getMarketConfig', 'getLast24h', 'getEntrustNewPrice', 'getUserWallets','getUserInfo']),
             symbol() {
                 return `${this.currentSymbol}${this.baseSymbol}`
             },
@@ -393,6 +393,18 @@
                 this.errorObj = {}
                 if (!this.getApiToken) {
                     Tip({type: 'danger', message: this.$t(`exchange.exchange_Not_logged`)}) // 未登录
+                    return
+                }
+                if (this.getUserInfo.kycState !== 1) {
+                    MessageBox({
+                        title: this.$t('public0.public242'),
+                        message: this.$t('home.home66'), // 请先完成实名验证
+                        confirmButtonText: this.$t('public0.ok')
+                    }).then(action => {
+                        if (action === 'confirm') {
+                            this.$router.push({name: 'kyc'})
+                        }
+                    })
                     return
                 }
                 let price = 0
