@@ -1,0 +1,8 @@
+{
+  "name": "gcox",
+  "ios_identifier": "com.gcox",
+  "android_identifier": "com.gcox",
+  "update": "resume",
+  "content_url": "http://res.tinkey.io/hotfix/gcox/www",
+  "min_native_interface": 1
+}

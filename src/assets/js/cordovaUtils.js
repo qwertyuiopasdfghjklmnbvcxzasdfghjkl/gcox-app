@@ -1,18 +1,19 @@
 import { MessageBox, Toast } from 'mint-ui'
-import Methods from '@/assets/js/methods'
-import store from '@/store/'
+import utils from '@/assets/js/utils'
+import Tip from '@/assets/js/tip'
 
 let api = {}
 
 // 保存图片
 const saveImage = function (src, bool) {
-  if (!window['cordova']) {
+  if (!window.cordova) {
     let a = document.createElement('a')
     a.href = src
     a.download = `${Date.now()}.png`
     a.click()
     return
   }
+  if (utils.getPhonePlatform() === 'ios') {
     var canvas, context, imageDataUrl, imageData;
     var img = new Image();
     img.onload = function () {
@@ -44,12 +45,32 @@ const saveImage = function (src, bool) {
       }
     };
     img.src = src
+    return
+  }
+  var data = {
+    name: `${Date.now()}`,
+    data: src
+  }
+  console.log('Image data=====',data)
+  cordova.exec((res)=>{
+    console.log('SavePhoto=====',res)
+    res = JSON.parse(res)
+    if(res.code=='0'){
+      if (bool) {
+        Tip({type: 'success', message: window.$i18n.t('public0.public223')}) // 保存成功
+        return
+      }
+      Toast(window.$i18n.t('public0.public223')) // 保存成功
+    }
+  }, (error)=>{
+    console.log(error)
+  }, 'TinkeyApi', 'SavePhoto', [JSON.stringify(data)])
 }
 api.saveImage = saveImage
 
  // 扫描二维码公共函数
 const scanQRCode = function(success) {
-    if (!window['cordova']) {
+    if (!window.cordova) {
       // 浏览器中不支持二维码扫描
       Toast(window.$i18n.t('public0.public224'))
       return
@@ -78,56 +99,90 @@ const scanQRCode = function(success) {
     }, 'BarcodeScanner', 'scan', config)
 }
 api.scanQRCode = scanQRCode
-
-//获取手机语言环境，app自动选择匹配语言
-const getDeviceLang = function(){
-  if(!window.localStorage.getItem('lang')){
-    console.log('getDeviceLang')
-    if(!window['cordova']){
-      return
+document.addEventListener('deviceready', function(){
+  if (window.StatusBar) {
+    var u = navigator.userAgent
+    if(u.indexOf('Android') > -1 || u.indexOf('Adr') > -1){
+      StatusBar.backgroundColorByHexString('#000000');
+    } else {
+      StatusBar.hide()
     }
-    cordova.exec((res)=>{
-      res = JSON.parse(res)
-      console.log('Language=====',res)
-      if(res.code=='0'){
-        let lang =  res.msg
-        if(lang.indexOf('zh')!=-1){
-          lang = 'zh-CN'
-        } else {
-          lang = 'en'
-        }
-        store.actions.common.setLang(lang)
-        window.$i18n.locale = lang
+  }
+
+  // 关闭启动页
+  if (window.navigator && window.navigator.splashscreen) {
+    window.navigator.splashscreen.hide()
+  }
+
+  //ios启用指纹识别
+  if(window['device'] && window['device']['platform']==='iOS' && Number(window['device']['version'].split('.')[0])>=7 && window['plugins'] && window['plugins']['touchid']){
+    try{
+      window.plugins.touchid.verifyFingerprint(
+        'Scan your fingerprint please', // this will be shown in the native scanner popup
+         function(msg) {
+          Toast('Vertify success')
+         }, // success handler: fingerprint accepted
+         function(msg) {
+          navigator.app.exitApp()
+         } // error handler with errorcode and localised reason
+      );
+    } catch(e){}
+  }
+
+  // 检测更新
+      if (window.chcp) {
+        let chcp = window.chcp;
+        // 检测更新
+          chcp.fetchUpdate((error, data) => {
+          // 表示没有更新版本，或者其他错误，详情的信息参考上面的chcp error链接
+          if (error) {
+            console.log('--fetchUpdate error--', error.code, error.description);
+            return;
+          }
+          // 这次更新的版本信息
+          console.log('--fetchUpdate--', data, data.config);
+          // 检测是否是否可以进行安装了，双重判断吧，有时候会出现有更新版本但是暂时无法安装的情况（也可以去掉这一层）
+          chcp.isUpdateAvailableForInstallation((error, data) => {
+            if (error) {
+              console.log('No update was loaded => nothing to install');
+            } else {
+              // 询问用户是否更新 检测到新版本，是否更新?
+              setTimeout(()=>{
+                MessageBox.confirm(window.$i18n.t('public0.public279')).then(action => {
+                  // 更新中
+                  chcp.installUpdate((error) => {
+                    if (error) {
+                      // 更新失败
+                      window.localStorage.setItem('appUpdated', 'false')
+                      console.log('Failed to install the update with error code: ' + error.code);
+                      console.log(error.description);
+                    } else {
+                      // 更新成功
+                      window.localStorage.setItem('appUpdated', 'true')
+                      console.log('Update installed!');
+                    }
+                  });
+                }, () =>{})
+              },5000)
+              // 对比版本号
+              console.log('Current content version: ' + data.currentVersion);
+              console.log('Ready to be installed:' + data.readyToInstallVersion);
+            }
+          });
+        });
+        
       }
-    }, (error)=>{
-      console.log(error)
-    }, 'TinkeyApi', 'Language', [])
-  }
-}
-api.getDeviceLang = getDeviceLang
-
-const share = function(obj){
-  var params = {
-    // dialogTitle:this.$t('wallet.shareAddress'),
-    contentTitle: obj.title,
-    contentText: obj.text
-  }
-  console.log('Share info=====',params)
-  window['cordova'] && cordova.exec((res)=>{
-    res = JSON.parse(res)
-    console.log('ShareResult=====',res)
-    if(res.code=='0'){
-      // Toast(this.$t('activity.walletDetail.shareSuccess'))
-    }
-  }, (error)=>{
-    console.log(error)
-  }, 'TinkeyApi', 'Share', [JSON.stringify(params)])
-}
-api.share = share
-
-document.addEventListener("deviceready", function () {
-  window.deviceready = true //标识app壳启动完毕
-  console.log('设备已就绪')
 }, false);
+  if (window.cordova && window.localStorage.getItem('appUpdated')) {
+    // 更新成功 | 更新失败
+    let msg = window.localStorage.getItem('appUpdated') === 'true' ? 'updateInfo' : 'public0.public281'
+    window.localStorage.removeItem('appUpdated')
+    setTimeout(() => {
+      MessageBox.alert(window.$i18n.t(msg), window.$i18n.t('public0.updateLog'),{
+        confirmButtonText:window.$i18n.t('public0.ok'),
+        closeOnClickModal:false
+      })
+    }, 5000)
+  }
 
 export default api
