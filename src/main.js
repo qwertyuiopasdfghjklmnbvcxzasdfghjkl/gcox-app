@@ -21,6 +21,7 @@ import 'swiper/dist/css/swiper.min.css'
 import '@/assets/js/vee-validate'
 import langApi from '@/api/language'
 import VueClipboard from 'vue-clipboard2'
+import Config from '@/api/config'
 
 import {
   Indicator, Button, Tabbar, TabItem, Loadmore, InfiniteScroll, Popup,
@@ -82,8 +83,8 @@ let $ajax = axios.create({
 
 Vue.prototype.$ajax = $ajax
 
-let LangEn = JSON.parse(window.localStorage.en || '[]') //英文包
-let LangZhCN = JSON.parse(window.localStorage['zh-CN'] || '[]') //简体中文包
+let LangEn = JSON.parse(window.localStorage.en || '{}') //英文包
+let LangZhCN = JSON.parse(window.localStorage['zh-CN'] || '{}') //简体中文包
 let lang = window.localStorage.lang || 'en'
 
 let i18n = window.$i18n = new VueI18n({
@@ -136,6 +137,11 @@ window.console.error = ()=>{};
 window.console.warn = ()=>{}
 // window.console.clear()
 langApi.getLanguage(lang, (res) => {
+    if(Config.updateInfo[lang]){
+      res.updateInfo = Config.updateInfo[lang]
+    } else {
+      res.updateInfo = Config.updateInfo['en']
+    }
     i18n.locale = lang
     i18n.setLocaleMessage(lang, res)
     window.localStorage[lang] = JSON.stringify(res)

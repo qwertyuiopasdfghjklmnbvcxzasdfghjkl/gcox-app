@@ -1,11 +1,12 @@
 <template>
     <div class="cont" v-if="show===1">
-        <p v-tap="{methods:download}">{{$t('public0.public212')}}</p>
+        <a :href="download" target="_blank">{{$t('public0.public212')}}</a>
         <i v-tap="{methods:hidden}"></i>
     </div>
 </template>
 
 <script>
+    import Vue from 'vue'
     import Wallet from "../../../api/wallet"
     import config from "../../../api/config"
     export default {
@@ -15,7 +16,18 @@
             return {
                 show: 1,
                 system: 0,
-                url: null
+                url: {},
+            }
+        },
+        computed:{
+            download(){
+                let _url
+                if(this.phone === 'ios'){
+                    _url=this.url.appleUrl
+                }else{
+                    _url=this.url.androidUrl
+                }
+                return _url
             }
         },
         created() {
@@ -27,17 +39,9 @@
             },
             getAddress(){
                 Wallet.getLatestVersion((res)=>{
-                    console.log(res)
-                    this.url = res;
+                    this.url = res
                 })
             },
-            download(){
-                if(this.phone === 'ios'){
-                    window.location.href='https://apps.apple.com/ng/app/gcox/id1458094561'
-                }else{
-                    window.location.href=config.url+this.url.androidPath
-                }
-            }
         }
 
     }
@@ -51,7 +55,8 @@
     text-align: center;
     padding: 0.1rem 0.6rem;
     position: relative;
-    p{
+    a{
+        display: block;
         border: 0.02rem dashed #1ac27f;
     }
     i{

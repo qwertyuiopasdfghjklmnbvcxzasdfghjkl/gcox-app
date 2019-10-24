@@ -19,7 +19,18 @@ const config = {
   url: `${http}${domain}`,
   protocol: protocol,
   brand: 'GCOX',
-  version:'1.0.0'
+  version:'1.1.0',
+  updateInfo:{  //更新日志
+  	'zh-CN':`
+	<p>1. 优化部分页面显示效果</p>
+	`,
+	'en':`
+	<p>1. Optimize the display effect of some pages</p>
+	`,
+	'kr':`
+	<p>1. 부분 페이지 표시 효과</p>
+	`
+  }
 }
 
 export default config

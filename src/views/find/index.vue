@@ -1,6 +1,6 @@
 <template>
     <div class="page">
-        <download v-if="(system === 0)&&phone!=='ios'" :phone="phone"></download>
+        <download v-if="system === 0" :phone="phone"></download>
         <banner></banner>
         <div>
             <label class="flex">
