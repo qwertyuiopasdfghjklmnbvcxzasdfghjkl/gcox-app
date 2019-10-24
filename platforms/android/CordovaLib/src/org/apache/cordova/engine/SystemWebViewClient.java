@@ -233,9 +233,10 @@ public class SystemWebViewClient extends WebViewClient {
             if ((appInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
                 // debug = true
                 handler.proceed();
+                return;
             } else {
                 // debug = false
-                handler.proceed();
+                super.onReceivedSslError(view, handler, error);
             }
         } catch (NameNotFoundException e) {
             // When it doubt, lock it out!
