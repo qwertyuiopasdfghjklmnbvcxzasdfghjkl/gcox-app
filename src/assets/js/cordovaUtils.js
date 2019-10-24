@@ -147,8 +147,10 @@ document.addEventListener('deviceready', function(){
               console.log('No update was loaded => nothing to install');
             } else {
               // 询问用户是否更新 检测到新版本，是否更新?
-              setTimeout(()=>{
-                MessageBox.confirm(window.$i18n.t('public0.public279')).then(action => {
+                MessageBox.confirm('New version detected. Is it updated?','Tip',{
+                  confirmButtonText: 'Yes',
+                  cancelButtonText: 'No'
+                }).then(action => {
                   // 更新中
                   chcp.installUpdate((error) => {
                     if (error) {
@@ -163,7 +165,6 @@ document.addEventListener('deviceready', function(){
                     }
                   });
                 }, () =>{})
-              },5000)
               // 对比版本号
               console.log('Current content version: ' + data.currentVersion);
               console.log('Ready to be installed:' + data.readyToInstallVersion);
