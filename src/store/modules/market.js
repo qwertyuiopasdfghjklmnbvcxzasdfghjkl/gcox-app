@@ -6,7 +6,7 @@ const fixed = 8
 
 const state = {
   initMarket: 'ETH_BTC', // 初始市场
-  marketList: null, // 交易市场列表
+  marketList: [], // 交易市场列表
   last24h: last24h,
   marketConfig: null,
   entrustPrices: [],

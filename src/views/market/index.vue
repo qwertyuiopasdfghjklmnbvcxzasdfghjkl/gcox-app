@@ -92,6 +92,7 @@
     import marketApi from '@/api/market'
     import valuation from '@/components/valuation'
     import NoData from "../../components/common/noData";
+    import KLineWebSocket from '@/assets/js/websocket'
 
     Vue.component(TabContainer.name, TabContainer)
     Vue.component(TabContainerItem.name, TabContainerItem)
@@ -111,7 +112,8 @@
                 index: null,
                 baseSymbol: [],
                 symbol: null,
-                marketsList: []
+                marketsList: [],
+                socket: null
             }
         },
         computed: {
@@ -140,9 +142,14 @@
                         }
                         return this.sort === 'asc' ? (m1.lt(m2) ? -1 : 1) : (m1.gt(m2) ? -1 : 1)
                     } else {
-                        let m1 = item1.currencySymbol
-                        let m2 = item2.currencySymbol
-                        return this.sort === 'desc' ? (m1 > m2 ? -1 : 1) : (m1 < m2 ? -1 : 1)
+                        // let m1 = item1.currencySymbol
+                        // let m2 = item2.currencySymbol
+                        // return this.sort === 'desc' ? (m1 > m2 ? -1 : 1) : (m1 < m2 ? -1 : 1)
+
+                        let m1 = numUtils.BN(item1.idx)
+                        let m2 = numUtils.BN(item2.idx)
+                        return m1.gt(m2) ? -1 : 1
+
                     }
                 })
                 return datas
@@ -151,13 +158,54 @@
         watch: {
             sortMarketDatas() {
                 this.tab({id: {i: this.index, symbol: this.symbol}})
+            },
+            getMarketList(){
+                console.log(this.getMarketList)
+                this.markets = this.getMarketList
+                this.getMarketList.filter(data => {
+                    if (this.baseSymbol.indexOf(data.baseSymbol) === -1) {
+                        this.baseSymbol.push(data.baseSymbol)
+                    }
+                })
             }
         },
         created() {
             this.getMarkets()
+            this.socket = KLineWebSocket({
+                subscribe: ['market'],
+                callback: (res) => {
+                    if (res.dataType === 'markets') {
+                        if(window.marketOrder){
+                            res.data.forEach(item=>{
+                                item.idx = window.marketOrder[item.market]
+                            })
+                        }
+                        this.setMarketList(this.mergeMarkets(res.data))
+
+                    }
+                },
+                onClose: () => {
+                    // this.closeMainLoading = true
+                }
+            })
+        },
+        beforeDestroy () {
+            this.socket && this.socket.close()
         },
         methods: {
-            ...mapActions(['setLast24h']),
+            ...mapActions(['setLast24h', 'setMarketList']),
+            mergeMarkets (newData) {
+                let oldData = this.getMarketList, tempObj = {}, collectionObj = {}
+                oldData.forEach((item) => {
+                    tempObj[item.market] = item.iconBase64
+                    collectionObj[item.market] = item.collection
+                })
+                newData.forEach((item) => {
+                    item.iconBase64 = tempObj[item.market]
+                    item.collection = collectionObj[item.market]
+                })
+                return newData
+            },
             sortMarket(active) {
                 if (active === this.sortActive) {
                     this.sort = this.sort === 'asc' ? 'desc' : 'asc'
@@ -167,16 +215,21 @@
                 }
             },
             getMarkets() { // 获取市场
-                marketApi.marketList((res) => {
-                    console.log(res)
-                    res.filter(data => {
-                        if (this.baseSymbol.indexOf(data.baseSymbol) === -1) {
-                            this.baseSymbol.push(data.baseSymbol)
-                        }
+                if(!this.getMarketList.length){
+                    marketApi.marketList((res) => {
+                        // console.log(res)
+                        // res.filter(data => {
+                        //     if (this.baseSymbol.indexOf(data.baseSymbol) === -1) {
+                        //         this.baseSymbol.push(data.baseSymbol)
+                        //     }
+                        // })
+                        // this.baseSymbol.sort()
+                        // console.log(this.baseSymbol)
+                        // this.markets = res
+                        this.setMarketList(res)
+                    }, () => {
                     })
-                    this.markets = res
-                }, () => {
-                })
+                }
             },
             tab(data) {
                 this.index = data.id.i
@@ -264,7 +317,7 @@
     }
 
     #scroll {
-        height: 100%;
+        height: calc(~'100% - 132px');
         overflow-x: hidden;
         overflow-y: auto;
     }
