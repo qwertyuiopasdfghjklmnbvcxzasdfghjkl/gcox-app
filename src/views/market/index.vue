@@ -109,9 +109,9 @@
                 sort: null,
                 scroll: false,
                 markets: [],
-                index: null,
+                index: 0,
                 baseSymbol: [],
-                symbol: null,
+                symbol: 'BTC',
                 marketsList: [],
                 socket: null
             }
