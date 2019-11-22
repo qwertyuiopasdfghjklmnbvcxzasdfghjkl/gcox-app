@@ -143,7 +143,7 @@
                     <p><span>{{$t('home.issue-time')}}</span><span>{{symbolInfo.issueTime || '--'}}</span></p>
                     <p><span>{{$t('home.issue-total')}}</span><span>{{symbolInfo.totalIssuance || '--'}}</span></p>
                     <p><span>{{$t('home.circulate-total')}}</span><span>{{symbolInfo.totalCirculation || '--'}}</span></p>
-                    <p><span>{{$t('home.raise-price')}}</span><span>{{symbolInfo.issuePrice || '--'}}</span></p>
+                    <!-- <p><span>{{$t('home.raise-price')}}</span><span>{{symbolInfo.issuePrice || '--'}}</span></p> -->
                     <p><span>{{$t('home.whitePaper')}}</span><span><a :href="symbolInfo.whitePaperUrl">
                         {{symbolInfo.whitePaperUrl || '--'}}</a></span>
                     </p>
