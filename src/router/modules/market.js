@@ -7,7 +7,7 @@ export default [
     {
         path: '/market',
         name: 'market',
-        component: () => import('@/views/market'),
+        component: () => import('@/views/market/index'),
         meta: {nav: true}
     },
     {
