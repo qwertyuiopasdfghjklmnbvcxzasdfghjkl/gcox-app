@@ -6,6 +6,7 @@ export default function (opts) {
   opts = opts || {}
   let symbol = opts.symbol || 'ETHBTC'
   let period = opts.period || '1m'
+  let subscribe = opts.subscribe || []
   let port = '9501'
   let isLeavePage = false
 
@@ -23,7 +24,8 @@ export default function (opts) {
       return
     }
     if (webSocket && webSocket.readyState === webSocket.OPEN) {
-      webSocket.send(`{"event":"addChannel","channel":"kline","is_mobile":true,"api_token":"${apiToken}","period":"${period === 'line' ? '1m' : period}","symbol":"${symbol}","isZip":"false"}`)
+      let params = {"event":"addChannel","channel":"kline","api_token":apiToken,"is_mobile":true,"period":period === 'line' ? '1m' : period,"symbol":symbol,"isZip":false,"subscribe":subscribe}
+      webSocket.send(JSON.stringify(params))
     }
   }
   let curTime = null

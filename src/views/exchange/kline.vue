@@ -328,6 +328,7 @@
                 }
             },
             '$route.params.market'() { //切换市场后重新初始化websoket
+                console.log(this.$route.params.market)
                 this.business.market = this.$route.params.market
                 this.klineSocket.close()
                 this.loading = true
@@ -426,6 +427,7 @@
                 })
                 this.kLineChart.switch_indic(this.indice)
                 this.kLineChart.updateKlienDatas(JSON.parse(JSON.stringify(this.klineData)))
+                console.log(this.klineData)
                 // 深度图
                 this.depthChart = DepthChart({
                     isAmountShowLeft: true,
@@ -469,7 +471,7 @@
                                 })
                                 this.klineData = klineDatas
                             } else {
-                                this.isFirstKline = false
+                                // this.isFirstKline = false
                                 this.klineData = newArray
                             }
 
