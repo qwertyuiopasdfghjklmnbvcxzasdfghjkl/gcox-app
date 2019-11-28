@@ -19,10 +19,10 @@
                     <span>{{$t('wallet.value_frozen')}}</span>
                     <p>{{symbolInfo.frozenBalance}}</p>
                 </label>
-                <label class="top-border">
-                    <span>{{$t('home.home47')}}</span>
-                    <p>{{symbolInfo.totalBalance}}</p>
-                </label>
+                <!--<label >-->
+                    <!--<span>{{$t('home.home47')}}</span>-->
+                    <!--<p>{{symbolInfo.totalBalance}}</p>-->
+                <!--</label>-->
             </div>
             <div class="market">
                 <p>{{$t('home.go-market')}}</p>
