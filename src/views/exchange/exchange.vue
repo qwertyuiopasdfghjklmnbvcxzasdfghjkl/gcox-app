@@ -297,6 +297,13 @@
                                     }
                                 })
                             }
+                            res.data = res.data.filter(item=>{
+                              if(window.marketVisible){
+                                return window.marketVisible[item.market] === '1'
+                              } else {
+                                return true
+                              }
+                            })
                             this.setMarketList(res.data)
                         }
                     }

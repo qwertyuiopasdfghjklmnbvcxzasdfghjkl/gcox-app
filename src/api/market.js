@@ -37,11 +37,16 @@ const marketList = function (success, error) {
 
     if (res.rst === 1) {
       if(res.data){
-        let marketOrder = {}
+        let marketOrder = {}, marketVisible = {}
         res.data.forEach(item=>{
           marketOrder[item.market] = item.idx
+          marketVisible[item.market] = item.visible
         })
         window.marketOrder = marketOrder
+        window.marketVisible = marketVisible
+        res.data = res.data.filter(item=>{
+          return item.visible ==='1'
+        })
       }
       success && success(res.data)
     } else {
