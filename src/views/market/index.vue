@@ -180,6 +180,13 @@
                                 item.idx = window.marketOrder[item.market]
                             })
                         }
+                        res.data = res.data.filter(item=>{
+                          if(window.marketVisible){
+                            return window.marketVisible[item.market] === '1'
+                          } else {
+                            return true
+                          }
+                        })
                         this.setMarketList(this.mergeMarkets(res.data))
 
                     }
