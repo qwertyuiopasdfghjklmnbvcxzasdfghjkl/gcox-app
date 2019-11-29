@@ -19,16 +19,16 @@ const config = {
   url: `${http}${domain}`,
   protocol: protocol,
   brand: 'GCOX',
-  version:'1.1.0',
+  version:'1.1.1',
   updateInfo:{  //更新日志
   	'zh-CN':`
-	<p>1. 优化部分页面显示效果</p>
+	<p>1. 优化市场显示</p>
 	`,
 	'en':`
-	<p>1. Optimize the display effect of some pages</p>
+	<p>1. Optimize market display</p>
 	`,
 	'kr':`
-	<p>1. 부분 페이지 표시 효과</p>
+	<p>1. 최적화 시장 디스플레이</p>
 	`
   }
 }
