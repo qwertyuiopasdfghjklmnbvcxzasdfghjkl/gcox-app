@@ -215,7 +215,7 @@
                 }
             },
             getMarkets() { // 获取市场
-                if(!this.getMarketList.length){
+                // if(!this.getMarketList.length){
                     marketApi.marketList((res) => {
                         // console.log(res)
                         // res.filter(data => {
@@ -229,7 +229,7 @@
                         this.setMarketList(res)
                     }, () => {
                     })
-                }
+                // }
             },
             tab(data) {
                 this.index = data.id.i
