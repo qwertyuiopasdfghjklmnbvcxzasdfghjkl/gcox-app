@@ -66,7 +66,11 @@
                 {{$t('home.home42')}}
             </span>
         </div>
-        <div class="space-area" id="depth"></div>
+        <div class="depth">
+            <div class="space-area" id="depth"></div>
+            <loading v-show="showLatestDeal" class="load"/>
+        </div>
+
     </div>
 </template>
 
@@ -82,6 +86,7 @@
     import valuation from '@/components/valuation'
     import KLineWebSocket from '@/assets/js/websocket'
     import DepthChart from '@/assets/js/kline.depth'
+    import Loading from "../../../components/common/loading";
 
     export default {
         props: {
@@ -103,6 +108,7 @@
             pTradeType: null
         },
         components: {
+            Loading,
             cpAdjust,
             valuation,
             numberbox
@@ -127,7 +133,8 @@
                     price: 0,
                     amount: '',
                     total: ''
-                }
+                },
+                showLatestDeal: true
             }
         },
         computed: {
@@ -165,6 +172,11 @@
             },
             depthChange () {
                 console.log(this.filterAsks,this.filterBids)
+                if(this.filterAsks.length && this.filterBids.length){
+                    this.showLatestDeal = false
+                }else{
+                    this.showLatestDeal = true
+                }
                 return {
                     asks: this.filterAsks,
                     bids: this.filterBids,
@@ -808,6 +820,15 @@
                     background:#E14B26
                 }
             }
+        }
+    }
+    .depth{
+        position: relative;
+        .load{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -0.3rem;
         }
     }
 </style>

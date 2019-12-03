@@ -97,6 +97,7 @@
                     </div>
                     <div class="kline-container" id="depthContainer"></div>
                 </div>
+                <loading v-show="loading" class="load"/>
             </div>
             <div class="depth-list-container f24">
                 <div class="btn-cont">
@@ -182,12 +183,14 @@
     import marketApi from '@/api/market'
     import market from '../market/index'
     import Lastdeal from "./market/lastdeal";
+    import Loading from "../../components/common/loading";
 
     let chartSettings = window.localStorage.getItem('chartSettings')
     chartSettings && (chartSettings = JSON.parse(chartSettings))
     export default {
         name: 'kline',
         components: {
+            Loading,
             Lastdeal,
             valuation,
             market
@@ -329,6 +332,7 @@
             },
             '$route.params.market'() { //切换市场后重新初始化websoket
                 console.log(this.$route.params.market)
+                this.klineData = []
                 this.business.market = this.$route.params.market
                 this.klineSocket.close()
                 this.loading = true
@@ -338,6 +342,7 @@
             },
             klineData(n, o) { //如果K线数据有变化，更新K线图数据
                 this.kLineChart.updateKlienDatas(JSON.parse(JSON.stringify(n)))
+                console.log('watch   '+n)
             },
             period(n, o) { //如果K线周期变化，重新请求周期数据
                 this.loading = true
@@ -427,7 +432,7 @@
                 })
                 this.kLineChart.switch_indic(this.indice)
                 this.kLineChart.updateKlienDatas(JSON.parse(JSON.stringify(this.klineData)))
-                console.log(this.klineData)
+                console.log('init    '+this.klineData)
                 // 深度图
                 this.depthChart = DepthChart({
                     isAmountShowLeft: true,
@@ -442,6 +447,7 @@
                 this.klineSocket = KLineWebSocket({
                     symbol: this.symbol,
                     period: this.period,
+                    subscribe: ['kline', 'depth'],
                     callback: (res) => {
                         // K线图数据
                         if (res.dataType === 'kline') { // K线图数据
@@ -471,42 +477,15 @@
                                 })
                                 this.klineData = klineDatas
                             } else {
-                                // this.isFirstKline = false
+                                this.isFirstKline = false
                                 this.klineData = newArray
                             }
+                            this.loading = false
 
                         } else if (res.dataType === 'LastOrderBook') {
                             // 深度数据
                             this.asks = res.data.asks
                             this.bids = res.data.bids
-                        } else if (res.dataType === 'LastPrice') {
-                            // 24小时最新信息
-                            this.setLast24h(res.data)
-                        } else if (res.dataType === 'markets') {
-                            if (this.getMarketList) {
-                                let datas = this.getMarketList
-                                let tempObj = {}
-                                datas.forEach((item) => {
-                                    tempObj[item.market] = item
-                                })
-                                res.data.forEach((item) => {
-                                    let d = tempObj[item.market]
-                                    if (d) {
-                                        item.collection = d.collection
-                                        item.iconBase64 = d.iconBase64
-                                        item.iconUrl = d.iconUrl
-                                    }
-                                })
-                            }
-                            // 市场信息
-                            res.data = res.data.filter(item=>{
-                              if(window.marketVisible){
-                                return window.marketVisible[item.market] === '1'
-                              } else {
-                                return true
-                              }
-                            })
-                            this.setMarketList(res.data)
                         }
                     },
                     onClose: () => {
@@ -796,6 +775,7 @@
         margin-right: -0.3rem;
         height: 5.3rem;
         overflow: hidden;
+        position: relative;
     }
 
     .kline-panel-container {
@@ -1016,5 +996,11 @@
                 padding-left: 0.2rem;
             }
         }
+    }
+    .load{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -0.3rem;
     }
 </style>
