@@ -141,8 +141,8 @@
                         <p>{{this.currentSymbol}}</p>
                     </label>
                     <p><span>{{$t('home.issue-time')}}</span><span>{{symbolInfo.issueTime || '--'}}</span></p>
-                    <p><span>{{$t('home.issue-total')}}</span><span>{{symbolInfo.totalIssuance || '--'}}</span></p>
-                    <p><span>{{$t('home.circulate-total')}}</span><span>{{symbolInfo.totalCirculation || '--'}}</span></p>
+                    <p><span>{{$t('home.issue-total')}}</span><span>{{toFixed(symbolInfo.totalIssuance, 2) || '--'}}</span></p>
+                    <p><span>{{$t('home.circulate-total')}}</span><span>{{toFixed(symbolInfo.totalCirculation, 2) || '--'}}</span></p>
                     <!-- <p><span>{{$t('home.raise-price')}}</span><span>{{symbolInfo.issuePrice || '--'}}</span></p> -->
                     <p><span>{{$t('home.whitePaper')}}</span><span><a :href="symbolInfo.whitePaperUrl">
                         {{symbolInfo.whitePaperUrl || '--'}}</a></span>
@@ -153,7 +153,7 @@
                     <p><span>{{$t('home.block-puery')}}</span>
                         <span><a :href="symbolInfo.blockQueryUrl">{{symbolInfo.blockQueryUrl || '--'}}</a></span>
                     </p>
-                    <p><span>{{$t('home.intro')}}</span><span>--</span></p>
+                    <!--<p><span>{{$t('home.intro')}}</span><span>&#45;&#45;</span></p>-->
                 </div>
             </div>
         </div>
