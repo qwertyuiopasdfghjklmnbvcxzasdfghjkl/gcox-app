@@ -61,3 +61,8 @@ $ sudo npm install cordova-splash -g
 $ cordova-splash 或 
 $ cordova-splash --config=config.xml --splash=splash.png
 ```
+
+### hot updata
+```
+$ cordova-hcp build
+```

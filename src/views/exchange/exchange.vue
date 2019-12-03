@@ -66,10 +66,12 @@
     import marketApi from '@/api/market'
     import Lastdeal from "./market/lastdeal"
     import market from '../market/index'
+    import Loading from "../../components/common/loading";
 
     export default {
         name: 'exchange',
         components: {
+            Loading,
             Lastdeal,
             business,
             depth,
@@ -86,7 +88,8 @@
                 tradeType: 'buy',
                 business: {
                     market: ''
-                }
+                },
+                showDepu: false
             }
         },
         computed: {
