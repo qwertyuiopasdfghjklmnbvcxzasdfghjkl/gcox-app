@@ -95,7 +95,7 @@
                     } else if (this.sort === 'new') {
                         let m1 = numUtils.BN(item1.createdAt)
                         let m2 = numUtils.BN(item2.createdAt)
-                        return (m1.lt(m2) ? -1 : 1)
+                        return (m1.lt(m2) ? 1 : -1)
                     }
                 })
                 return datas
