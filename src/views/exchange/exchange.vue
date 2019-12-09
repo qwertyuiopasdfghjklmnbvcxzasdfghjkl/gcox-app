@@ -176,6 +176,10 @@
             },
             '$route.params.market'(){
                 this.showMarkets = false
+                this.setLast24h(0)
+                marketApi.get24hPrice({symbol: `${this.symbol}`}, (data) => {
+                    this.setLast24h(data)
+                })
             }
         },
         created() {

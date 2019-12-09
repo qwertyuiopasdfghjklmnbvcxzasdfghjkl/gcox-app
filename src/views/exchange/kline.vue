@@ -339,6 +339,10 @@
                 this.isFirstKline = true
                 this.showMarkets = false
                 this.InitKlineWebSoket()
+                this.setLast24h(0)
+                marketApi.get24hPrice({symbol: `${this.symbol}`}, (data) => {
+                    this.setLast24h(data)
+                })
             },
             klineData(n, o) { //如果K线数据有变化，更新K线图数据
                 this.kLineChart.updateKlienDatas(JSON.parse(JSON.stringify(n)))

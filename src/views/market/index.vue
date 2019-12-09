@@ -58,7 +58,7 @@
                     <section class="coin_content">
                         <div class="">
                             <div class="inner">
-                                <ul class="item" v-for="(item, index) in marketsList" :key="index"
+                                <ul class="item" v-for="(item, index) in sortMarketDatas" :key="index"
                                     @click="goToExchangePage(item)">
                                     <li>
                                         <h1><span>{{item.currencySymbol}}</span>/<i>{{item.baseSymbol}}</i></h1>
@@ -73,7 +73,7 @@
                                         </span>
                                     </li>
                                 </ul>
-                                <no-data v-if="!marketsList.length"></no-data>
+                                <no-data v-if="!sortMarketDatas.length"></no-data>
                                 <div class="lastspace"></div>
                             </div>
                         </div>
@@ -110,7 +110,7 @@
                 scroll: false,
                 markets: [],
                 index: 0,
-                baseSymbol: [],
+                // baseSymbol: [],
                 symbol: 'BTC',
                 marketsList: [],
                 socket: null
@@ -119,7 +119,7 @@
         computed: {
             ...mapGetters(['getApiToken', 'getMarketList']),
             sortMarketDatas() {
-                let datas = this.markets.sort((item1, item2) => {
+                let datas = this.getMarketList.sort((item1, item2) => {
                     if (this.sortActive === 'dealAmount') {
                         let m1 = numUtils.BN(item1.dealAmount)
                         let m2 = numUtils.BN(item2.dealAmount)
@@ -142,33 +142,38 @@
                         }
                         return this.sort === 'asc' ? (m1.lt(m2) ? -1 : 1) : (m1.gt(m2) ? -1 : 1)
                     } else {
-                        // let m1 = item1.currencySymbol
-                        // let m2 = item2.currencySymbol
-                        // return this.sort === 'desc' ? (m1 > m2 ? -1 : 1) : (m1 < m2 ? -1 : 1)
-
                         let m1 = numUtils.BN(item1.idx)
                         let m2 = numUtils.BN(item2.idx)
                         return m1.gt(m2) ? -1 : 1
-
                     }
                 })
-                return datas
-            }
-        },
-        watch: {
-            sortMarketDatas() {
-                this.tab({id: {i: this.index, symbol: this.symbol}})
+                let list = []
+                if(this.symbol){
+                    for(let i in datas){
+                        if(datas[i].baseSymbol === this.symbol){
+                            list.push(datas[i])
+                        }
+                    }
+                }else{
+                    for(let i in datas){
+                        if(datas[i].collection){
+                            list.push(datas[i])
+                        }
+                    }
+                }
+                return list
             },
-            getMarketList(){
-                console.log(this.getMarketList)
-                this.markets = this.getMarketList
+            baseSymbol(){
+                let list = []
                 this.getMarketList.filter(data => {
-                    if (this.baseSymbol.indexOf(data.baseSymbol) === -1) {
-                        this.baseSymbol.push(data.baseSymbol)
+                    if (list.indexOf(data.baseSymbol) === -1) {
+                        list.push(data.baseSymbol)
                     }
                 })
+                return list.sort()
             }
         },
+        watch: {},
         created() {
             this.getMarkets()
             this.socket = KLineWebSocket({
@@ -188,7 +193,6 @@
                           }
                         })
                         this.setMarketList(this.mergeMarkets(res.data))
-
                     }
                 },
                 onClose: () => {
@@ -211,6 +215,7 @@
                     item.iconBase64 = tempObj[item.market]
                     item.collection = collectionObj[item.market]
                 })
+                console.log(newData)
                 return newData
             },
             sortMarket(active) {
@@ -222,50 +227,24 @@
                 }
             },
             getMarkets() { // 获取市场
-                // if(!this.getMarketList.length){
+                console.log(this.getMarketList)
+                if(!this.getMarketList.length){
                     marketApi.marketList((res) => {
-                        // console.log(res)
-                        // res.filter(data => {
-                        //     if (this.baseSymbol.indexOf(data.baseSymbol) === -1) {
-                        //         this.baseSymbol.push(data.baseSymbol)
-                        //     }
-                        // })
-                        // this.baseSymbol.sort()
-                        // console.log(this.baseSymbol)
-                        // this.markets = res
                         this.setMarketList(res)
                     }, () => {
                     })
-                // }
+                }
             },
             tab(data) {
                 this.index = data.id.i
                 this.symbol = data.id.symbol
-                this.marketsList = []
-                if (this.index === null) {
-                    this.sortMarketDatas.filter(res => {
-                        if (res.collection) {
-                            this.marketsList.push(res)
-                        }
-                    })
-                } else {
-                    this.sortMarketDatas.filter(res => {
-                        if (this.symbol === res.baseSymbol) {
-                            this.marketsList.push(res)
-                        }
-                    })
-                }
-                console.log(this.marketsList)
             },
             goToExchangePage(item) {
-                marketApi.get24hPrice({symbol: `${item.currencySymbol}${item.baseSymbol}`}, (data) => {
-                    this.setLast24h(data)
-                    if(this.form === 'kline'){
-                        this.$router.push({name: 'kline', params: {market: `${item.currencySymbol}_${item.baseSymbol}`}})
-                    }else{
-                        this.$router.push({name: 'exchange', params: {market: `${item.currencySymbol}_${item.baseSymbol}`}})
-                    }
-                })
+                if(this.form === 'kline'){
+                    this.$router.push({name: 'kline', params: {market: `${item.currencySymbol}_${item.baseSymbol}`}})
+                }else{
+                    this.$router.push({name: 'exchange', params: {market: `${item.currencySymbol}_${item.baseSymbol}`}})
+                }
             },
             percent(item) {
                 if (numUtils.BN(item.openingPrice).equals(0)) {
