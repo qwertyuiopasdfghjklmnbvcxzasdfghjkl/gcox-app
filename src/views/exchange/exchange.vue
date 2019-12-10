@@ -475,7 +475,7 @@
     }
 
     .price.down {
-        color: #F65B69;
+        color: #E14B26;
     }
 
     .exchange-container, .entrust-container {

@@ -123,7 +123,7 @@
                     color: #20C26D;
                 }
                 .c-orange{
-                      color: #DF4A26;
+                      color: #E14B26;
                   }
             }
         }

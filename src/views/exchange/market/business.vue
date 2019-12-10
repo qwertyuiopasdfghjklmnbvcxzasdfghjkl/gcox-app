@@ -564,7 +564,7 @@
 <style lang="less" scoped>
     @c_gray: #2A2A34;
     @c_buy: #439B64;
-    @c_sell: #DC6041;
+    @c_sell: #E14B26;
     @c_light: #C8C7CC;
     @c_board: #B9D0CF;
     .c_light {
@@ -817,7 +817,7 @@
                     background:#439B64
                 }
                 &.red{
-                    background:#E14B26
+                    background: @c_sell
                 }
             }
         }
