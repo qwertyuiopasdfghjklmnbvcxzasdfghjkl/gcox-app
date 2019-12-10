@@ -149,7 +149,8 @@ document.addEventListener('deviceready', function(){
               // 询问用户是否更新 检测到新版本，是否更新?
                 MessageBox.confirm('New version detected. Is it updated?','Tip',{
                   confirmButtonText: 'Yes',
-                  cancelButtonText: 'No'
+                  showCancelButton: false
+                  // cancelButtonText: 'No'
                 }).then(action => {
                   // 更新中
                   chcp.installUpdate((error) => {
@@ -171,7 +172,7 @@ document.addEventListener('deviceready', function(){
             }
           });
         });
-        
+
       }
 }, false);
   if (window.cordova && window.localStorage.getItem('appUpdated')) {
