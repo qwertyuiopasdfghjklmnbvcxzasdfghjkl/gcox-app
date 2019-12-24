@@ -66,10 +66,12 @@
     import marketApi from '@/api/market'
     import Lastdeal from "./market/lastdeal"
     import market from '../market/index'
+    import Loading from "../../components/common/loading";
 
     export default {
         name: 'exchange',
         components: {
+            Loading,
             Lastdeal,
             business,
             depth,
@@ -86,7 +88,8 @@
                 tradeType: 'buy',
                 business: {
                     market: ''
-                }
+                },
+                showDepu: false
             }
         },
         computed: {
@@ -173,6 +176,10 @@
             },
             '$route.params.market'(){
                 this.showMarkets = false
+                this.setLast24h(0)
+                marketApi.get24hPrice({symbol: `${this.symbol}`}, (data) => {
+                    this.setLast24h(data)
+                })
             }
         },
         created() {
@@ -468,7 +475,7 @@
     }
 
     .price.down {
-        color: #F65B69;
+        color: #E14B26;
     }
 
     .exchange-container, .entrust-container {

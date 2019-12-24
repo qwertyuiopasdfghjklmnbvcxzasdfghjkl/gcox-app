@@ -205,7 +205,7 @@
     }
 
     .latest-deal .deal-list li span:nth-of-type(2) {
-        color: #F65B69;
+        color: #E14B26;
     }
 
     .latest-deal .deal-list li span:nth-of-type(3) {

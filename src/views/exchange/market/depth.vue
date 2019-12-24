@@ -4,7 +4,7 @@
             <span>{{$t('exchange.exchange_price')}}({{baseSymbol}})<!--价格--></span>
             <span>{{$t('exchange.exchange_amount')}}({{currentSymbol}})<!--数量--></span>
         </div>
-        <div class="bid-sell mt20">
+        <div class="bid-sell mt20 relative">
             <ul class="sell-list" ref="parentListAsk" v-if="sellBuy!==2">
                 <li v-for="n in askLength">
                     <span>--</span>
@@ -15,12 +15,13 @@
                     <span @click="clickChangeValue(toFixed(item.price), 'price')">{{Number(toFixed(item.avaliableAmount, accuracy.quantityAccu))}}</span>
                 </li>
             </ul>
+            <loading v-show="!asks.length" class="load"/>
         </div>
         <div class="numb_text">
             <p :class="{sell:(getLast24h.direction!=1)}">{{Number(toFixed(getLast24h.close))}}</p>
             <!--<p class="mt10">≈ <valuation :lastPrice="getLast24h.close" :baseSymbol="baseSymbol"/></p>-->
         </div>
-        <div class="mt35" v-if="sellBuy!==1">
+        <div class="mt35 relative" v-if="sellBuy!==1">
             <ul class="buy-list" ref="parentListBid">
                 <li v-for="(item, index) in filterBids" :style="listItemStyle(item, 'bid')">
                     <span @click="clickChangeValue(toFixed(item.price), 'price')">{{Number(toFixed(item.price))}}</span>
@@ -31,6 +32,7 @@
                     <span>--</span>
                 </li>
             </ul>
+            <loading v-show="!bids.length" class="load"/>
         </div>
         <div class="check">
             <label>
@@ -66,6 +68,7 @@
     import numUtils from '@/assets/js/numberUtils'
     import marketApi from '@/api/market'
     import valuation from '@/components/valuation'
+    import Loading from "../../../components/common/loading";
 
     export default {
         props: {
@@ -83,6 +86,7 @@
             }
         },
         components: {
+            Loading,
             valuation
         },
         data() {
@@ -272,6 +276,7 @@
                 return this.keysEntrust[key]
             },
             clickChangeValue(item, type) {
+                console.log(item, type)
                 if (type !== 'total') {
                     this.tiggerEvents({
                         name: 'businessEvent',
@@ -307,7 +312,7 @@
 <style lang="less" scoped>
     @c_gray: #F4F5FA;
     @c_buy: #24C898;
-    @c_sell: #F65B69;
+    @c_sell: #E14B26;
     @c_light: #91A4A3;
     @c_board: #C8C7CC;
     .order-book {
@@ -445,6 +450,15 @@
                     }
                 }
             }
+        }
+    }
+    .relative{
+        position: relative;
+        .load{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -0.3rem;
         }
     }
 </style>
