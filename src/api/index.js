@@ -30,7 +30,8 @@ axios.interceptors.response.use(function (response) {
     let error = {response: response}
     return Promise.reject(error)
   }
-  if (response.data && response.data.rst === 401 || response.data && response.data.rst === 403) {
+  console.log(response)
+  if ((response.data && response.data.rst === 401) || response.status === 403 || response.status === 401 ) {
     console.error(response.config.url)
     console.log('用户不存在，退出登录')
     // 用户不存在，退出登录
