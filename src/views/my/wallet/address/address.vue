@@ -70,11 +70,12 @@
                 })
             },
             getAdd(data){
+                console.log(data.addressData)
                 if(this.type === 'withdrawal'){
-                    this.$router.push({name:'withdrawal', query: {address: data.item.address}})
+                    this.$router.push({name:'withdrawal', query: {address: data.addressData.address}})
                 }else{
                     this.show=true;
-                    this.data = data.item
+                    this.data = data.addressData
                 }
             },
             onCopy() {
