@@ -629,7 +629,7 @@
     }
 
     .price.down {
-        color: #F65B69;
+        color: #E14B26;
     }
 
     .info {
@@ -771,7 +771,7 @@
     }
 
     .acpanel button.sell {
-        background-color: #DC6041;
+        background-color: #E14B26;
     }
 
     .kline-panel {
@@ -954,7 +954,7 @@
                 }
 
                 &.sell {
-                    color: #F65B69;
+                    color: #E14B26;
                 }
             }
         }
