@@ -71,7 +71,7 @@
                     wallet.addAddress(this.form,res=>{
                         this.lock = true
                         Tip({type: 'success', message: res.msg})
-                        this.$router.push({name:'address'})
+                        this.$router.back()
                     },msg=>{
                         this.lock = true
                         Tip({type: 'danger', message: msg})

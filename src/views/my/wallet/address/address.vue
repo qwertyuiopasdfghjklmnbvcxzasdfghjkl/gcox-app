@@ -6,7 +6,7 @@
         <div class="page-main">
             <div class="list" v-if="list.length">
                 <ul>
-                    <li v-for="item in list" v-tap="{methods:()=>{show=true;data = item}}">
+                    <li v-for="item in list" v-tap="{methods:getAdd, addressData: item}">
                         <i>
                             <img src="../../../../assets/img/address.png">
                         </i>
@@ -52,12 +52,14 @@
                 list: [],
                 show: false,
                 data: {},
+                type: null
             }
         },
         created() {
             this.symbol = this.getSymbol()
             console.log(this.symbol)
             this.getAddressList()
+            this.type = this.$route.query.type
         },
         methods: {
             ...mapGetters(['getSymbol']),
@@ -66,6 +68,14 @@
                     console.log(res)
                     this.list = res
                 })
+            },
+            getAdd(data){
+                if(this.type === 'withdrawal'){
+                    this.$router.push({name:'withdrawal', query: {address: data.item.address}})
+                }else{
+                    this.show=true;
+                    this.data = data.item
+                }
             },
             onCopy() {
                 Tip({type: 'success', message: this.$t('public0.public33')})

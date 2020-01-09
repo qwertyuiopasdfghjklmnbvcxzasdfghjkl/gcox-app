@@ -130,6 +130,7 @@
         created() {
             this.symbol = this.getSymbol
             this.getInfo()
+            this.form.toAddress = this.$route.query.address || null
         },
         methods: {
             getInfo() {
@@ -172,7 +173,7 @@
                 }
             },
             getAddress(){
-                this.$router.push({name:'address'})
+                this.$router.push({name:'address', query: {type: 'withdrawal'}})
             },
             amount(){
                 if(Number(this.symbolInfo.availableBalance) < Number(this.symbolInfo.procedureFee)){
