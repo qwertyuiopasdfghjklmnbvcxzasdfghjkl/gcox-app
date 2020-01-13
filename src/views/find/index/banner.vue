@@ -50,14 +50,16 @@
                 findApi.getBanner({type:2}, res => {
                     let enAdsense = [];
                     res.filter(next=>{
-                        let data ={}
-                        if(this.lang === 'zh-CN'){
-                            data.gameAdvertisementImage =config.url+next.activityImgUrl;
-                        }else{
-                            data.gameAdvertisementImage =config.url+next.activityImgUrlEn;
+                        if(next.siteType === 1){
+                            let data ={}
+                            if(this.lang === 'zh-CN'){
+                                data.gameAdvertisementImage =config.url+next.activityImgUrl;
+                            }else{
+                                data.gameAdvertisementImage =config.url+next.activityImgUrlEn;
+                            }
+                            data.gameAdvertisementLink =next.jumpAddress;
+                            enAdsense.push(data)
                         }
-                        data.gameAdvertisementLink =next.jumpAddress;
-                        enAdsense.push(data)
                     })
                     if(enAdsense.length>0){
                         this.adsense = enAdsense

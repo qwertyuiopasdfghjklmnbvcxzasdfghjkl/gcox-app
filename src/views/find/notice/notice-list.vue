@@ -49,7 +49,8 @@
                     secondLevel: 1,
                     page: 0,
                     size: 10,
-                    state: 1
+                    state: 1,
+                    siteType: 1
                 },
                 sport: '',
                 allLoaded: false,
