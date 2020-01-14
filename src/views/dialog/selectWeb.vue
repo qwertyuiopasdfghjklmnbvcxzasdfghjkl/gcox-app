@@ -1,7 +1,11 @@
 <template>
     <div class="select">
-        <p @click="com()">{{vm.$t('user.gcox_com')}}</p>
-        <p @click="sg()">{{vm.$t('user.gcox_sg')}}</p>
+        <h4 class="title">{{vm.$t('user.area_chioce')}}</h4>
+        <h2>{{vm.$t('user.goto_sg_site')}}</h2>
+        <small>{{vm.$t('user.curr_pos_sg')}}</small>
+        <p>{{vm.$t('user.goto_desc')}}</p>
+        <p class="btn next" @click="sg()">{{vm.$t('shop.continue')}}</p>
+        <p class="btn" @click="com() ">{{vm.$t('user.curr_stay')}}</p>
     </div>
 </template>
 
@@ -32,23 +36,51 @@
 .select{
     position: fixed;
     width: 90vw;
-    height: 4rem;
+    height: 6rem;
     background: #ffffff;
     top: 50%;
-    margin-top: -2rem;
+    margin-top: -3rem;
     left: 5vw;
     border-radius:0.1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-flow: column;
+    text-align: center;
+    font-size: 0.28rem;
     p{
+        color: #999999;
+        margin-top: 0.2rem;
+        padding: 0 0.3rem;
+    }
+    .title{
+        margin: 0;
+        padding: 0.3rem;
+        text-align: center;
+        border-bottom: 0.02rem solid #b6bbbf;
+        color: #222222;
+        font-size: 0.3rem;
+    }
+    h2{
+        font-size: 0.34rem;
+        font-weight: bold;
+        color: #222222;
+        margin-top: 0.3rem;
+    }
+    small{
+        color: #999999;
+        margin-top: 0.2rem;
+        display: block;
+    }
+    .btn{
         display: block;
         text-align: center;
-        background: #2A2A34;
-        width: 90%;
-        height: 1.2rem;
-        line-height: 1.2rem;
+        margin: 0 0.3rem;
+        color: #222222;
+        margin-top: 0.3rem;
+        border-radius:0.1rem;
+        height: 1rem;
+        line-height: 1rem;
+    }
+    .next{
+        background: #00a0e9;
+        color: #ffffff;
     }
 }
 </style>

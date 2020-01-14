@@ -39,5 +39,5 @@
     <plugin name="cordova-hot-code-push-plugin" spec="~1.5.3" />
     <plugin name="nl.madebymark.share" spec="~0.1.1" />
     <engine name="ios" />
-    <engine name="android" spec="^8.0.0" />
+    <engine name="android" spec="^7.0.0" />
 </widget>

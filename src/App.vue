@@ -117,6 +117,7 @@
                                 // 选择哪个站点 select
                             })
                         } else {
+                            this.setApiToken('')
                             utils.setDialog(international, {
                                 // 提示其访问主站（gcox.com）
                             })
