@@ -20,6 +20,9 @@
     import cordovaUtils from '@/assets/js/cordovaUtils'
     import marketApi from '@/api/market'
     import walletApi from '@/api/wallet'
+    import select from './views/dialog/selectWeb'
+    import international from './views/dialog/internationalWeb'
+    import internationalApp from './views/dialog/internationalApp'
 
     export default {
         components: {
@@ -39,9 +42,11 @@
             getApiToken(newVal) {
                 this.loadLoginInfo()
                 this.getMarketList()
+                this.showJumpTo2()
             },
         },
         created() {
+            this.showJumpTo()
             //一键注册用户快速登录
             if (!this.getApiToken && this.getQuickLoginInfo) {
                 this.setApiToken(this.getQuickLoginInfo.apiToken)
@@ -86,6 +91,42 @@
         },
         methods: {
             ...mapActions(['setBTCValuation', 'setUSDCNY', 'setNetworkSignal', 'setBtcValues', 'setMarketList', 'setUserWallets', 'setMarketConfig', 'setApiToken', 'setUserInfo', 'setVersion', 'setSysParams']),
+
+            showJumpTo() {
+                marketApi.getIpVerify(res => {
+                    if (res) {
+                        if (window['cordova']) {
+                            console.log('请访问新加坡站点')
+                            utils.setDialog(internationalApp, {
+                                // 选择哪个站点 select
+                            })
+                        } else {
+                            utils.setDialog(select, {
+                                // 选择哪个站点 select
+                            })
+                        }
+                    }
+                })
+            },
+            showJumpTo2() {
+                marketApi.getKycValidate(res => {
+                    if (res) {
+                        if (window['cordova']) {
+                            console.log('请访问新加坡站点')
+                            utils.setDialog(internationalApp, {
+                                // 选择哪个站点 select
+                            })
+                        } else {
+                            utils.setDialog(international, {
+                                // 提示其访问主站（gcox.com）
+                            })
+                        }
+
+                    }
+                })
+            },
+
+
             getSysparams(){
               marketApi.rateSysparams(res=>{
                 let params = {}

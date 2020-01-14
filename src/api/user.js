@@ -33,7 +33,7 @@ const login = function (formData, success, error) {
     if (res.rst === 1) {
       success && success(res.api_token, res)
     } else {
-      error && error(res.data.error, res.rst)
+      error && error(res.data.error || res.msg, res.rst)
     }
   }, error)
 }

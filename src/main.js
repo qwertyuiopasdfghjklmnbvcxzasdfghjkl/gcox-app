@@ -22,6 +22,7 @@ import '@/assets/js/vee-validate'
 import langApi from '@/api/language'
 import VueClipboard from 'vue-clipboard2'
 import Config from '@/api/config'
+import './components/dialog'
 
 import {
   Indicator, Button, Tabbar, TabItem, Loadmore, InfiniteScroll, Popup,

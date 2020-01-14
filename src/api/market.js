@@ -358,4 +358,28 @@ const getBtcPrice = function (success, error) {
 }
 market.getBtcPrice = getBtcPrice
 
+//查询是否为新加坡ip段
+const getIpVerify = function(success, error){
+  api.get(`${domain}api/v1/gcox/user/ip/ipVerify`, (res) => {
+    if (res.rst === 1) {
+      success && success(res.data)
+    } else {
+      error && error(res.msg)
+    }
+  }, error)
+}
+market.getIpVerify = getIpVerify
+
+//查询是否为新加坡用户
+const getKycValidate = function(success, error){
+  api.get(`${domain}api/v1/gcox/user/kyc/validate`, (res) => {
+    if (res.rst === 1) {
+      success && success(res.data)
+    } else {
+      error && error(res.msg)
+    }
+  }, error)
+}
+market.getKycValidate = getKycValidate
+
 export default market

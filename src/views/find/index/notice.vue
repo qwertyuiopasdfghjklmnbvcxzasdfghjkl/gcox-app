@@ -42,7 +42,8 @@
                     firstLevel: 1,
                     secondLevel: 1,
                     page: 1,
-                    size: 3
+                    size: 3,
+                    siteType: 1
                 }
                 findApi.getCmsList(data, res => {
                     this.adsense = res.data
