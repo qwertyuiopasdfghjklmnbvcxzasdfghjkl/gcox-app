@@ -3,7 +3,7 @@
         <h4 class="title">{{vm.$t('user.area_chioce')}}</h4>
         <h2>{{vm.$t('user.goto_sg_site')}}</h2>
         <small>{{vm.$t('user.curr_pos_sg')}}</small>
-        <p>{{vm.$t('user.goto_desc')}}</p>
+        <p>{{vm.$t('user.goto_desc_sg')}}</p>
         <p class="btn next" @click="sg()">{{vm.$t('shop.continue')}}</p>
         <p class="btn" @click="com() ">{{vm.$t('user.curr_stay')}}</p>
     </div>
