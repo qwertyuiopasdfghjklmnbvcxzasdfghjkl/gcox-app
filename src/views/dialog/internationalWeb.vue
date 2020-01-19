@@ -1,9 +1,9 @@
 <template>
     <div class="international">
-        <p>{{vm.$t('user.no_sg_user')}}
+        <p>{{vm.$t('user.yes_sg_user')}}
             <a href="https://m.gcox.sg">{{vm.$t('user.gcox_sg')}}</a>
         </p>
-        <p style="text-align: center">{{vm.$t('user.go_main_soon')}} （{{timer}}s）</p>
+        <p style="text-align: center">{{vm.$t('user.go_sg_soon')}} （{{timer}}s）</p>
     </div>
 </template>
 

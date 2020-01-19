@@ -1,9 +1,9 @@
 <template>
     <div class="select">
-        <h4 class="title">{{vm.$t('user.area_chioce')}}</h4>
+        <!--<h4 class="title">{{vm.$t('user.area_chioce')}}</h4>-->
         <h2>{{vm.$t('user.goto_sg_site')}}</h2>
         <small>{{vm.$t('user.curr_pos_sg')}}</small>
-        <p>{{vm.$t('user.goto_desc')}}</p>
+        <p>{{vm.$t('user.goto_desc_sg')}}</p>
         <p class="btn next" @click="sg()">{{vm.$t('shop.continue')}}</p>
         <p class="btn" @click="com() ">{{vm.$t('user.curr_stay')}}</p>
     </div>
@@ -36,7 +36,7 @@
 .select{
     position: fixed;
     width: 90vw;
-    height: 6rem;
+    height: 5.6rem;
     background: #ffffff;
     top: 50%;
     margin-top: -3rem;
@@ -44,6 +44,7 @@
     border-radius:0.1rem;
     text-align: center;
     font-size: 0.28rem;
+    padding-top: 0.3rem;
     p{
         color: #999999;
         margin-top: 0.2rem;

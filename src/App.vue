@@ -127,7 +127,6 @@
                 })
             },
 
-
             getSysparams(){
               marketApi.rateSysparams(res=>{
                 let params = {}
