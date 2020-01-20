@@ -66,9 +66,9 @@ export default {
       }
     },
     getList () {
-      if(this.getUserWallets.length){
-        return
-      }
+      // if(this.getUserWallets.length){
+      //   return
+      // }
       Indicator.open()
       userUtils.myAssets({}, (resSet) => {
         Indicator.close()

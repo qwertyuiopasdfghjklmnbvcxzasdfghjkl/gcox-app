@@ -72,6 +72,7 @@
     import noData from '@/components/common/noData'
     import noMoreData from '@/components/common/noMoreData'
     import numUtils from '@/assets/js/numberUtils'
+    import userUtils from '@/api/wallet'
 
     export default {
         name: 'trading',
@@ -128,9 +129,22 @@
         created() {
             console.log(this.getUserInfo)
             this.getBtcPrice()
+            this.getList()
         },
         methods: {
-            ...mapActions(['setBTCValuation', 'setUSDCNY', 'setSymbol']),
+            ...mapActions(['setBTCValuation', 'setUSDCNY', 'setSymbol', 'setUserWallets']),
+            getList(){
+                userUtils.myAssets({}, (resSet) => {
+                    resSet = resSet.filter(item=>{
+                        return item.type===1
+                    })
+                    resSet.forEach((item) => {
+                        item.frozenBalance = numUtils.add(item.frozenBalance, item.adFrozenBalance).add(item.loanBalance).toString()
+                    })
+                    this.setUserWallets(resSet)
+                }, (msg) => {
+                })
+            },
             getBtcPrice() {
                 market.getBtcPrice(res => {
                     this.setUSDCNY({
