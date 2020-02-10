@@ -36,7 +36,7 @@
             }
         },
         computed: {
-            ...mapGetters(['getApiToken', 'getQuickLoginInfo'])
+            ...mapGetters(['getApiToken', 'getQuickLoginInfo',  'getSiteType', 'getSysParams'])
         },
         watch: {
             getApiToken(newVal) {
@@ -44,6 +44,14 @@
                 this.getMarketList()
                 this.showJumpTo2()
             },
+            getSysParams(e) {
+                console.log(e)
+                let status = e['maintain']['value']
+                if( status === '1'){
+                    console.log('go maintain')
+                    this.$router.push({name: 'maintain'})
+                }
+            }
         },
         created() {
             this.showJumpTo()
