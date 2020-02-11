@@ -50,11 +50,12 @@
                 if( status === '1'){
                     console.log('go maintain')
                     this.$router.push({name: 'maintain'})
+                }else{
+                    this.showJumpTo()
                 }
             }
         },
         created() {
-            this.showJumpTo()
             //一键注册用户快速登录
             if (!this.getApiToken && this.getQuickLoginInfo) {
                 this.setApiToken(this.getQuickLoginInfo.apiToken)

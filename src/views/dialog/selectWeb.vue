@@ -20,15 +20,15 @@
             }
         },
         computed:{
-            ...mapGetters(['getSysParams']),
+            //...mapGetters(['getSysParams']),
         },
         watch:{
-            getSysParams(e) {
+            /*getSysParams(e) {
                 let status = e['maintain']['value']
                 if( status === '1'){
                     this.$emit('removeDialog')
                 }
-            }
+            }*/
         },
         created() {
 
