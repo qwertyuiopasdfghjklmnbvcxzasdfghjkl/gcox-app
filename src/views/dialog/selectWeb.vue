@@ -10,12 +10,24 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
     export default {
         name: "selectWeb",
         data() {
             const vm = window.vm
             return {
                 vm: vm
+            }
+        },
+        computed:{
+            ...mapGetters(['getSysParams']),
+        },
+        watch:{
+            getSysParams(e) {
+                let status = e['maintain']['value']
+                if( status === '1'){
+                    this.$emit('removeDialog')
+                }
             }
         },
         created() {
