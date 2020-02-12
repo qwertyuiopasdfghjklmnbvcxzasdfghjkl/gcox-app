@@ -171,7 +171,7 @@
                 return this.$t('exchange.exchange_market_price') // 市价
             },
             depthChange () {
-                console.log(this.filterAsks,this.filterBids)
+               // console.log(this.filterAsks,this.filterBids)
                 if(this.filterAsks.length && this.filterBids.length){
                     this.showLatestDeal = false
                 }else{
@@ -280,6 +280,9 @@
             },
             depthChange () {
                 this.depthChart && this.depthChart.drawDepth(this.depthChange)
+            },
+            getMarketConfig(e){
+                console.log(e)
             }
         },
         created() {

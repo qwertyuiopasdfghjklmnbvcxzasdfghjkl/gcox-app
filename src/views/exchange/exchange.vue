@@ -67,6 +67,7 @@
     import Lastdeal from "./market/lastdeal"
     import market from '../market/index'
     import Loading from "../../components/common/loading";
+    import utils from '@/assets/js/utils'
 
     export default {
         name: 'exchange',
@@ -190,7 +191,7 @@
             this.dataSocket && this.dataSocket.close()
         },
         methods: {
-            ...mapActions(['setLast24h', 'tiggerEvents', 'setMarketList']),
+            ...mapActions(['setLast24h', 'tiggerEvents', 'setMarketList', 'setMarketConfig']),
             switchTradeType(active) {
                 this.tradeType = active.name
                 console.log(active)
@@ -226,7 +227,7 @@
                 this.dataSocket = DataWebSocket({
                     symbol: this.symbol,
                     period: '1m',
-                    subscribe: ['depth', 'msg', 'last_price', 'new_transaction', 'user_new_orderbook', 'user_history_orderbook'],
+                    subscribe: ['depth', 'msg', 'last_price', 'new_transaction', 'user_new_orderbook', 'user_history_orderbook', 'market'],
                     callback: (res) => {
                         if (res.symbol && res.symbol !== this.symbol) {
                             console.log(`市场数据不匹配...`)
@@ -304,7 +305,13 @@
                                     }
                                 })
                             }
+                            let config = {}
                             res.data = res.data.filter(item=>{
+                                config[item.market] = {
+                                    minAmount: item.minAmount,
+                                    minQuantity: item.minQuantity
+                                }
+
                               if(window.marketVisible){
                                 return window.marketVisible[item.market] === '1'
                               } else {
@@ -312,6 +319,9 @@
                               }
                             })
                             this.setMarketList(res.data)
+
+                            this.setMarketConfig(utils.isPlainEmpty(config) ? null : config)
+                            console.log(config)
                         }
                     }
                 })
