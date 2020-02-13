@@ -7,7 +7,7 @@
                         <span class="f28 ft-c-white">{{item.currencySymbol}}</span>
                         <span class="ft-c-lightGray f24">/{{item.baseSymbol}}</span>
                     </p>
-                    <p class="nub f32" :class="[percent(item).css]">{{toFixed(item.lastPrice, item.accuracy)|number}}</p>
+                    <p class="nub f32" :class="[percent(item).css]">{{percentToMoney(item)}}</p>
                     <span class="f24 fmt" :class="[percent(item).css]">
                         <img :src="percent(item).css === 'c-orange'? r_d:g_u">{{percent(item).percent}}%
                     </span>
@@ -21,6 +21,7 @@
     import { mapGetters, mapActions } from 'vuex'
     import numUtils from '@/assets/js/numberUtils'
     import marketApi from '@/api/market'
+    import utils from '../../../assets/js/utils'
 
     export default {
         name: "data_box",
@@ -70,6 +71,9 @@
                     this.$router.push({name: 'exchange', params: {market: `${item.currencySymbol}_${item.baseSymbol}`}})
                 })
             },
+            percentToMoney(item){
+                return utils.removeEndZero(this.toFixed(item.lastPrice, item.accuracy)).toMoney()
+            }
         }
     }
 </script>

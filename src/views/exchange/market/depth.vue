@@ -18,13 +18,13 @@
             <loading v-show="!asks.length" class="load"/>
         </div>
         <div class="numb_text">
-            <p :class="{sell:(getLast24h.direction!=1)}">{{Number(toFixed(getLast24h.close))}}</p>
+            <p :class="{sell:(getLast24h.direction!=1)}">{{toFixed(getLast24h.close)}}</p>
             <!--<p class="mt10">≈ <valuation :lastPrice="getLast24h.close" :baseSymbol="baseSymbol"/></p>-->
         </div>
         <div class="mt35 relative" v-if="sellBuy!==1">
             <ul class="buy-list" ref="parentListBid">
                 <li v-for="(item, index) in filterBids" :style="listItemStyle(item, 'bid')">
-                    <span @click="clickChangeValue(toFixed(item.price), 'price')">{{Number(toFixed(item.price))}}</span>
+                    <span @click="clickChangeValue(toFixed(item.price), 'price')">{{toFixed(item.price)}}</span>
                     <span @click="clickChangeValue(toFixed(item.price), 'price')">{{Number(toFixed(item.avaliableAmount, accuracy.quantityAccu))}}</span>
                 </li>
                 <li v-for="n in bidLength">

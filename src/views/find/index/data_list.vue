@@ -49,7 +49,7 @@
                                 {{toFixed(item.dealAmount, 2)}}</p>
                         </li>
                         <li>
-                            <p class="f34">{{toFixed(item.lastPrice, item.accuracy)|number}}</p>
+                            <p class="f34">{{percentToMoney(item)}}</p>
                             <!--<p class="ft-c-lightGray mt15">≈<span><valuation :lastPrice="item.lastPrice" :baseSymbol="item.baseSymbol"/></span></p>-->
                         </li>
                         <li>
@@ -67,6 +67,7 @@
     import numUtils from '@/assets/js/numberUtils'
     import marketApi from '@/api/market'
     import valuation from '@/components/valuation'
+    import utils from '../../../assets/js/utils'
 
     export default {
         name: 'market-index',
@@ -99,7 +100,8 @@
                     }
                 })
                 return datas
-            }
+            },
+
         },
         methods: {
             ...mapActions(['setLast24h']),
@@ -130,6 +132,9 @@
             },
             toFixed(v1, fixed) {
                 return numUtils.BN(v1).toFixed(fixed !== undefined ? fixed : 8)
+            },
+            percentToMoney(item){
+                return utils.removeEndZero(this.toFixed(item.lastPrice, item.accuracy)).toMoney()
             }
         }
     }
