@@ -106,9 +106,9 @@
                     if (res) {
                         if (window['cordova']) {
                             console.log('请访问新加坡站点')
-                            utils.setDialog(internationalApp, {
+                            // utils.setDialog(internationalApp, {
                                 // 选择哪个站点 select
-                            })
+                            //})
                         } else {
                             utils.setDialog(select, {
                                 // 选择哪个站点 select
@@ -122,9 +122,9 @@
                     if (res) {
                         if (window['cordova']) {
                             console.log('请访问新加坡站点')
-                            utils.setDialog(internationalApp, {
+                           // utils.setDialog(internationalApp, {
                                 // 选择哪个站点 select
-                            })
+                            //})
                         } else {
                             this.setApiToken('')
                             utils.setDialog(international, {

@@ -46,7 +46,7 @@
                             </li>
                         </ul>
                         <loading v-if="messageBottomLoading"/>
-                        <noMoreData v-if="!messageBottomLoading && noMoreMessage" :bgColor="'#F7F7F7'"/>
+                        <noMoreData v-if="!messageBottomLoading && noMoreMessage"/>
                     </template>
                     <noData v-if="!messageTopLoading && messageList.length === 0"/>
                 </mt-loadmore>

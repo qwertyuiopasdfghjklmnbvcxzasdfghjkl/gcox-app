@@ -129,7 +129,7 @@
                 return false
             },
             baseSymbol() {
-                let symbol = this.$route.params.market
+                let symbol = this.$route.params.market || localStorage.market
                 if (symbol) {
                     symbol = symbol.split('_')[1]
                     return symbol ? symbol : 'BTC'
@@ -138,7 +138,7 @@
                 }
             },
             currentSymbol() {
-                let symbol = this.$route.params.market
+                let symbol = this.$route.params.market || localStorage.market
                 if (symbol) {
                     symbol = symbol.split('_')[0]
                     return symbol ? symbol : 'ETH'
@@ -181,11 +181,15 @@
                 marketApi.get24hPrice({symbol: `${this.symbol}`}, (data) => {
                     this.setLast24h(data)
                 })
+                localStorage.market = this.$route.params.market
             }
         },
         created() {
             this.tradeType = this.$route.params.action !== false ? 'buy' : 'sell'
             this.InitDataSoket()
+            if(this.$route.params.market){
+                localStorage.market = this.$route.params.market
+            }
         },
         beforeDestroy() {
             this.dataSocket && this.dataSocket.close()

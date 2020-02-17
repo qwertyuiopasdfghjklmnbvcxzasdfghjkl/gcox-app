@@ -18,7 +18,7 @@
             },
             bgColor: {
                 type: String,
-                default: '#25242A'
+                default: 'none'
             },
             text: {
                 type: String,
