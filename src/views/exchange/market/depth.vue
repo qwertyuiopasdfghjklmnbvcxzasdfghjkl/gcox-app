@@ -11,7 +11,7 @@
                     <span>--</span>
                 </li>
                 <li v-for="(item, index) in filterAsks" :style="listItemStyle(item, 'ask')">
-                    <span @click="clickChangeValue(toFixed(item.price), 'price')">{{Number(toFixed(item.price))}}</span>
+                    <span @click="clickChangeValue(toFixed(item.price), 'price')">{{toFixed(item.price)}}</span>
                     <span @click="clickChangeValue(toFixed(item.price), 'price')">{{Number(toFixed(item.avaliableAmount, accuracy.quantityAccu))}}</span>
                 </li>
             </ul>
