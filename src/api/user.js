@@ -237,7 +237,6 @@ user.payPW = payPW
 // kyc 检验
 const kyc = function ( success, error) {
   api.get(`${domain}api/v1/gcox/user/initiate-kyc`, (res) => {
-    // api/v1/Kyc/initiate-submit
     if (res.rst === 1) {
       success && success(res)
     } else {

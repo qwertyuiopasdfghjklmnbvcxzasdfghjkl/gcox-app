@@ -25,7 +25,8 @@
                         :tradeType="tradeType"
                         :currentSymbol="currentSymbol"
                         :baseSymbol="baseSymbol"
-                        :accuracy="accuracy"></business>
+                        :accuracy="accuracy"
+                        :dataList="businesData"></business>
                 <div class="right">
                     <depth v-model="showLatestDeal" :baseSymbol="baseSymbol" :currentSymbol="currentSymbol"
                            v-show="!showLatestDeal" :accuracy="accuracy"></depth>
@@ -90,7 +91,8 @@
                 business: {
                     market: ''
                 },
-                showDepu: false
+                showDepu: false,
+                businesData: {}
             }
         },
         computed: {
@@ -172,16 +174,18 @@
                     this.showMarketsSlide = false
                 }
             },
-            symbol() {
-                this.dataSocket && this.dataSocket.switchSymbol(this.symbol)
-            },
+            // symbol() {
+            //     this.dataSocket && this.dataSocket.switchSymbol(this.symbol)
+            // },
             '$route.params.market'(){
+                this.dataSocket.close()
                 this.showMarkets = false
                 this.setLast24h(0)
                 marketApi.get24hPrice({symbol: `${this.symbol}`}, (data) => {
                     this.setLast24h(data)
                 })
                 localStorage.market = this.$route.params.market
+                this.InitDataSoket()
             }
         },
         created() {
@@ -227,7 +231,8 @@
                     params: {market: `${args.market.currencySymbol}_${args.market.baseSymbol}`}
                 })
             },
-            InitDataSoket() { //初始化数据websoket
+            InitDataSoket() { //
+
                 this.dataSocket = DataWebSocket({
                     symbol: this.symbol,
                     period: '1m',
@@ -240,6 +245,10 @@
                         if (res.dataType === 'LastOrderBook') {
                             // 深度数据
                             let data = res.data
+                            this.businesData = {
+                                asks: data.asks || [],
+                                bids: data.bids || []
+                            }
                             this.tiggerEvents({
                                 name: 'depthEvent',
                                 params: {

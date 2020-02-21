@@ -1,6 +1,6 @@
 // let domain = process.env.NODE_ENV === 'development' ? 'gcox.dev.koall.io' : location.host.split(':')[0]
- let domain = process.env.NODE_ENV === 'development' ? 'gcox-test.lab.ssss.so' : location.host.split(':')[0]
-// let domain = process.env.NODE_ENV === 'development' ? 'gcox.com' : location.host.split(':')[0]
+//  let domain = process.env.NODE_ENV === 'development' ? 'gcox-test.lab.ssss.so' : location.host.split(':')[0]
+let domain = process.env.NODE_ENV === 'development' ? 'm-exchange.gcox.com' : location.host.split(':')[0]
 // let domain = process.env.NODE_ENV === 'development' ? 'ws-exchange.gcox.com' : location.host.split(':')[0]
 // let domain = process.env.NODE_ENV === 'development' ? 'exchange-staging.gcox.com' : location.host.split(':')[0]
 if (process.env.VUE_APP_BASEURL) {

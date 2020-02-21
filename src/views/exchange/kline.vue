@@ -326,12 +326,13 @@
                 this.loading = true
                 this.showMarkets = false
                 this.InitKlineWebSoket()
+                this.setIframe()
                 this.setLast24h(0)
                 marketApi.get24hPrice({symbol: `${this.symbol}`}, (data) => {
                     this.setLast24h(data)
                 })
                 localStorage.market = this.$route.params.market
-                this.setIframe()
+
 
             },
             depthChange() {
@@ -362,6 +363,9 @@
                 },1000)
             },
             setIframe(){
+                if(!this.loading){
+
+                }
                 this.$refs.klineContainer.src = this.klineURL
             },
             upOrDown(item) {
