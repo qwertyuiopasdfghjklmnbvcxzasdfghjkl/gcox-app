@@ -258,7 +258,8 @@
                             })
                         }
                         datas.forEach((item) => {
-                            newArray.push([Number(item[0]), parseFloat(this.toFixed(Number(item[1]))) || 0, parseFloat(this.toFixed(Number(item[2]))) || 0, parseFloat(this.toFixed(Number(item[3]))) || 0, parseFloat(this.toFixed(Number(item[4]))) || 0, parseFloat(this.toFixed(Number(item[5]))) || 0])
+                            newArray.push([Number(item[0]), item[1] || 0, item[2] || 0, item[3] || 0, item[4] || 0, item[5] || 0])
+                            //console.log(newArray)
                         })
                         if (!this.isFirst && newArray.length === 1) {
                             let tempObj = {}
@@ -283,6 +284,7 @@
                             this.isFirst = false
                             this.klineData = newArray
                         }
+                        console.log(this.klineData)
                         TVjsApi.onMessage(this.klineData)
                     }
                 },

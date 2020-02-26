@@ -1,6 +1,7 @@
 //自定义Vue过滤器集合
 
 import Vue from 'vue'
+import utils from './utils'
 
 //小写转大写过滤器
 Vue.filter('uppercase', function (value) {
@@ -22,7 +23,7 @@ Vue.filter('number', function (value) {
   if(isNaN(value)){
     return value
   } else {
-    return Number(value)
+    return utils.removeEndZero(value)
   }
 })
 

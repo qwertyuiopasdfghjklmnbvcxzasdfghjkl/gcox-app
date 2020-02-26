@@ -11,7 +11,7 @@
             <div class="info mt20">
                 <div>
                     <p class="f50">
-                        {{toFixed(getLast24h.close)}}
+                        {{toFixed(getLast24h.close) | number}}
                     </p>
                     <p class="fabi mt10 f30 price"
                        :class="{down:Number(getLast24h.percent)<0,up:Number(getLast24h.percent)>0}">
@@ -20,17 +20,17 @@
                     </p>
                     <p class="mt10">
                         <span class="">{{$t('market.volume_24h')}}{{$t('home.home04')}}</span><!--24h成交量-->
-                        <span class="ml25">{{toFixed(getLast24h.vol, 2)}} {{baseSymbol}}</span>
+                        <span class="ml25">{{toFixed(getLast24h.vol, 2) | number}} {{baseSymbol}}</span>
                     </p>
                 </div>
                 <div>
                     <p class="mt10">
                         <span class="">{{$t('market.low')}}</span>
-                        <!--24h最低价--><span>{{toFixed(getLast24h.bottom)}}</span>
+                        <!--24h最低价--><span>{{toFixed(getLast24h.bottom) | number}}</span>
                     </p>
                     <p class="mt10">
                         <span class="">{{$t('market.high')}}</span>
-                        <!--24h最高价--><span>{{toFixed(getLast24h.high)}}</span>
+                        <!--24h最高价--><span>{{toFixed(getLast24h.high) | number}}</span>
                     </p>
                 </div>
             </div>
@@ -60,9 +60,6 @@
             <div class="kline-panel">
                 <div class="kline-panel-container" :class="{depth:!isKline}">
                     <div class="kline-master">
-                        <!--<div class="kine-select">-->
-
-                        <!--</div>-->
                         <div class="kline-container">
                             <iframe ref="klineContainer" id="klineContainer" frameborder="0"
                                     height="100%" width="100%"
@@ -418,20 +415,6 @@
                 }
             },
             initECharts() {
-                // this.kLineChart = KLineChart({
-                //     container: document.getElementById('klineContainer'),
-                //     klineType: 'eosbtc',
-                //     scale: 2,
-                //     hideDepth: true,
-                //     fixedNumber: this.accuracy.fixedNumber,
-                //     ThemeColor: {
-                //         Background: '#201f25',
-                //         Cursor: '#555963',
-                //     }
-                // })
-                // this.kLineChart.switch_indic(this.indice)
-                // this.kLineChart.updateKlienDatas(JSON.parse(JSON.stringify(this.klineData)))
-                // console.log('init    ' + this.klineData)
                 // 深度图
                 this.depthChart = DepthChart({
                     isAmountShowLeft: true,

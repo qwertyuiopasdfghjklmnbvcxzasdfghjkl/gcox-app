@@ -4,21 +4,29 @@
         <div class="page-main">
             <div class="cont">
                 <img :src="imgSrc[getUserInfo.kycState]"/>
-                <div v-if="getUserInfo.kycState === -1">
-                    <p class="f-c-green">{{$t('home.kyc-ing')}}</p>
-                    <span>{{$t('home.kyc-ing-p')}}</span>
-                </div>
                 <div v-if="getUserInfo.kycState === 0">
-                    <p>{{$t('home.no-kyc')}}</p>
-                    <span @click="submitKYC()" style="cursor: pointer" v-html="$t('home.no-kyc-p')"></span>
+                    <p>{{$t('usercontent.user85')}}</p>
+                    <span @click="submitKYC()" style="cursor: pointer" v-html="$t('usercontent.user48')"></span>
                 </div>
+
                 <div v-if="getUserInfo.kycState === 1">
-                    <p class="f-c-green">{{$t('home.kyc')}}</p>
-                    <span>{{$t('home.kyc-p')}}</span>
+                    <p class="f-c-green">{{$t('usercontent.user42')}}</p>
+                    <span>{{$t('usercontent.user43')}}</span>
                 </div>
-                <div v-if="getUserInfo.kycState === -2 || getUserInfo.kycState === -3">
-                    <p class="f-c-danger">{{$t('home.re-kyc')}}</p>
-                    <span @click="submitKYC()" style="cursor: pointer" v-html="$t('home.re-kyc-p')"></span>
+
+                <div v-if="getUserInfo.kycState === 2">
+                    <p class="f-c-green">{{$t('usercontent.user46')}}</p>
+                    <span>{{$t('usercontent.user47')}}</span>
+                </div>
+                <div v-if="getUserInfo.kycState === -1">
+                    <p class="f-c-green">{{$t('usercontent.user46')}}</p>
+                    <span>{{$t('usercontent.user47')}}</span>
+                </div>
+
+                <div v-if="getUserInfo.kycState === -2 || getUserInfo.kycState === -3
+      || getUserInfo.kycState === -4 || getUserInfo.kycState === -5">
+                    <p class="f-c-danger">{{$t('usercontent.user44')}}</p>
+                    <span @click="submitKYC()" style="cursor: pointer" v-html="$t('usercontent.user45')"></span>
                 </div>
             </div>
         </div>
@@ -33,12 +41,16 @@
         data() {
             return {
                 // 0未通过，1已通过，-1审核中，-2错误，-3拒绝
+                // 0:新的,1:已审核,2:正在提交,-1:待审核,-2:错误,-3:拒绝,-4:不完整,-5:失败
                 imgSrc: {
                     '0': require('../../../assets/img/authentication01.png'),
                     '1': require('../../../assets/img/authentication03.png'),
                     '-1': require('../../../assets/img/authentication02.png'),
+                    '2': require('../../../assets/img/authentication02.png'),
                     '-2': require('../../../assets/img/authentication04.png'),
+                    '-4': require('../../../assets/img/authentication04.png'),
                     '-3': require('../../../assets/img/authentication04.png'),
+                    '-5': require('../../../assets/img/authentication04.png'),
                 }
             }
         },
