@@ -281,7 +281,7 @@ individual.downloadHeader = downloadHeader
 
 // 下载别人头像
 const downloadHeaderOther = function (id, success, error) {
-  api.get(`${domain}api/v2/individual/download/header?user_id=${id}`, (res) => {
+  api.get(`${domain}api/v2/individual/download/header`,id, (res) => {
     if (res.rst === 1) {
       success && success(`${res.url ? config.url + res.url + '?' + Date.now() : ''}`)
     } else {
