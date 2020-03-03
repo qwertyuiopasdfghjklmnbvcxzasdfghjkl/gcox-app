@@ -36,13 +36,13 @@
             }
         },
         computed: {
-            ...mapGetters(['getApiToken', 'getQuickLoginInfo',  'getSiteType', 'getSysParams'])
+            ...mapGetters(['getApiToken', 'getQuickLoginInfo',  'getSiteType', 'getSysParams','getUserInfo'])
+
         },
         watch: {
             getApiToken(newVal) {
                 this.loadLoginInfo()
                 this.getMarketList()
-                this.showJumpTo2()
             },
             getSysParams(e) {
                 console.log(e)
@@ -52,6 +52,11 @@
                     this.$router.push({name: 'maintain'})
                 }else{
                     this.showJumpTo()
+                }
+            },
+            getUserInfo(){
+                if(this.getUserInfo.kycState === 1){
+                    this.showJumpTo2()
                 }
             }
         },
