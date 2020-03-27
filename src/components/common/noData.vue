@@ -32,7 +32,7 @@
     .no-data {
         background-color: transparent;
         text-align: center;
-        margin: 1rem auto;
+        margin: 0.6rem auto;
     }
     .no-data img{
         width: 3.45rem;

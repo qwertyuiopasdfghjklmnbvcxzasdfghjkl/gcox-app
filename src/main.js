@@ -19,9 +19,7 @@ import VeeValidate from 'vee-validate' // 验证
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.min.css'
 import '@/assets/js/vee-validate'
-import langApi from '@/api/language'
 import VueClipboard from 'vue-clipboard2'
-import Config from '@/api/config'
 import './components/dialog'
 
 import {
@@ -97,6 +95,8 @@ let i18n = window.$i18n = new VueI18n({
 })
 
 Vue.config.productionTip = false
+// Vue.config.performance = true
+
 
 //路由拦截
 router.beforeEach((to, from, next) => {
@@ -140,15 +140,8 @@ if(process.env.NODE_ENV !== 'development'){
 }
 
 // window.console.clear()
-langApi.getLanguage(lang, (res) => {
-    if(Config.updateInfo[lang]){
-      res.updateInfo = Config.updateInfo[lang]
-    } else {
-      res.updateInfo = Config.updateInfo['en']
-    }
-    i18n.locale = lang
-    i18n.setLocaleMessage(lang, res)
-    window.localStorage[lang] = JSON.stringify(res)
+console.log('main')
+
     window.vm = new Vue({
         i18n,
         methods:Methods,
@@ -156,14 +149,14 @@ langApi.getLanguage(lang, (res) => {
         store,
         render: h => h(App)
     }).$mount('#app')
-},msg=>{
-    window.vm = new Vue({
-        i18n,
-        methods:Methods,
-        router,
-        store,
-        render: h => h(App)
-    }).$mount('#app')
-})
+// },msg=>{
+//     window.vm = new Vue({
+//         i18n,
+//         methods:Methods,
+//         router,
+//         store,
+//         render: h => h(App)
+//     }).$mount('#app')
+// })
 
 

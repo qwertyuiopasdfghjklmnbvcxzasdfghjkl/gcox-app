@@ -9,7 +9,7 @@
             </span>
         </top-back>
         <div class=" user">
-            <div class="user_head">
+            <div class="user_head mt20">
                 <div class="info" @click="routeTo()">
                     <label>
                         <img :src="avatarUrl||''" @error="setDefaultIcon($event)">
@@ -22,13 +22,13 @@
                     </span>
                 </div>
             </div>
-            <div class="mt20">
+            <div class="mt2">
                 <rail-bar v-for="data in data1" :item="data" class="hr"></rail-bar>
             </div>
-            <div class="mt20">
+            <div class="mt2">
                 <rail-bar v-for="data in data2" :item="data" class="hr"></rail-bar>
             </div>
-            <div class="mt20">
+            <div class="mt2">
                 <rail-bar v-for="data in data3" :item="data" class="hr"></rail-bar>
             </div>
             <div class="mt20">
@@ -157,14 +157,14 @@
     .user_head {
         position: relative;
         overflow: hidden;
-        height: 2.24rem;
+        height: 1.8rem;
         background: #2A2A34;
         .info {
             position: absolute;
             padding-left: 0.3rem;
             padding-right: 0.3rem;
             left: 0;
-            bottom: 0.92rem;
+            top: 0.4rem;
             display: flex;
             align-items: center;
             justify-content: flex-start;
@@ -223,7 +223,7 @@
             bottom: 0;
             right: 0.3rem;
             left:0.3rem;
-            background: #43434E;
+            background: #363643;
             height: 0.02rem;
         }
 

@@ -7,49 +7,64 @@
             </div>
             <span slot="right">
                 <i class="icon_favorite" :class="{active:curMarket && curMarket.collection}" v-tap="{methods:keep}"></i>
-        <router-link :to="{name: 'kline', params: {market: `${currentSymbol}_${baseSymbol}`}}" tag="i"
-                     class="icon_kline"></router-link>
-
-      </span>
+            <router-link :to="{name: 'kline', params: {market: `${currentSymbol}_${baseSymbol}`}}" tag="i"
+                         class="icon_kline"></router-link>
+          </span>
         </top-back>
-        <div class="top_checkt">
-            <label v-tap="{methods:switchTradeType, name: 'buy'}" :class="{'active': tradeType === 'buy'}">{{$t('exchange.exchange_buy')}}</label>
-            <label v-tap="{methods:switchTradeType, name: 'sell'}" :class="{'active': tradeType === 'sell'}">{{$t('exchange.exchange_sell')}}</label>
-            <label v-tap="{methods: toNowDeal}">{{$t('trade_record.current_entrust')}}</label>
-            <label v-tap="{methods: toHistoryDeal}">{{$t('trade_record.history_entrust')}}</label>
-        </div>
+
         <div class="main">
             <section class="exchange-container">
-                <business
-                        :pTradeType="tradeType"
-                        :tradeType="tradeType"
-                        :currentSymbol="currentSymbol"
-                        :baseSymbol="baseSymbol"
-                        :accuracy="accuracy"
-                        :dataList="businesData"></business>
+                <div class="left">
+                    <div class="top_checkt">
+                        <label v-tap="{methods:switchTradeType, name: 'buy'}" :class="{'buy': tradeType === 'buy'}">{{$t('exchange.exchange_buy')}}</label>
+                        <label v-tap="{methods:switchTradeType, name: 'sell'}" :class="{'sell': tradeType === 'sell'}">{{$t('exchange.exchange_sell')}}</label>
+                        <!--<label v-tap="{methods: toNowDeal}">{{$t('trade_record.current_entrust')}}</label>-->
+                        <!--<label v-tap="{methods: toHistoryDeal}">{{$t('trade_record.history_entrust')}}</label>-->
+                    </div>
+                    <business
+                            :pTradeType="tradeType"
+                            :tradeType="tradeType"
+                            :currentSymbol="currentSymbol"
+                            :baseSymbol="baseSymbol"
+                            :accuracy="accuracy"
+                            :dataList="businesData"></business>
+                </div>
                 <div class="right">
                     <depth v-model="showLatestDeal" :baseSymbol="baseSymbol" :currentSymbol="currentSymbol"
                            v-show="!showLatestDeal" :accuracy="accuracy"></depth>
                 </div>
             </section>
             <div class="assets mt30">
-                <lastdeal :currentSymbol="currentSymbol"
+                <!--<lastdeal :currentSymbol="currentSymbol"-->
+                          <!--:baseSymbol="baseSymbol"-->
+                          <!--:symbol="symbol"-->
+                          <!--:accuracy="accuracy"-->
+                <!--&gt;</lastdeal>-->
+                <div class="tabs">
+                    <label v-tap="{methods: tabs, nav: 1}">
+                        <span :class="{active: orderNav === 1}">{{$t('trade_record.current_entrust')}}</span>
+                    </label>
+                    <label v-tap="{methods: tabs, nav: 2}">
+                        <span :class="{active: orderNav === 2}">{{$t('trade_record.history_entrust')}}</span>
+                    </label>
+                </div>
+                <div class="tabs_cont">
+                    <entrust v-show="orderNav === 1"
+                             :currentSymbol="currentSymbol"
+                             :baseSymbol="baseSymbol"
+                             :symbol="symbol"></entrust>
+
+                    <deal v-show="orderNav === 2"
+                          :currentSymbol="currentSymbol"
                           :baseSymbol="baseSymbol"
-                          :symbol="symbol"
-                          :accuracy="accuracy"
-                ></lastdeal>
+                          :symbol="symbol"></deal>
+                </div>
             </div>
         </div>
         <mask-layer :show="showMarkets" @hide="hideMarketList" :isgray="true">
-            <transition enter-active-class="animated short slideInRight">
+            <transition enter-active-class="animated short slideInLeft">
                 <div class="wallet-list-container" v-show="showMarketsSlide">
-
-                    <div class="title">
-                        <span v-tap="{methods:toggleMarketList}"></span>
-                        {{$t('home.select-market')}}
-                    </div>
-                    <market :form="'exchange'"></market>
-
+                    <market-list @changeMarket="changeMarket"/>
                 </div>
             </transition>
         </mask-layer>
@@ -69,16 +84,22 @@
     import market from '../market/index'
     import Loading from "../../components/common/loading";
     import utils from '@/assets/js/utils'
+    import Deal from "./history-deal/deal";
+    import Entrust from "./now-deal/entrust";
+    import MarketList from "./marketList";
 
     export default {
         name: 'exchange',
         components: {
+            MarketList,
+            Deal,
             Loading,
             Lastdeal,
             business,
             depth,
             cpSwitch,
-            market
+            market,
+            Entrust
         },
         data() {
             return {
@@ -92,7 +113,9 @@
                     market: ''
                 },
                 showDepu: false,
-                businesData: {}
+                businesData: {},
+                orderNav: 1,
+                market: null,
             }
         },
         computed: {
@@ -131,7 +154,7 @@
                 return false
             },
             baseSymbol() {
-                let symbol = this.$route.params.market || localStorage.market
+                let symbol = this.market || localStorage.market
                 if (symbol) {
                     symbol = symbol.split('_')[1]
                     return symbol ? symbol : 'BTC'
@@ -140,7 +163,7 @@
                 }
             },
             currentSymbol() {
-                let symbol = this.$route.params.market || localStorage.market
+                let symbol = this.market || localStorage.market
                 if (symbol) {
                     symbol = symbol.split('_')[0]
                     return symbol ? symbol : 'ETH'
@@ -174,26 +197,28 @@
                     this.showMarketsSlide = false
                 }
             },
-            // symbol() {
-            //     this.dataSocket && this.dataSocket.switchSymbol(this.symbol)
-            // },
-            '$route.params.market'(){
+            symbol() {
+                this.dataSocket && this.dataSocket.switchSymbol(this.symbol)
+            },
+            'market'(){
                 this.dataSocket.close()
                 this.showMarkets = false
                 this.setLast24h(0)
                 marketApi.get24hPrice({symbol: `${this.symbol}`}, (data) => {
                     this.setLast24h(data)
                 })
-                localStorage.market = this.$route.params.market
                 this.InitDataSoket()
             }
         },
         created() {
             this.tradeType = this.$route.params.action !== false ? 'buy' : 'sell'
             this.InitDataSoket()
-            if(this.$route.params.market){
-                localStorage.market = this.$route.params.market
-            }
+        },
+        mounted() {
+            localStorage.setItem('market', `${this.currentSymbol}_${this.baseSymbol}`)
+        },
+        updated() {
+            localStorage.setItem('market', `${this.currentSymbol}_${this.baseSymbol}`)
         },
         beforeDestroy() {
             this.dataSocket && this.dataSocket.close()
@@ -226,10 +251,8 @@
             },
             changeMarket(args) {
                 this.showMarkets = false
-                this.$router.replace({
-                    name: 'exchange',
-                    params: {market: `${args.market.currencySymbol}_${args.market.baseSymbol}`}
-                })
+                this.market = `${args.currencySymbol}_${args.baseSymbol}`
+                console.log(args)
             },
             InitDataSoket() { //
 
@@ -379,29 +402,37 @@
                     name: 'history-deal',
                     params: {currentSymbol: this.currentSymbol, baseSymbol: this.baseSymbol, symbol: this.symbol}
                 })
+            },
+            tabs(e){
+                this.orderNav = e.nav
             }
         }
     }
 </script>
 
 <style lang="less" scoped>
+    @c_buy: #439B64;
+    @c_sell: #E14B26;
     .top_checkt {
-        border-bottom: 0.02rem solid #40403E;
-        height: 0.8rem;
+        background: #2A2A34;
+        height: 0.7rem;
         display: flex;
         justify-content: space-between;
-        align-items: flex-end;
-        padding: 0 0.12rem;
+        align-items: center;
+        line-height: 0.7rem;
+        padding: 0;
 
         label {
-            color: #C8C7CC;
+            color: #ffffff;
             font-size: 0.3rem;
-            padding: 0.06rem 0.18rem;
-            border-bottom: 0.02rem solid transparent;
-            margin-bottom: -0.02rem;
+            text-align: center;
+            flex: 1;
 
-            &.active {
-                border-bottom-color: #18BAF8;
+            &.buy {
+                background-color: @c_buy
+            }
+            &.sell {
+                background-color: @c_sell
             }
         }
     }
@@ -409,7 +440,7 @@
     .main {
         padding: 0 0.3rem;
         overflow-y: auto;
-        height: calc(100vh - 2.7rem);
+        height: calc(100vh - 1.9rem);
     }
 
     .icon_favorite {
@@ -453,7 +484,7 @@
 
     .wallet-list-container {
         position: relative;
-        width: 100vw;
+        width: 70vw;
         height: 100vh;
 
         .title {
@@ -511,7 +542,7 @@
     }
 
     .exchange-container {
-        padding-top: 0.2rem;
+        padding-top: 0.3rem;
         display: flex;
     }
 
@@ -525,16 +556,27 @@
     .assets {
         margin-left: -0.3rem;
         margin-right: -0.3rem;
-        /*padding: 0.3rem;*/
-        /*background-color: #fff;*/
-
-        /*.items {*/
-        /*display: flex;*/
-        /*justify-content: space-between;*/
-
-        /*&.header {*/
-        /*color: #999;*/
-        /*}*/
-        /*}*/
+        .tabs{
+            background: #2A2A34;
+            height: 0.96rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            label{
+                flex: 1;
+                text-align: center;
+                line-height: 0.96rem;
+                span{
+                    display: inline-block;
+                    height: 0.93rem;
+                    line-height: 0.93rem;
+                    border-bottom: 0.03rem solid transparent;
+                    padding: 0 0.3rem;
+                    &.active{
+                        border-bottom: 0.03rem solid #18BAF8;
+                    }
+                }
+            }
+        }
     }
 </style>

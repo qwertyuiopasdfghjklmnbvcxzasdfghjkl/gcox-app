@@ -63,7 +63,7 @@
     @c_board: #B9D0CF;
     .price-adjust {
         display: flex;
-        height: 0.64rem;
+        height: 0.8rem;
         background: #2A2A34;;
 
         > div {
@@ -76,8 +76,8 @@
                 font-size: 0.24rem;
                 width: 100%;
                 text-align: center;
-                height: 0.64rem;
-                line-height: 0.64rem;
+                height: 0.8rem;
+                line-height: 0.8rem;
             }
         }
         > div:nth-of-type(2) {
@@ -86,21 +86,21 @@
         }
 
         > div:nth-of-type(1) {
-            width: 0.64rem;
-            height: 0.64rem;
+            width: 0.7rem;
+            height: 0.8rem;
             background: #43434E;
         }
 
         > div:nth-of-type(3) {
-            width: 0.64rem;
-            height: 0.64rem;
+            width: 0.7rem;
+            height: 0.8rem;
             background: #43434E;
         }
 
         i {
             font-size: 0.36rem;
             color: #d8d8d8;
-            line-height: 0.64rem;
+            line-height: 0.8rem;
             text-align: center;
             flex: 1;
             position: relative;

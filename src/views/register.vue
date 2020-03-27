@@ -55,7 +55,7 @@
             </span>
                     </div>
 
-                    <div class="register-content-button mt80">
+                    <div class="register-content-button mt100">
                         <mt-button class="circle" :class="{'unlock': gtLocked}" type="primary" size="large"
                                    v-tap="{methods: register}">
                             <template>{{$t('public0.register')}}<!--注册--></template>
@@ -279,7 +279,6 @@
     .has-account {
         width: 100%;
         text-align: center;
-        position: absolute;
-        bottom: 1rem;
+        margin-top: 0.3rem;
     }
 </style>

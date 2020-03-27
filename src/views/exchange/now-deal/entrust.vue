@@ -1,5 +1,5 @@
 <template>
-    <section class="entrust-container">
+    <section class="entrust">
         <div class="navbar">
             <div class="hideOther">
                 <mt-switch v-model="hideOtherTrust"></mt-switch>
@@ -15,7 +15,7 @@
                     <column :data="item" :index="index" @del="cancelOrder"></column>
                 </li>
             </ul>
-            <no-data v-if="!cdatas"></no-data>
+            <no-data v-if="!cdatas.length" :text="text"></no-data>
         </div>
     </section>
 </template>
@@ -64,6 +64,9 @@
         },
         computed: {
             ...mapGetters(['getApiToken']),
+            text(){
+                return this.getApiToken ? '': this.$t('public0.not_logged')
+            }
         },
         watch: {
             hideOtherTrust(e){
@@ -151,7 +154,7 @@
     @c_board: #B9D0CF;
     @c_btn: #1C9CE3;
 
-    .entrust-container {
+    .entrust {
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -160,7 +163,6 @@
             line-height: 0.54rem;
             color: @c_gray;
             background: #2A2A34;
-            margin: 0 -0.3rem;
 
             .navs span {
                 margin-right: 0.3rem;
@@ -179,9 +181,8 @@
     }
 
     .trust-list {
+        margin-bottom: 0.2rem;
         li {
-            padding: 0.25rem 0;
-
             .title {
                 position: relative;
 
@@ -315,4 +316,11 @@
         color: @c_btn;
         padding: 0 0.3rem;
     }
+    /*蜂玩：2019.03 - 至今*/
+    /*厦门国金：2016.05 - 2019.01*/
+    /*众信：2015.03 - 2016.02*/
+    /*搜狐-焦点：2014.08 - 2014.12*/
 </style>
+
+
+

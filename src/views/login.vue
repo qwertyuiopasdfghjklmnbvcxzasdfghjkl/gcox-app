@@ -37,13 +37,16 @@
                         <mt-button type="primary" class="circle" :class="{'unlock': gtLocked}"
                                    size="large" v-tap="{methods:login}">{{$t('public0.login')}}<!--登录--></mt-button>
                     </div>
-                    <p class="forget_password">
-                        <router-link tag="span" :to="{name:'findpwd'}">{{$t('public0.forgetPassword')}}
-                            <!--忘记密码--></router-link>
-                    </p>
-                    <p class="sing_in">
-                        <router-link class="ft-c-main" :to="{name:'register'}">{{$t('home.home10')}}</router-link>
-                    </p>
+                    <div class="login_to">
+                        <p class="forget_password">
+                            <router-link tag="span" :to="{name:'findpwd'}">{{$t('public0.forgetPassword')}}
+                                <!--忘记密码--></router-link>
+                        </p>
+                        <p class="sing_in">
+                            <router-link class="ft-c-main" :to="{name:'register'}">{{$t('home.home10')}}</router-link>
+                        </p>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -251,18 +254,25 @@
         }
     }
 
+    .login_to{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 0.24rem;
+        padding: 0 0.3rem;
+    }
     .forget_password {
-        position: absolute;
-        left: 0.2rem;
-        bottom: 0.8rem;
+        /*position: absolute;*/
+        /*left: 0.2rem;*/
+        /*bottom: 0.8rem;*/
         font-size: 0.24rem;
         color: #ffffff;
     }
 
     .sing_in {
-        position: absolute;
-        right: 0.2rem;
-        bottom: 0.8rem;
+        /*position: absolute;*/
+        /*right: 0.2rem;*/
+        /*bottom: 0.8rem;*/
         font-size: 0.24rem;
         color: #00A0E9;
     }

@@ -1,7 +1,7 @@
 <template>
     <div class="left">
         <div class="trust-type-choice">
-            <span @click="toggleChoice">{{$t(entrustType=='market'?'exchange.exchange_market':'exchange.exchange_limit')}}</span>
+            <span class="select" @click="toggleChoice">{{$t(entrustType=='market'?'exchange.exchange_market':'exchange.exchange_limit')}}</span>
             <transition enter-active-class="animated short fadeIn" leave-active-class="animated short fadeOut">
                 <ul class="choices" v-show="isTrustChioce">
                     <li @click="toggleChoice('limit')" :class="{active:entrustType==='limit'}">
@@ -46,20 +46,20 @@
                 {{$t(isBuy?'exchange.exchange_buy':'exchange.exchange_sell')}}
             </button>
         </div>
-        <div class="tip_color">
-            <span>
-                <i class="green"></i>
-                {{$t('home.home41')}}
-            </span>
-            <span>
-                <i class="red"></i>
-                {{$t('home.home42')}}
-            </span>
-        </div>
-        <div class="depth">
-            <div class="space-area" id="depth"></div>
-            <loading v-show="showLatestDeal" class="load"/>
-        </div>
+        <!--<div class="tip_color">-->
+            <!--<span>-->
+                <!--<i class="green"></i>-->
+                <!--{{$t('home.home41')}}-->
+            <!--</span>-->
+            <!--<span>-->
+                <!--<i class="red"></i>-->
+                <!--{{$t('home.home42')}}-->
+            <!--</span>-->
+        <!--</div>-->
+        <!--<div class="depth">-->
+            <!--<div class="space-area" id="depth"></div>-->
+            <!--<loading v-show="showLatestDeal" class="load"/>-->
+        <!--</div>-->
 
     </div>
 </template>
@@ -217,16 +217,16 @@
         created() {
             console.log(this.currentSymbol, this.baseSymbol)
             this.tradeType = this.pTradeType ? this.pTradeType : 'buy'
-            this.$nextTick(() => {
-                this.initECharts()
-                this.addEvents({
-                    name: 'businessEvent',
-                    fun: this.businessEvent
-                })
-            })
+            // this.$nextTick(() => {
+            //     this.initECharts()
+            //     this.addEvents({
+            //         name: 'businessEvent',
+            //         fun: this.businessEvent
+            //     })
+            // })
         },
         beforeDestroy() {
-            this.removeEvents('businessEvent')
+            // this.removeEvents('businessEvent')
         },
         methods: {
             ...mapActions(['addEvents', 'removeEvents']),
@@ -607,6 +607,11 @@
         background-color: #2A2A34;
         color: #fff;
     }
+    .left .trust-type-choice .select{
+        display: block;
+        padding-top: 0.3rem;
+        margin-top: 0.2rem;
+    }
 
     .left .price-placeholder {
         height: 0.64rem;
@@ -618,7 +623,6 @@
     }
 
     .left .amount {
-        height: 0.64rem;
         display: flex;
 
         input {
@@ -717,7 +721,7 @@
 
     .left .buyBtn, .left .sellBtn {
         width: 100%;
-        height: 0.8rem;
+        height: 0.9rem;
         color: #fff;
         border: none;
         font-size: 0.34rem;
@@ -737,16 +741,16 @@
 
     .left .total-input {
         position: relative;
-        height: 0.64rem;
+        height: 0.8rem;
         text-align: center;
-        margin-top: 0.3rem;
+        margin-top: 0.4rem;
         background: #2A2A34;
 
         span {
             position: absolute;
             width: 100%;
             display: block;
-            line-height: 0.64rem;
+            line-height: 0.8rem;
             text-align: center;
             font-size: 0.24rem;
             color: #A7ACB9;
@@ -756,7 +760,7 @@
             background: none;
             border: none;
             outline: none;
-            height: 0.64rem;
+            height: 0.8rem;
             padding: 0;
             color: #ffffff;
             text-align: center;

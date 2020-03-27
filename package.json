@@ -20,6 +20,7 @@
     "cordova-plugin-app-update": "git+ssh://git@c.koall.io:ko-plugins/cordova-plugin-app-update.git",
     "cordova-plugin-appversion": "^1.0.0",
     "cordova-plugin-share": "^0.1.3",
+    "cordova-plugin-splashscreen": "^5.0.3",
     "cordova-plugin-statusbar": "^2.4.3",
     "core-js": "^2.6.5",
     "js-cookie": "^2.2.0",
@@ -67,7 +68,8 @@
       "cordova-plugin-statusbar": {},
       "cordova-plugin-share": {},
       "cordova-hot-code-push-plugin": {},
-      "nl.madebymark.share": {}
+      "nl.madebymark.share": {},
+      "cordova-plugin-splashscreen": {}
     },
     "platforms": [
       "ios",

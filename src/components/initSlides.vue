@@ -41,7 +41,7 @@ export default{
 			}
 		});
 		if(this.slides.length === 1){
-			setTimeout(()=>{this.start()},3000)
+			setTimeout(()=>{this.start()},6000)
 		}
 	},
 	methods:{
@@ -57,7 +57,7 @@ export default{
 <style lang="less" scoped="">
 .banner {
 	position: fixed;
-	z-index: 999999;
+	z-index: 999;
 	left: 0;
 	top: 0;
 	right: 0;
