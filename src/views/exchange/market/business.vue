@@ -421,10 +421,10 @@
                     Tip({type: 'danger', message: msg})
                     return
                 }
-                if (!this.getMarketConfig) {
-                    Tip({type: 'danger', message: `error_code.SYMBOL_INEXIST`})
-                    return
-                }
+                // if (!this.getMarketConfig) {
+                //     Tip({type: 'danger', message: `error_code.SYMBOL_INEXIST`})
+                //     return
+                // }
                 let minQuantity = numUtils.BN(this.getMarketConfig[this.symbol].minQuantity).toString()
                 let minAmount = numUtils.BN(this.getMarketConfig[this.symbol].minAmount).toString()
 
