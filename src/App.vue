@@ -37,7 +37,7 @@
         data(){
             return{
                 system: 0,
-                showSplash: false
+                showSplash: true
             }
         },
         computed: {
@@ -97,20 +97,21 @@
             this.loadLoginInfo()
             this.checkDeviceready()
             screen.orientation.lock('portrait');
-            if(window['cordova']){
-                this.system = 1
-                navigator.splashscreen.hide();
-                this.showSplash = true
-                console.log('我是app首页！',new Date().getTime())
-            }else{
-                console.log('我是h5首页！',new Date().getTime())
-            }
+            console.log('vue created',new Date().getTime())
         },
         mounted() {
             $('#app').on('click', 'input', (e) => {
                 e.target.focus()
             })
-            console.log('vue 实例化',new Date().getTime())
+
+            if(window['cordova']){
+                this.system = 1
+                navigator.splashscreen.hide();
+                console.log('我是app首页！',new Date().getTime())
+            }else{
+                this.showSplash = false
+                console.log('我是h5首页！',new Date().getTime())
+            }
             setTimeout(()=>{
                 this.showSplash = false
             },4000)
