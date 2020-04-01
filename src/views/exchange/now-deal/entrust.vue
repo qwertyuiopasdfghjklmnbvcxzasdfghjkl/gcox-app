@@ -1,6 +1,6 @@
 <template>
     <section class="entrust">
-        <div class="navbar">
+        <div class="navbar" v-if="getApiToken">
             <div class="hideOther">
                 <mt-switch v-model="hideOtherTrust"></mt-switch>
                 <label class="ml10">{{$t('exchange.exchange_hide_trade_pair')}}<!--隐藏其他交易对--></label>

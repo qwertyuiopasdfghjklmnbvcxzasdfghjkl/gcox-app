@@ -117,7 +117,9 @@
             },4000)
         },
         methods: {
-            ...mapActions(['setBTCValuation', 'setUSDCNY', 'setNetworkSignal', 'setBtcValues', 'setMarketList', 'setUserWallets', 'setMarketConfig', 'setApiToken', 'setUserInfo', 'setVersion', 'setSysParams']),
+            ...mapActions(['setBTCValuation', 'setUSDCNY', 'setNetworkSignal', 'setBtcValues',
+                'setMarketList', 'setUserWallets', 'setMarketConfig', 'setApiToken', 'setUserInfo',
+                'setVersion', 'setSysParams']),
 
             getLang(){
                 let lang = window.localStorage.lang || 'en'

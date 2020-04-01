@@ -17,8 +17,9 @@
             </ul>
             <loading v-show="!asks.length" class="load"/>
         </div>
-        <div class="numb_text">
-            <p :class="{sell:(getLast24h.direction!=1)}">{{toFixed(getLast24h.close)}}</p>
+        <div class="numb_text" :class="{up:(getLast24h.direction!=1)}">
+            <span class="f32">{{toFixed(getLast24h.close)}}</span>
+            <span class="f24">{{percent}}%</span>
             <!--<p class="mt10">≈ <valuation :lastPrice="getLast24h.close" :baseSymbol="baseSymbol"/></p>-->
         </div>
         <div class="mt25 relative" v-if="sellBuy!==1">
@@ -104,7 +105,7 @@
             }
         },
         computed: {
-            ...mapGetters(['getLast24h', 'getEntrustPrices', 'getNetworkSignal']),
+            ...mapGetters(['getLast24h', 'getEntrustPrices', 'getNetworkSignal', 'getMarketList']),
             fromCoin() {
                 return this.currentSymbol
             },
@@ -172,6 +173,17 @@
                 } else {
                     return this.$t('public.market_status_delay')
                 }
+            },
+            percent(){
+                let market = this.getMarketList || []
+                let ms = this.fromCoin+this.toCoin
+                let i = null
+                market.filter(res=>{
+                    if(res.market === ms){
+                        i = this.getPercent(res)
+                    }
+                })
+                return i
             }
         },
         watch: {
@@ -304,7 +316,20 @@
             },
             toFixed(value, fixed) {
                 return numUtils.BN(value || 0).toFixed(fixed === undefined ? this.accuracy.fixedNumber : fixed, 1)
-            }
+            },
+            getPercent(item) {
+                if (numUtils.BN(item.openingPrice).equals(0)) {
+                    return  '0.00'
+                } else if (item.openingPrice && item.lastPrice) {
+                    var percent = numUtils.BN(item.change24h).div(item.openingPrice).mul(100)
+                    if (percent.equals(0)) {
+                        return  '0.00'
+                    }
+                    return percent.toFixed(2)
+                } else {
+                    return  '0.00'
+                }
+            },
         }
     }
 </script>
@@ -411,6 +436,9 @@
         margin: 0.2rem 0;
         border: 0.02rem solid #40403E;
         border-width: 0.02rem 0 0.02rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 
     .check {
@@ -460,5 +488,8 @@
             left: 50%;
             margin-left: -0.3rem;
         }
+    }
+    .up {
+        color: @c_sell;
     }
 </style>
