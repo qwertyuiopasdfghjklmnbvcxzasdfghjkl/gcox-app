@@ -29,7 +29,7 @@
                     </label>
                     <label>
                         <span>{{$t('exchange.exchange_entrust_time')}}</span>
-                        <p>{{new Date(data.updatedAt).format()}}</p>
+                        <p>{{new Date(data.updatedAt).format()}} {{timeZone}}</p>
                     </label>
                 </div>
             </div>
@@ -52,6 +52,9 @@
         },
         computed:{
             ...mapGetters(['getUserWallets']),
+            timeZone(){
+                return utils.getClientTimezone()
+            }
         },
         created() {
             console.log(this.$route.params)

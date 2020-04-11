@@ -562,4 +562,12 @@ const copyText = (str) => {
 }
 utils.copyText = copyText
 
+const getClientTimezone = ()=>{  
+  var oDate = new Date();  
+  var nTimezone = -oDate.getTimezoneOffset() / 60;
+  var offset = nTimezone.toFixed(2);  
+  return `（GMT ${Number(offset)>0?`+${offset}`:offset}）`
+}  
+utils.getClientTimezone = getClientTimezone
+
 export default utils

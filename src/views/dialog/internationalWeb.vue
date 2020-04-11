@@ -20,9 +20,9 @@
         },
         watch: {
             timer() {
-                if (this.timer === 0) {
+                if (this.timer == 0) {
                     clearInterval(this.interval)
-                    window.open('https://m.gcox.sg')
+                    location.href = 'https://m.gcox.sg'
                 }
             }
         },
