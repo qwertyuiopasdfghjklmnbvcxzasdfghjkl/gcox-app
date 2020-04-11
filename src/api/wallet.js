@@ -32,7 +32,7 @@ wallet.myAssets = myAssets
 
 // 查询钱包地址
 const listWithdraws = function (symbol, success, error) {
-  api.get(`${domain}api/v2/account/showWithdraw?symbol=${symbol}`, (res) => {
+  api.get(`${domain}api/v2/account/showWithdraw`,{symbol:'symbol'}, (res) => {
     if (res.rst === 1) {
       success && success(res.data)
     } else {

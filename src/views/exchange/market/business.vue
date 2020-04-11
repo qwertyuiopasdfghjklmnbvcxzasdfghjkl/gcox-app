@@ -1,13 +1,7 @@
 <template>
     <div class="left">
-        <!--<div class="acBtns">-->
-        <!--&lt;!&ndash;<button type="button" class="buy" :class="{active:isBuy}" @click="switchTradeType('buy')">&ndash;&gt;-->
-        <!--&lt;!&ndash;{{$t('exchange.exchange_buy')}}&lt;!&ndash;买入&ndash;&gt;</button>&ndash;&gt;-->
-        <!--&lt;!&ndash;<button type="button" class="sell" :class="{active:!isBuy}" @click="switchTradeType('sell')">&ndash;&gt;-->
-        <!--&lt;!&ndash;{{$t('exchange.exchange_sell')}}&lt;!&ndash;卖出&ndash;&gt;</button>&ndash;&gt;-->
-        <!--</div>-->
         <div class="trust-type-choice">
-            <span @click="toggleChoice">{{$t(entrustType=='market'?'exchange.exchange_market':'exchange.exchange_limit')}}</span>
+            <span class="select" @click="toggleChoice">{{$t(entrustType=='market'?'exchange.exchange_market':'exchange.exchange_limit')}}</span>
             <transition enter-active-class="animated short fadeIn" leave-active-class="animated short fadeOut">
                 <ul class="choices" v-show="isTrustChioce">
                     <li @click="toggleChoice('limit')" :class="{active:entrustType==='limit'}">
@@ -20,13 +14,8 @@
         <cp-adjust v-model="formData.price" v-if="!isMarket" :accuracy="accuracy.fixedNumber" class="mt30"></cp-adjust>
         <p class="price-placeholder mt30" v-if="isMarket">{{$t('exchange.exchange_market_price')}}</p>
         <p class="c_light mt20">
-            <!--≈-->
-            <!--<valuation :lastPrice="formData.price" :baseSymbol="baseSymbol"/>-->
         </p>
         <div class="amount mt20">
-            <!--<numberbox v-model="formData.amount" :accuracy="accuracy.quantityAccu"-->
-            <!--:placeholder="$t('exchange.exchange_amount')" v-focus></numberbox>-->
-            <!--<span>{{isBuy ? baseSymbol : currentSymbol}}</span>-->
             <cp-adjust v-model="formData.amount" :accuracy="3" class=""
                        :tip="$t('home.home40')+'('+(isMarket ? (isBuy ?baseSymbol:currentSymbol):currentSymbol)+')'"></cp-adjust>
         </div>
@@ -41,7 +30,8 @@
             </div>
         </div>
         <div class="total-input" v-if="!isMarket">
-            <span class="c_light" v-if="!formData.total">{{$t('exchange.exchange_total')}}({{baseSymbol}})<!--金额--></span>
+            <span class="c_light" v-if="!formData.total">{{$t('exchange.exchange_total')}}({{baseSymbol}})
+                <!--金额--></span>
             <numberbox v-model="formData.total" :accuracy="accuracy.amountAccu"></numberbox>
         </div>
         <p class="blance-tip">
@@ -56,20 +46,20 @@
                 {{$t(isBuy?'exchange.exchange_buy':'exchange.exchange_sell')}}
             </button>
         </div>
-        <div class="tip_color">
-            <span>
-                <i class="green"></i>
-                {{$t('home.home41')}}
-            </span>
-            <span>
-                <i class="red"></i>
-                {{$t('home.home42')}}
-            </span>
-        </div>
-        <div class="depth">
-            <div class="space-area" id="depth"></div>
-            <loading v-show="showLatestDeal" class="load"/>
-        </div>
+        <!--<div class="tip_color">-->
+            <!--<span>-->
+                <!--<i class="green"></i>-->
+                <!--{{$t('home.home41')}}-->
+            <!--</span>-->
+            <!--<span>-->
+                <!--<i class="red"></i>-->
+                <!--{{$t('home.home42')}}-->
+            <!--</span>-->
+        <!--</div>-->
+        <!--<div class="depth">-->
+            <!--<div class="space-area" id="depth"></div>-->
+            <!--<loading v-show="showLatestDeal" class="load"/>-->
+        <!--</div>-->
 
     </div>
 </template>
@@ -105,7 +95,11 @@
                 type: String,
                 default: 'buy'
             },
-            pTradeType: null
+            pTradeType: null,
+            dataList: {
+                type: Object,
+                default: {}
+            }
         },
         components: {
             Loading,
@@ -127,18 +121,16 @@
                 klineData: [], // k线数据
                 depthData: {},
                 depthChart: null,
-                asks: [],
-                bids: [],
                 formData: {
                     price: 0,
                     amount: '',
                     total: ''
                 },
-                showLatestDeal: true
+                showLatestDeal: true,
             }
         },
         computed: {
-            ...mapGetters(['getApiToken', 'getMarketConfig', 'getLast24h', 'getEntrustNewPrice', 'getUserWallets','getUserInfo']),
+            ...mapGetters(['getApiToken', 'getMarketConfig', 'getLast24h', 'getEntrustNewPrice', 'getUserWallets', 'getUserInfo']),
             symbol() {
                 return `${this.currentSymbol}${this.baseSymbol}`
             },
@@ -170,67 +162,22 @@
             marketPrice() {
                 return this.$t('exchange.exchange_market_price') // 市价
             },
-            depthChange () {
-                console.log(this.filterAsks,this.filterBids)
-                if(this.filterAsks.length && this.filterBids.length){
-                    this.showLatestDeal = false
-                }else{
-                    this.showLatestDeal = true
-                }
-                return {
-                    asks: this.filterAsks,
-                    bids: this.filterBids,
-                }
-            },
-            filterAsks () {
-                let mergeDatas = []
-                let temp = {}
-                this.asks.forEach((item) => {
-                    let key = this.toFixed(item.price)
-                    let tempItem = temp[key]
-                    if (!tempItem) {
-                        temp[key] = {
-                            price: key,
-                            avaliableAmount: item.avaliableAmount
-                        }
-                        mergeDatas.push(temp[key])
-                    } else {
-                        tempItem.avaliableAmount = numUtils.add(tempItem.avaliableAmount, item.avaliableAmount).toString()
-                    }
-                })
-                let newDatas = []
-                mergeDatas.forEach((item) => {
-                    newDatas.push([item.price, item.avaliableAmount])
-                })
-                newDatas.sort((item1, item2) => {
-                    return numUtils.BN(item1[0]).lt(numUtils.BN(item2[0])) ? -1 : 1
-                })
-                return newDatas
-            },
-            filterBids () {
-                let mergeDatas = []
-                let temp = {}
-                this.bids.forEach((item) => {
-                    let key = this.toFixed(item.price)
-                    let tempItem = temp[key]
-                    if (!tempItem) {
-                        temp[key] = {
-                            price: key,
-                            avaliableAmount: item.avaliableAmount
-                        }
-                        mergeDatas.push(temp[key])
-                    } else {
-                        tempItem.avaliableAmount = numUtils.add(tempItem.avaliableAmount, item.avaliableAmount).toString()
-                    }
-                })
-                let newDatas = []
-                mergeDatas.forEach((item) => {
-                    newDatas.push([item.price, item.avaliableAmount])
-                })
-                return newDatas
-            }
+
+
         },
         watch: {
+            dataList(e) {
+                if (this.filterAsks().length && this.filterBids().length) {
+                    this.showLatestDeal = false
+                } else {
+                    this.showLatestDeal = true
+                }
+                let list = {
+                    asks: this.filterAsks(),
+                    bids: this.filterBids(),
+                }
+                this.depthChart && this.depthChart.drawDepth(list)
+            },
             entrustType() {
                 this.percent = 0
                 this.formData.amount = ''
@@ -257,50 +204,81 @@
             },
             symbol() {
                 this.updateValue = true;
-                console.log('bz')
-                // this.business.market = this.$route.params.market
-                this.klineSocket.close()
                 this.loading = true
                 this.isFirstKline = true
-                this.InitKlineWebSoket()
             },
             percent(newVal) {
                 this.switchPercent(newVal)
-                // this.formData.total =
             },
             getEntrustNewPrice() {
                 this.formData.price = this.toFixed(this.getEntrustNewPrice)
             },
-            '$route.params.market' () { //切换市场后重新初始化websoket
-                console.log('ly')
-                // this.asks = [];
-                // this.bids = [];
-
-                console.log(this.depthChange)
-            },
-            depthChange () {
-                this.depthChart && this.depthChart.drawDepth(this.depthChange)
-            }
         },
         created() {
             console.log(this.currentSymbol, this.baseSymbol)
             this.tradeType = this.pTradeType ? this.pTradeType : 'buy'
-            this.InitKlineWebSoket()
-            this.$nextTick(() => {
-                this.initECharts()
-                this.addEvents({
-                    name: 'businessEvent',
-                    fun: this.businessEvent
-                })
-            })
+            // this.$nextTick(() => {
+            //     this.initECharts()
+            //     this.addEvents({
+            //         name: 'businessEvent',
+            //         fun: this.businessEvent
+            //     })
+            // })
         },
         beforeDestroy() {
-            this.removeEvents('businessEvent')
-            this.klineSocket && this.klineSocket.close()
+            // this.removeEvents('businessEvent')
         },
         methods: {
             ...mapActions(['addEvents', 'removeEvents']),
-            initECharts () {
+            filterAsks() {
+                let mergeDatas = []
+                let temp = {}
+                console.log(this.dataList)
+                this.dataList.asks.forEach((item) => {
+                    let key = this.toFixed(item.price)
+                    let tempItem = temp[key]
+                    if (!tempItem) {
+                        temp[key] = {
+                            price: key,
+                            avaliableAmount: item.avaliableAmount
+                        }
+                        mergeDatas.push(temp[key])
+                    } else {
+                        tempItem.avaliableAmount = numUtils.add(tempItem.avaliableAmount, item.avaliableAmount).toString()
+                    }
+                })
+                let newDatas = []
+                mergeDatas.forEach((item) => {
+                    newDatas.push([item.price, item.avaliableAmount])
+                })
+                newDatas.sort((item1, item2) => {
+                    return numUtils.BN(item1[0]).lt(numUtils.BN(item2[0])) ? -1 : 1
+                })
+                return newDatas
+            },
+            filterBids() {
+                let mergeDatas = []
+                let temp = {}
+                this.dataList.bids.forEach((item) => {
+                    let key = this.toFixed(item.price)
+                    let tempItem = temp[key]
+                    if (!tempItem) {
+                        temp[key] = {
+                            price: key,
+                            avaliableAmount: item.avaliableAmount
+                        }
+                        mergeDatas.push(temp[key])
+                    } else {
+                        tempItem.avaliableAmount = numUtils.add(tempItem.avaliableAmount, item.avaliableAmount).toString()
+                    }
+                })
+                let newDatas = []
+                mergeDatas.forEach((item) => {
+                    newDatas.push([item.price, item.avaliableAmount])
+                })
+                return newDatas
+            },
+            initECharts() {
                 // 深度图
                 this.depthChart = DepthChart({
                     isAmountShowLeft: true,
@@ -310,24 +288,6 @@
                     xSplitLen: 10,
                     // ySplitLen: 10,
                     fontColor: '#8A8A9F'
-                })
-            },
-            InitKlineWebSoket () { // 初始化K线websoket
-                console.log(this.symbol)
-                this.klineSocket = KLineWebSocket({
-                    symbol: this.symbol,
-                    period: '1m',
-                    callback: (res) => {
-                        // K线图数据
-                        if (res.dataType === 'LastOrderBook') {
-                            // 深度数据
-                            this.asks = res.data.asks
-                            this.bids = res.data.bids
-                        }
-                    },
-                    onClose: () => {
-                        this.isFirstKline = true
-                    }
                 })
             },
             switchTradeType(type) {
@@ -399,7 +359,7 @@
                 } else {
                     this.formData.amount = Number(amount)
                 }
-                console.log(this.formData.total,this.formData.amount)
+                console.log(this.formData.total, this.formData.amount)
             },
             buyOrSell() {
                 this.errorObj = {}
@@ -461,10 +421,10 @@
                     Tip({type: 'danger', message: msg})
                     return
                 }
-                if (!this.getMarketConfig) {
-                    Tip({type: 'danger', message: `error_code.SYMBOL_INEXIST`})
-                    return
-                }
+                // if (!this.getMarketConfig) {
+                //     Tip({type: 'danger', message: `error_code.SYMBOL_INEXIST`})
+                //     return
+                // }
                 let minQuantity = numUtils.BN(this.getMarketConfig[this.symbol].minQuantity).toString()
                 let minAmount = numUtils.BN(this.getMarketConfig[this.symbol].minAmount).toString()
 
@@ -647,6 +607,11 @@
         background-color: #2A2A34;
         color: #fff;
     }
+    .left .trust-type-choice .select{
+        display: block;
+        padding-top: 0.3rem;
+        margin-top: 0.2rem;
+    }
 
     .left .price-placeholder {
         height: 0.64rem;
@@ -658,7 +623,6 @@
     }
 
     .left .amount {
-        height: 0.64rem;
         display: flex;
 
         input {
@@ -757,7 +721,7 @@
 
     .left .buyBtn, .left .sellBtn {
         width: 100%;
-        height: 0.8rem;
+        height: 0.9rem;
         color: #fff;
         border: none;
         font-size: 0.34rem;
@@ -777,24 +741,26 @@
 
     .left .total-input {
         position: relative;
-        height: 0.64rem;
+        height: 0.8rem;
         text-align: center;
-        margin-top: 0.3rem;
+        margin-top: 0.4rem;
         background: #2A2A34;
-        span{
+
+        span {
             position: absolute;
             width: 100%;
             display: block;
-            line-height: 0.64rem;
+            line-height: 0.8rem;
             text-align: center;
             font-size: 0.24rem;
             color: #A7ACB9;
         }
-        input{
+
+        input {
             background: none;
             border: none;
             outline: none;
-            height: 0.64rem;
+            height: 0.8rem;
             padding: 0;
             color: #ffffff;
             text-align: center;
@@ -802,29 +768,36 @@
             z-index: 9;
         }
     }
-    .tip_color{
+
+    .tip_color {
         margin-top: 1.1rem;
-        span{
+
+        span {
             display: inline-flex;
             align-items: center;
             padding-right: .3rem;
-            i{
+
+            i {
                 display: inline-block;
                 width: 0.26rem;
                 height: 0.26rem;
                 margin-right: 0.1rem;
-                &.green{
-                    background:#439B64
+
+                &.green {
+                    background: #439B64
                 }
-                &.red{
+
+                &.red {
                     background: @c_sell
                 }
             }
         }
     }
-    .depth{
+
+    .depth {
         position: relative;
-        .load{
+
+        .load {
             position: absolute;
             top: 50%;
             left: 50%;

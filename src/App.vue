@@ -1,11 +1,13 @@
 <template>
     <div id="app">
+        <div v-show="showSplash" class="splash"></div>
         <transition enter-active-class="animated short myFadeIn" leave-active-class="animated short fadeOut">
             <router-view :class="{wrap:$route.meta.nav}"/>
         </transition>
         <!--<update ref="update"></update>-->
         <init-slides v-if="system === 1"></init-slides>
         <nav-footer v-show="$route.meta.nav"></nav-footer>
+
     </div>
 </template>
 
@@ -23,6 +25,8 @@
     import select from './views/dialog/selectWeb'
     import international from './views/dialog/internationalWeb'
     import internationalApp from './views/dialog/internationalApp'
+    import langApi from '@/api/language'
+    import Config from '@/api/config'
 
     export default {
         components: {
@@ -32,21 +36,37 @@
         },
         data(){
             return{
-                system: 0
+                system: 0,
+                showSplash: true
             }
         },
         computed: {
-            ...mapGetters(['getApiToken', 'getQuickLoginInfo'])
+            ...mapGetters(['getApiToken', 'getQuickLoginInfo',  'getSiteType', 'getSysParams','getUserInfo'])
+
         },
         watch: {
             getApiToken(newVal) {
                 this.loadLoginInfo()
                 this.getMarketList()
-                this.showJumpTo2()
             },
+            getSysParams(e) {
+                console.log(e)
+                let status = e['maintain']['value']
+                if( status === '1'){
+                    console.log('go maintain')
+                    this.$router.push({name: 'maintain'})
+                }else{
+                    this.showJumpTo()
+                }
+            },
+            getUserInfo(){
+                if(this.getUserInfo.kycState === 1){
+                    this.showJumpTo2()
+                }
+            }
         },
         created() {
-            this.showJumpTo()
+            this.getLang()
             //一键注册用户快速登录
             if (!this.getApiToken && this.getQuickLoginInfo) {
                 this.setApiToken(this.getQuickLoginInfo.apiToken)
@@ -77,29 +97,51 @@
             this.loadLoginInfo()
             this.checkDeviceready()
             screen.orientation.lock('portrait');
-            if(window['cordova']){
-                this.system = 1
-                console.log('我是app首页！')
-            }else{
-                console.log('我是h5首页！')
-            }
+            console.log('vue created',new Date().getTime())
         },
         mounted() {
             $('#app').on('click', 'input', (e) => {
                 e.target.focus()
             })
+
+            if(window['cordova']){
+                this.system = 1
+                navigator.splashscreen.hide();
+                console.log('我是app首页！',new Date().getTime())
+            }else{
+                this.showSplash = false
+                console.log('我是h5首页！',new Date().getTime())
+            }
+            setTimeout(()=>{
+                this.showSplash = false
+            },4000)
         },
         methods: {
-            ...mapActions(['setBTCValuation', 'setUSDCNY', 'setNetworkSignal', 'setBtcValues', 'setMarketList', 'setUserWallets', 'setMarketConfig', 'setApiToken', 'setUserInfo', 'setVersion', 'setSysParams']),
+            ...mapActions(['setBTCValuation', 'setUSDCNY', 'setNetworkSignal', 'setBtcValues',
+                'setMarketList', 'setUserWallets', 'setMarketConfig', 'setApiToken', 'setUserInfo',
+                'setVersion', 'setSysParams']),
 
+            getLang(){
+                let lang = window.localStorage.lang || 'en'
+                langApi.getLanguage(lang, (res) => {
+                    if (Config.updateInfo[lang]) {
+                        res.updateInfo = Config.updateInfo[lang]
+                    } else {
+                        res.updateInfo = Config.updateInfo['en']
+                    }
+                    this.$i18n.locale = lang
+                    this.$i18n.setLocaleMessage(lang, res)
+                    window.localStorage[lang] = JSON.stringify(res)
+                })
+            },
             showJumpTo() {
                 marketApi.getIpVerify(res => {
                     if (res) {
                         if (window['cordova']) {
                             console.log('请访问新加坡站点')
-                            utils.setDialog(internationalApp, {
+                            // utils.setDialog(internationalApp, {
                                 // 选择哪个站点 select
-                            })
+                            //})
                         } else {
                             utils.setDialog(select, {
                                 // 选择哪个站点 select
@@ -113,9 +155,9 @@
                     if (res) {
                         if (window['cordova']) {
                             console.log('请访问新加坡站点')
-                            utils.setDialog(internationalApp, {
+                           // utils.setDialog(internationalApp, {
                                 // 选择哪个站点 select
-                            })
+                            //})
                         } else {
                             this.setApiToken('')
                             utils.setDialog(international, {
@@ -219,5 +261,15 @@
             padding: 0.08rem !important;
             font-size: 0.16rem !important;
         }
+    }
+    .splash{
+        background: url("./assets/img/splash.gif") no-repeat center #000000;
+        background-size: cover;
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        z-index: 9999;
     }
 </style>

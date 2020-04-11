@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  style="background: #25242A">
+<html lang="en"  style="background: #000000">
 <head>
     <meta charset="utf-8">
     <meta name="aplus-terminal" content="1">
@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="./static/css/act_base.css"/>
     <link rel="stylesheet" href="./static/css/animate.min.css" type="text/css"/>
 </head>
-<body style="background: #25242A">
+<body style="background: #000000">
 <noscript>
     <strong>We're sorry but GCOX doesn't work properly without JavaScript enabled. Please enable it to
         continue.</strong>
@@ -21,6 +21,7 @@
 <div id="app"></div>
 <!-- built files will be auto injected -->
 <script type="text/javascript">
+    console.log('index',new Date().getTime())
     function receiveMessage(event) {
         if (typeof event.data === "string") {
             var data = window.JSON.parse(event.data);
@@ -45,6 +46,7 @@
 <script type="text/javascript" src="./static/js/jsencrypt.min.js"></script>
 <script type="text/javascript" src="./static/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+
     if (navigator.userAgent.indexOf("InAppWebView") >= 0) {
         document.write('<script type="text/javascript" src="./cordova.js"><\/script>');
       }

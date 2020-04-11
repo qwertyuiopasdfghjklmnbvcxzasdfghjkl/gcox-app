@@ -1,8 +1,6 @@
-// let domain = process.env.NODE_ENV === 'development' ? 'gcox.dev.koall.io' : location.host.split(':')[0]
-// let domain = process.env.NODE_ENV === 'development' ? 'm.sit.gcox.cc' : location.host.split(':')[0]
-let domain = process.env.NODE_ENV === 'development' ? 'gcox.com' : location.host.split(':')[0]
-// let domain = process.env.NODE_ENV === 'development' ? 'ws-exchange.gcox.com' : location.host.split(':')[0]
-// let domain = process.env.NODE_ENV === 'development' ? 'exchange-staging.gcox.com' : location.host.split(':')[0]
+
+ let domain = process.env.NODE_ENV === 'development' ? 'gcox-test.lab.ssss.so' : location.host.split(':')[0]
+
 if (process.env.VUE_APP_BASEURL) {
   domain = process.env.VUE_APP_BASEURL
 }
@@ -22,13 +20,13 @@ const config = {
   version:'1.1.1',
   updateInfo:{  //更新日志
   	'zh-CN':`
-	<p>1. 优化市场显示</p>
+	<p>1. 优化kline<br>2. 优化交易市场显示</p>
 	`,
 	'en':`
-	<p>1. Optimize market display</p>
+	<p>1. Optimize kline<br>2. Optimize trading market display</p>
 	`,
 	'kr':`
-	<p>1. 최적화 시장 디스플레이</p>
+	<p>1. 최적화된 kline<br> 2. 거래시장최적화결과</p>
 	`
   }
 }

@@ -11,20 +11,21 @@
                     <span>--</span>
                 </li>
                 <li v-for="(item, index) in filterAsks" :style="listItemStyle(item, 'ask')">
-                    <span @click="clickChangeValue(toFixed(item.price), 'price')">{{Number(toFixed(item.price))}}</span>
+                    <span @click="clickChangeValue(toFixed(item.price), 'price')">{{toFixed(item.price)}}</span>
                     <span @click="clickChangeValue(toFixed(item.price), 'price')">{{Number(toFixed(item.avaliableAmount, accuracy.quantityAccu))}}</span>
                 </li>
             </ul>
             <loading v-show="!asks.length" class="load"/>
         </div>
-        <div class="numb_text">
-            <p :class="{sell:(getLast24h.direction!=1)}">{{Number(toFixed(getLast24h.close))}}</p>
+        <div class="numb_text" :class="{up:(getLast24h.direction!=1)}">
+            <span class="f32">{{toFixed(getLast24h.close)}}</span>
+            <span class="f24">{{percent}}%</span>
             <!--<p class="mt10">≈ <valuation :lastPrice="getLast24h.close" :baseSymbol="baseSymbol"/></p>-->
         </div>
-        <div class="mt35 relative" v-if="sellBuy!==1">
+        <div class="mt25 relative" v-if="sellBuy!==1">
             <ul class="buy-list" ref="parentListBid">
                 <li v-for="(item, index) in filterBids" :style="listItemStyle(item, 'bid')">
-                    <span @click="clickChangeValue(toFixed(item.price), 'price')">{{Number(toFixed(item.price))}}</span>
+                    <span @click="clickChangeValue(toFixed(item.price), 'price')">{{toFixed(item.price)}}</span>
                     <span @click="clickChangeValue(toFixed(item.price), 'price')">{{Number(toFixed(item.avaliableAmount, accuracy.quantityAccu))}}</span>
                 </li>
                 <li v-for="n in bidLength">
@@ -34,32 +35,32 @@
             </ul>
             <loading v-show="!bids.length" class="load"/>
         </div>
-        <div class="check">
-            <label>
-                <p v-tap="{methods:()=>{show=!show,showSellBuy=false}}">
-                    <span v-if="accuracy.fixedNumber === 8">{{$t('home.8decimal')}}</span>
-                    <span v-if="accuracy.fixedNumber === 6">{{$t('home.6decimal')}}</span>
-                    <span v-if="accuracy.fixedNumber === 4">{{$t('home.4decimal')}}</span>
-                </p>
-                <ul v-if="show">
-                    <li v-tap="{methods:()=>{accuracy.fixedNumber = 8,show=false}}">{{$t('home.8decimal')}}</li>
-                    <li v-tap="{methods:()=>{accuracy.fixedNumber = 6,show=false}}">{{$t('home.6decimal')}}</li>
-                    <li v-tap="{methods:()=>{accuracy.fixedNumber = 4,show=false}}">{{$t('home.4decimal')}}</li>
-                </ul>
-            </label>
-            <label>
-                <p v-tap="{methods:()=>{showSellBuy=!showSellBuy,show=false}}">
-                    <span v-if="sellBuy===0">{{$t('home.default')}}</span>
-                    <span v-if="sellBuy===1">{{$t('home.show-sell')}}</span>
-                    <span v-if="sellBuy===2">{{$t('home.show-buy')}}</span>
-                </p>
-                <ul v-if="showSellBuy">
-                    <li v-tap="{methods:()=>{sellBuy = 0,showSellBuy=false}}">{{$t('home.default')}}</li>
-                    <li v-tap="{methods:()=>{sellBuy = 1,showSellBuy=false}}">{{$t('home.show-sell')}}</li>
-                    <li v-tap="{methods:()=>{sellBuy = 2,showSellBuy=false}}">{{$t('home.show-buy')}}</li>
-                </ul>
-            </label>
-        </div>
+        <!--<div class="check">-->
+            <!--<label>-->
+                <!--<p v-tap="{methods:()=>{show=!show,showSellBuy=false}}">-->
+                    <!--<span v-if="accuracy.fixedNumber === 8">{{$t('home.8decimal')}}</span>-->
+                    <!--<span v-if="accuracy.fixedNumber === 6">{{$t('home.6decimal')}}</span>-->
+                    <!--<span v-if="accuracy.fixedNumber === 4">{{$t('home.4decimal')}}</span>-->
+                <!--</p>-->
+                <!--<ul v-if="show">-->
+                    <!--<li v-tap="{methods:()=>{accuracy.fixedNumber = 8,show=false}}">{{$t('home.8decimal')}}</li>-->
+                    <!--<li v-tap="{methods:()=>{accuracy.fixedNumber = 6,show=false}}">{{$t('home.6decimal')}}</li>-->
+                    <!--<li v-tap="{methods:()=>{accuracy.fixedNumber = 4,show=false}}">{{$t('home.4decimal')}}</li>-->
+                <!--</ul>-->
+            <!--</label>-->
+            <!--<label>-->
+                <!--<p v-tap="{methods:()=>{showSellBuy=!showSellBuy,show=false}}">-->
+                    <!--<span v-if="sellBuy===0">{{$t('home.default')}}</span>-->
+                    <!--<span v-if="sellBuy===1">{{$t('home.show-sell')}}</span>-->
+                    <!--<span v-if="sellBuy===2">{{$t('home.show-buy')}}</span>-->
+                <!--</p>-->
+                <!--<ul v-if="showSellBuy">-->
+                    <!--<li v-tap="{methods:()=>{sellBuy = 0,showSellBuy=false}}">{{$t('home.default')}}</li>-->
+                    <!--<li v-tap="{methods:()=>{sellBuy = 1,showSellBuy=false}}">{{$t('home.show-sell')}}</li>-->
+                    <!--<li v-tap="{methods:()=>{sellBuy = 2,showSellBuy=false}}">{{$t('home.show-buy')}}</li>-->
+                <!--</ul>-->
+            <!--</label>-->
+        <!--</div>-->
     </div>
 </template>
 
@@ -93,7 +94,7 @@
             return {
                 asks: [],
                 bids: [],
-                mergeLen: 7,
+                mergeLen: 6,
                 price: '0',
                 active: 'askbid',
                 direction: null,
@@ -104,7 +105,7 @@
             }
         },
         computed: {
-            ...mapGetters(['getLast24h', 'getEntrustPrices', 'getNetworkSignal']),
+            ...mapGetters(['getLast24h', 'getEntrustPrices', 'getNetworkSignal', 'getMarketList']),
             fromCoin() {
                 return this.currentSymbol
             },
@@ -122,14 +123,14 @@
                 asks = asks.sort((item1, item2) => {
                     return numUtils.BN(item1.price).lt(item2.price) ? 1 : -1
                 })
-                return asks.length >= 7 ? asks.slice(asks.length - 7, asks.length) : asks
+                return asks.length >= 6 ? asks.slice(asks.length - 6, asks.length) : asks
             },
             filterBids() {
                 let bids = this.mergeDatas(this.bids)
                 if(this.sellBuy !== 0){
                     return bids.length >= 14 ? bids.slice(0, 14) : bids
                 }else{
-                    return bids.length >= 7 ? bids.slice(0, 7) : bids
+                    return bids.length >= 6 ? bids.slice(0, 6) : bids
                 }
             },
             askMax() {
@@ -172,6 +173,17 @@
                 } else {
                     return this.$t('public.market_status_delay')
                 }
+            },
+            percent(){
+                let market = this.getMarketList || []
+                let ms = this.fromCoin+this.toCoin
+                let i = null
+                market.filter(res=>{
+                    if(res.market === ms){
+                        i = this.getPercent(res)
+                    }
+                })
+                return i
             }
         },
         watch: {
@@ -304,7 +316,20 @@
             },
             toFixed(value, fixed) {
                 return numUtils.BN(value || 0).toFixed(fixed === undefined ? this.accuracy.fixedNumber : fixed, 1)
-            }
+            },
+            getPercent(item) {
+                if (numUtils.BN(item.openingPrice).equals(0)) {
+                    return  '0.00'
+                } else if (item.openingPrice && item.lastPrice) {
+                    var percent = numUtils.BN(item.change24h).div(item.openingPrice).mul(100)
+                    if (percent.equals(0)) {
+                        return  '0.00'
+                    }
+                    return percent.toFixed(2)
+                } else {
+                    return  '0.00'
+                }
+            },
         }
     }
 </script>
@@ -376,8 +401,8 @@
     .order-book .sell-list li, .order-book .buy-list li {
         display: flex;
         justify-content: space-between;
-        height: 0.6rem;
-        line-height: 0.6rem;
+        height: 0.5rem;
+        line-height: 0.5rem;
         background: url('../../../assets/img/sell-list-bg.png') no-repeat right center;
         background-size: 0% 90%;
     }
@@ -408,9 +433,12 @@
         text-align: center;
         font-size: .32rem;
         padding: 0.2rem 0;
-        margin: 0.24rem 0;
+        margin: 0.2rem 0;
         border: 0.02rem solid #40403E;
         border-width: 0.02rem 0 0.02rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 
     .check {
@@ -460,5 +488,8 @@
             left: 50%;
             margin-left: -0.3rem;
         }
+    }
+    .up {
+        color: @c_sell;
     }
 </style>

@@ -1,39 +1,51 @@
 <template>
     <div class="cont">
         <div class="top">
-            <span :class="[data.direction==1?'buy':'sell']">{{getPrice(data.price)}}{{data.direction==1 ? $t('exchange.exchange_buy') : $t('exchange.exchange_sell')}}</span>
-            <span>{{data.toSymbol}} / {{data.fromSymbol}}</span>
-            <span class="time">{{new Date(Number(data.createdAt)).format()}}</span>
+            <div>
+                <p>
+                    <span :class="[data.direction==1?'buy':'sell']">{{getPrice(data.price) }}
+                    {{data.direction==1 ? $t('exchange.exchange_buy') : $t('exchange.exchange_sell')}}</span>
+                    <span>  {{data.toSymbol}} / {{data.fromSymbol}}</span>
+                </p>
+                <p class="time">{{new Date(Number(data.createdAt)).format()}}</p>
+            </div>
+
+            <p v-if="form" class="f24">{{getStatue(data)}}</p>
+            <span v-else class="cancel" @click="cancelOrder(data.orderBookId)">
+                    {{$t('exchange.exchange_revoked')}}<!--撤销-->
+                </span>
         </div>
 
         <div class="data">
             <div class="ear">
-                <div class="ear-cont">
-                    <div class="ear-left">
-                        <div class="border-right"
-                             :class="[data.direction==1?'buy':'sell']"
-                             :style="{transform: `rotate(${leftRotate}deg)`}">
-                        </div>
-                    </div>
-                    <div class="ear-right">
-                        <div class="border-left"
-                             :class="[data.direction==1?'buy':'sell']"
-                             :style="{transform: `rotate(${rightRotate}deg)`}"></div>
-                    </div>
-                    <p :class="[data.direction==1?'buy':'sell']">{{value}}%</p>
-                </div>
+                <!--<div class="ear-cont">-->
+                    <!--<div class="ear-left">-->
+                        <!--<div class="border-right"-->
+                             <!--:class="[data.direction==1?'buy':'sell']"-->
+                             <!--:style="{transform: `rotate(${leftRotate}deg)`}">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="ear-right">-->
+                        <!--<div class="border-left"-->
+                             <!--:class="[data.direction==1?'buy':'sell']"-->
+                             <!--:style="{transform: `rotate(${rightRotate}deg)`}"></div>-->
+                    <!--</div>-->
+                    <!--<p :class="[data.direction==1?'buy':'sell']">{{value}}%</p>-->
+                <!--</div>-->
+                <p>{{$t('exchange.entrust_price')}}({{data.fromSymbol}})</p>
+                <p>{{util.removeEndZero(toFixed(data.price))}}</p>
             </div>
             <div class="data-title">
-                <p>{{$t('exchange.exchange_amount')}}<!--数量-->
-                    <span>{{toFixed(data.finishedAmount)|number}} / {{toFixed(data.totalAmount)|number}}</span>
-                </p>
-                <p>{{$t('exchange.exchange_price')}}<!--价格--> <span>{{toFixed(data.price)|number}}</span></p>
+                <p>{{$t('exchange.exchange_Transaction_volume')}}<!--成交量--> / {{$t('exchange.entrust_total')}} ({{data.toSymbol}})<!--委托总量--></p>
+                <p>{{util.removeEndZero(toFixed(data.finishedAmount))}} / {{util.removeEndZero(toFixed(data.totalAmount))}}</p>
             </div>
             <div class="btn">
-                <span v-if="form">{{getStatue(data)}}</span>
-                <span v-else class="cancel" @click="cancelOrder(data.orderBookId)">
-                    {{$t('exchange.exchange_revoked')}}<!--撤销-->
-                </span>
+                <p>{{$t('home.home_volume')}}<!--成交额-->({{data.fromSymbol}}) </p>
+                <p>{{util.removeEndZero(toFixed(data.averagePrice * data.finishedAmount))}}</p>
+                <!--<span v-if="form">{{getStatue(data)}}</span>-->
+                <!--<span v-else class="cancel" @click="cancelOrder(data.orderBookId)">-->
+                    <!--{{$t('exchange.exchange_revoked')}}&lt;!&ndash;撤销&ndash;&gt;-->
+                <!--</span>-->
             </div>
         </div>
     </div>
@@ -42,6 +54,7 @@
 <script>
 
     import numUtils from '@/assets/js/numberUtils'
+    import utils from '../../../assets/js/utils'
 
     export default {
         props: ['data','index','form'],
@@ -49,7 +62,8 @@
             return {
                 rightRotate: 45,
                 value: 0,
-                fixedNumber: 8
+                fixedNumber: 8,
+                util: utils
             }
         },
         computed: {
@@ -111,26 +125,28 @@
 <style scoped lang="less">
     @c_f: #969EAD;
     .cont {
+        background: #2A2A34;
+        margin-top: 0.2rem;
         .top {
             display: flex;
+            border-bottom: 0.02rem solid #353544;
+            padding: 0.2rem 0.3rem;
+            align-items: center;
+            justify-content: space-between;
 
-            span {
+            span{
                 font-size: 0.3rem;
-
-                &:first-child {
-                    width: 1.4rem;
-                }
-
-                &:nth-child(2) {
-
-                }
-
-                &:last-child {
-                    flex-grow: 1;
-                    text-align: right;
-                    font-size: 0.24rem;
-                    color: @c_f;
-                }
+            }
+            .time{
+                font-size: 0.24rem;
+                color: @c_f;
+                padding-top: 0.15rem;
+            }
+            .cancel{
+                font-size: 0.28rem;
+                color: #1C9CE3;
+                height: 0.6rem;
+                line-height: 0.6rem;
             }
         }
 
@@ -145,56 +161,24 @@
         .data {
             display: flex;
             align-items: center;
+            padding: 0.3rem;
+            justify-content: space-between;
 
             .ear {
-                padding: 0.16rem;
                 margin-right: 0.2rem;
+                width: 2.2rem;
+            }
+            div{
+                font-size: 0.24rem;
+                &>p:first-child{
+                    color: #969EAD;
+                    margin-bottom: 0.2rem;
+                }
             }
 
             .ear-cont {
-                width: 0.9rem;
-                height: 0.9rem;
-                position: relative;
-                border: 0.06rem solid #606163;
-                border-radius: 50%;
 
-                & > div {
-                    position: absolute;
-                    width: 0.45rem;
-                    height: 0.9rem;
-                    z-index: 9;
-                    overflow: hidden;
 
-                    div {
-                        position: absolute;
-                        width: 0.9rem;
-                        height: 0.9rem;
-                        border-radius: 50%;
-
-                    }
-
-                    .buy {
-                        border: 0.06rem solid #439B64;
-                    }
-
-                    .sell {
-                        border: 0.06rem solid #D65538;
-                    }
-
-                    .border-right {
-                        left: 0;
-                        top: 0;
-                        border-left-color: transparent;
-                        border-bottom-color: transparent;
-                    }
-
-                    .border-left {
-                        right: 0;
-                        top: 0;
-                        border-right-color: transparent;
-                        border-top-color: transparent;
-                    }
-                }
 
                 .ear-left {
                     left: -0.06rem;
@@ -213,14 +197,7 @@
             }
         }
         .data-title{
-            p{
-                line-height: 0.52rem;
-                color: @c_f;
-                span{
-                    padding-left: 0.2rem;
-                    color: #ffffff;
-                }
-            }
+
         }
         .btn{
             flex-grow: 1;

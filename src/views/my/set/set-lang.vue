@@ -38,14 +38,12 @@
         },
         methods:{
             setLang(parme){
-
                 langApi.getLanguage(parme.lang,res=>{
                     this.lang = parme.lang
                     this.$i18n.locale = parme.lang
                     this.$i18n.setLocaleMessage(parme.lang, res)
                     window.localStorage[parme.lang] = JSON.stringify(res)
                     window.localStorage.lang = this.lang
-
                     console.log(parme,res)
                 })
             }

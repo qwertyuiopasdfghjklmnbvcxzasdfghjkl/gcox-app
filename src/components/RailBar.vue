@@ -1,6 +1,6 @@
 <template>
     <div class="bar" :class="item.disabled?'disabled':''" v-tap="{methods: reto}">
-        <img v-if="item.icon" :src="item.icon"/>
+        <small v-if="item.icon" class="small_img"><img v-if="item.icon" :src="item.icon"/></small>
         <p>{{item.name}}</p>
         <span v-if="item.small" v-html="item.small"></span>
         <slot></slot>
@@ -42,7 +42,7 @@
         flex-wrap: nowrap;
         align-items: center;
         justify-content: space-between;
-        height: 0.92rem;
+        height: 0.96rem;
         line-height: 0.48rem;
 
         p {
@@ -53,11 +53,17 @@
             /*padding-left: 0.2rem;*/
         }
 
-        &>img {
-            width: 0.48rem;
-            height: 0.48rem;
-            margin-right: 0.2rem;
+        .small_img{
+            width: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            &>img {
+                max-width: 0.48rem;
+                max-height: 0.48rem;
+            }
         }
+
 
         span {
             margin-right: 0.2rem;

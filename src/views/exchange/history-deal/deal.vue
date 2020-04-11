@@ -1,5 +1,5 @@
 <template>
-    <section class="entrust-container">
+    <section class="entrust">
         <div class="content">
             <mt-loadmore
                     :top-method="loadTop"
@@ -11,6 +11,7 @@
                     :bottom-pull-text="$t('home.bottom-pull-text')"
                     :bottom-drop-text="$t('home.drop-text')"
                     :bottom-loading-text="$t('home.loading-text')"
+                    :autoFill="false"
                     ref="loadmore">
                 <ul class="trust-list" v-if="cdatas">
                     <li v-for="(item, index) in cdatas" :key="index">
@@ -19,7 +20,7 @@
                 </ul>
                 <no-more-data v-if="noMoreData"></no-more-data>
             </mt-loadmore>
-            <no-data v-if="!cdatas"></no-data>
+            <no-data v-if="!cdatas.length" :text="text"></no-data>
         </div>
     </section>
 </template>
@@ -68,7 +69,7 @@
                 allLoaded: false,
                 data: [],
                 form: {
-                    current: 0,
+                    current: 1,
                     hideCancelled: 0,
                     history: "1",
                     limit: 10,
@@ -78,6 +79,9 @@
         },
         computed: {
             ...mapGetters(['getApiToken']),
+            text(){
+                return this.getApiToken ? '': this.$t('public0.not_logged')
+            }
         },
         watch: {
             hideOtherTrust(e) {
@@ -95,11 +99,15 @@
             }
         },
         created() {
-            // this.getList()
+            this.getList()
         },
         methods: {
             ...mapActions(['setEntrustPrices', 'addEvents', 'removeEvents', 'tiggerEvents']),
             getList() {
+                if(!this.getApiToken){
+                    this.cdatas = []
+                    return
+                }
                 market.getCurrentEntrustByParams(this.form, res => {
                     if (this.sport === 'bottom') { // 加载更多数据
                         this.allLoaded = false
@@ -107,17 +115,19 @@
                             this.cdatas.push(d)
                         })
                         this.$refs.loadmore.onBottomLoaded();
-                        if (this.cdatas.length >= res.total) { // 没有更多数据
-                            this.noMoreData = true
-                            this.allLoaded = true
-                        }
+
                     } else if (this.sport === 'top') { // 下拉刷新
                         this.cdatas = res.data
+                        this.noMoreData = false
+                        this.allLoaded = false
                         this.$refs.loadmore.onTopLoaded();
                     } else {
                         this.cdatas = res.data
                     }
-                    this.noData = !this.cdatas.length
+                    if (this.cdatas.length >= res.total) { // 没有更多数据
+                        this.noMoreData = Boolean(res.total)
+                        this.allLoaded = true
+                    }
                 }, msg => {
                     Tip({type: 'danger', message: this.$t(`error_code.${msg}`)})
                 })
@@ -145,14 +155,14 @@
     @c_board: #B9D0CF;
     @c_btn: #1C9CE3;
 
-    .entrust-container {
+    .entrust {
         .content{
-            height: calc(100vh - 0.9rem);
+            /*height: calc(100vh - 0.9rem);*/
         }
     }
     .trust-list {
+        margin-bottom: 0.2rem;
         li {
-            padding: 0.25rem 0;
 
             .title {
                 position: relative;

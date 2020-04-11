@@ -11,7 +11,7 @@
             <div class="info mt20">
                 <div>
                     <p class="f50">
-                        {{toFixed(getLast24h.close)}}
+                        {{toFixed(getLast24h.close) | number}}
                     </p>
                     <p class="fabi mt10 f30 price"
                        :class="{down:Number(getLast24h.percent)<0,up:Number(getLast24h.percent)>0}">
@@ -20,55 +20,25 @@
                     </p>
                     <p class="mt10">
                         <span class="">{{$t('market.volume_24h')}}{{$t('home.home04')}}</span><!--24h成交量-->
-                        <span class="ml25">{{toFixed(getLast24h.vol, 2)}} {{baseSymbol}}</span>
+                        <span class="ml25">{{toFixed(getLast24h.vol, 2) | number}} {{baseSymbol}}</span>
                     </p>
                 </div>
                 <div>
                     <p class="mt10">
-                        <span class="">{{$t('market.low')}}</span><!--24h最低价--><span>{{toFixed(getLast24h.bottom)}}</span>
+                        <span class="">{{$t('market.low')}}</span>
+                        <!--24h最低价--><span>{{toFixed(getLast24h.bottom) | number}}</span>
                     </p>
                     <p class="mt10">
-                        <span class="">{{$t('market.high')}}</span><!--24h最高价--><span>{{toFixed(getLast24h.high)}}</span>
+                        <span class="">{{$t('market.high')}}</span>
+                        <!--24h最高价--><span>{{toFixed(getLast24h.high) | number}}</span>
                     </p>
                 </div>
             </div>
             <ul class="tabs">
                 <li :class="{active:isKline}">
                     <a v-tap="{methods:toggleDepth, type:true}">
-                        <span v-if="period=='1m'">{{$t('exchange.exchange_time')}}</span>
-                        <span v-if="period=='5m'">5{{$t('exchange.exchange_min')}}</span>
-                        <span v-if="period=='15m'">15{{$t('exchange.exchange_min')}}</span>
-                        <span v-if="period=='30m'">30{{$t('exchange.exchange_min')}}</span>
-                        <span v-if="period=='1h'">1{{$t('exchange.exchange_hour')}}</span>
-                        <span v-if="period=='2h'">2{{$t('exchange.exchange_hour')}}</span>
-                        <span v-if="period=='4h'">4{{$t('exchange.exchange_hour')}}</span>
-                        <span v-if="period=='6h'">6{{$t('exchange.exchange_hour')}}</span>
-                        <span v-if="period=='12h'">12{{$t('exchange.exchange_hour')}}</span>
-                        <span v-if="period=='1d'">1{{$t('exchange.exchange_day')}}</span>
-                        <img src="../../assets/img/tc_meus_b@2x.png"/>
+                        {{$t('exchange.exchange_candlesticks')}}
                     </a>
-                    <label class="select" v-if="showSelect">
-                        <span v-tap="{methods:setPeriod, t:'1m'}" :class="{active:period=='1m'}">{{$t('exchange.exchange_time')}}
-                            <!--分时--></span>
-                        <span v-tap="{methods:setPeriod, t:'5m'}" :class="{active:period=='5m'}">5{{$t('exchange.exchange_min')}}
-                            <!--5分钟--></span>
-                        <span v-tap="{methods:setPeriod, t:'15m'}" :class="{active:period=='15m'}">15{{$t('exchange.exchange_min')}}
-                            <!--5分钟--></span>
-                        <span v-tap="{methods:setPeriod, t:'30m'}" :class="{active:period=='30m'}">30{{$t('exchange.exchange_min')}}
-                            <!--30分钟--></span>
-                        <span v-tap="{methods:setPeriod, t:'1h'}" :class="{active:period=='1h'}">1{{$t('exchange.exchange_hour')}}
-                            <!--1小时--></span>
-                        <span v-tap="{methods:setPeriod, t:'2h'}" :class="{active:period=='2h'}">2{{$t('exchange.exchange_hour')}}
-                            <!--2小时--></span>
-                        <span v-tap="{methods:setPeriod, t:'4h'}" :class="{active:period=='4h'}">4{{$t('exchange.exchange_hour')}}
-                            <!--4小时--></span>
-                        <span v-tap="{methods:setPeriod, t:'6h'}" :class="{active:period=='6h'}">6{{$t('exchange.exchange_hour')}}
-                            <!--6小时--></span>
-                        <span v-tap="{methods:setPeriod, t:'12h'}" :class="{active:period=='12h'}">12{{$t('exchange.exchange_hour')}}
-                            <!--12小时--></span>
-                        <span v-tap="{methods:setPeriod, t:'1d'}" :class="{active:period=='1d'}">1{{$t('exchange.exchange_day')}}
-                            <!--1天--></span>
-                    </label>
                 </li>
                 <li :class="{active:!isKline}">
                     <a v-tap="{methods:toggleDepth, type:false}">
@@ -90,10 +60,12 @@
             <div class="kline-panel">
                 <div class="kline-panel-container" :class="{depth:!isKline}">
                     <div class="kline-master">
-                        <!--<div class="kine-select">-->
-
-                        <!--</div>-->
-                        <div class="kline-container" id="klineContainer"></div>
+                        <div class="kline-container">
+                            <iframe ref="klineContainer" id="klineContainer" frameborder="0"
+                                    height="100%" width="100%"
+                                    scrolling="no" marginheight="0" marginwidth="0" src=""
+                                    @load="iframeLoaded"></iframe>
+                        </div>
                     </div>
                     <div class="kline-container" id="depthContainer"></div>
                 </div>
@@ -101,9 +73,11 @@
             </div>
             <div class="depth-list-container f24">
                 <div class="btn-cont">
-                    <label v-tap="{methods:()=>{label = 1}}" :class="{show:label === 1 }">{{$t('home.entrus-order')}}</label>
+                    <label v-tap="{methods:()=>{label = 1}}"
+                           :class="{show:label === 1 }">{{$t('home.entrus-order')}}</label>
                     <label v-tap="{methods:()=>{label = 2}}" :class="{show:label === 2 }">{{$t('exchange.exchange_trade_history')}}</label>
-                    <label v-tap="{methods:()=>{label = 3}}" :class="{show:label === 3 }">{{$t('home.symbol-info')}}</label>
+                    <label v-tap="{methods:()=>{label = 3}}"
+                           :class="{show:label === 3 }">{{$t('home.symbol-info')}}</label>
                 </div>
                 <div v-if="label === 1">
                     <div class="header ft-c-dark">
@@ -142,8 +116,11 @@
                         <p>{{this.currentSymbol}}</p>
                     </label>
                     <p><span>{{$t('home.issue-time')}}</span><span>{{symbolInfo.issueTime || '--'}}</span></p>
-                    <p><span>{{$t('home.issue-total')}}</span><span>{{toFixed(symbolInfo.totalIssuance, 2) || '--'}}</span></p>
-                    <p><span>{{$t('home.circulate-total')}}</span><span>{{toFixed(symbolInfo.totalCirculation, 2) || '--'}}</span></p>
+                    <p>
+                        <span>{{$t('home.issue-total')}}</span><span>{{toFixed(symbolInfo.totalIssuance, 2) || '--'}}</span>
+                    </p>
+                    <p><span>{{$t('home.circulate-total')}}</span><span>{{toFixed(symbolInfo.totalCirculation, 2) || '--'}}</span>
+                    </p>
                     <!-- <p><span>{{$t('home.raise-price')}}</span><span>{{symbolInfo.issuePrice || '--'}}</span></p> -->
                     <p><span>{{$t('home.whitePaper')}}</span><span><a :href="symbolInfo.whitePaperUrl">
                         {{symbolInfo.whitePaperUrl || '--'}}</a></span>
@@ -184,6 +161,7 @@
     import market from '../market/index'
     import Lastdeal from "./market/lastdeal";
     import Loading from "../../components/common/loading";
+    import config from '../../api/config'
 
     let chartSettings = window.localStorage.getItem('chartSettings')
     chartSettings && (chartSettings = JSON.parse(chartSettings))
@@ -219,11 +197,21 @@
                 symbolInfo: {},
                 business: {
                     market: ''
-                }
+                },
+                domain: config.domain,
+                protocol: config.protocol,
+                url: config.url,
             }
         },
         computed: {
-            ...mapGetters(['getApiToken', 'getLast24h', 'getInitMarket', 'getMarketList','getUserWallets']),
+            ...mapGetters(['getApiToken', 'getLast24h', 'getInitMarket', 'getMarketList', 'getUserWallets', 'getLang']),
+            klineURL(){
+                if(window['cordova']){
+                    window.httpdURL = window.httpdURL?window.httpdURL:'https://m-exchange.gcox.com/kline/'
+                }
+                let _url = window.httpdURL?window.httpdURL:'/kline/'
+                return `${_url}?symbol=${this.symbol}&domain=${this.domain}&protocol=${this.protocol}&url=${this.url}&lang=${this.getLang}`
+            },
             filterMarketList() {
                 if (this.getMarketList) {
                     return this.getMarketList.filter(item => {
@@ -331,28 +319,18 @@
                 }
             },
             '$route.params.market'() { //切换市场后重新初始化websoket
-                console.log(this.$route.params.market)
-                this.klineData = []
                 this.business.market = this.$route.params.market
-                this.klineSocket.close()
                 this.loading = true
-                this.isFirstKline = true
                 this.showMarkets = false
                 this.InitKlineWebSoket()
+                this.setIframe()
                 this.setLast24h(0)
                 marketApi.get24hPrice({symbol: `${this.symbol}`}, (data) => {
                     this.setLast24h(data)
                 })
-            },
-            klineData(n, o) { //如果K线数据有变化，更新K线图数据
-                this.kLineChart.updateKlienDatas(JSON.parse(JSON.stringify(n)))
-                console.log('watch   '+n)
-            },
-            period(n, o) { //如果K线周期变化，重新请求周期数据
-                this.loading = true
-                this.isFirstKline = true
-                this.kLineChart.switch_period(n)
-                this.klineSocket.switchPeriod(n)
+                localStorage.market = this.$route.params.market
+
+
             },
             depthChange() {
                 this.depthChart && this.depthChart.drawDepth(this.depthChange)
@@ -368,11 +346,25 @@
             this.getSymbolInfo()
             console.log(this.getUserWallets)
         },
+        mounted(){
+            this.setIframe()
+        },
         beforeDestroy() {
             this.klineSocket && this.klineSocket.close()
         },
         methods: {
             ...mapActions(['setLast24h', 'tiggerEvents', 'setMarketList']),
+            iframeLoaded(){
+                setTimeout(()=>{
+                    this.loading = false
+                },1000)
+            },
+            setIframe(){
+                if(!this.loading){
+
+                }
+                this.$refs.klineContainer.src = this.klineURL
+            },
             upOrDown(item) {
                 if (numUtils.BN(item.openingPrice).equals(0)) {
                     return ''
@@ -386,8 +378,8 @@
                     return ''
                 }
             },
-            getSymbolInfo(){
-                marketApi.getSymbolIntroduce(this.currentSymbol,res=>{
+            getSymbolInfo() {
+                marketApi.getSymbolIntroduce(this.currentSymbol, res => {
                     console.log(res)
                     this.symbolInfo = res
                 })
@@ -411,32 +403,18 @@
             },
             toggleDepth(args) {
                 this.isKline = args.type
-                if(this.isKline){
-                    if(this.select === 1){
-                        this.select ++
-                    }else{
+                if (this.isKline) {
+                    if (this.select === 1) {
+                        this.select++
+                    } else {
                         this.showSelect = !this.showSelect
                     }
-                }else{
+                } else {
                     this.showSelect = false
                     this.select = 1
                 }
             },
             initECharts() {
-                this.kLineChart = KLineChart({
-                    container: document.getElementById('klineContainer'),
-                    klineType: 'eosbtc',
-                    scale: 2,
-                    hideDepth: true,
-                    fixedNumber: this.accuracy.fixedNumber,
-                    ThemeColor: {
-                        Background: '#201f25',
-                        Cursor: '#555963',
-                    }
-                })
-                this.kLineChart.switch_indic(this.indice)
-                this.kLineChart.updateKlienDatas(JSON.parse(JSON.stringify(this.klineData)))
-                console.log('init    '+this.klineData)
                 // 深度图
                 this.depthChart = DepthChart({
                     isAmountShowLeft: true,
@@ -451,42 +429,9 @@
                 this.klineSocket = KLineWebSocket({
                     symbol: this.symbol,
                     period: this.period,
-                    subscribe: ['kline', 'depth'],
+                    subscribe: [ 'depth'],
                     callback: (res) => {
-                        // K线图数据
-                        if (res.dataType === 'kline') { // K线图数据
-                            let klineDatas = JSON.parse(JSON.stringify(this.klineData))
-                            let datas = res.data && res.data.constructor === Array ? res.data : []
-                            let newArray = []
-                            datas.forEach((item) => {
-                                // newArray.push([Number(item[0]), parseFloat(item[1]) || 0, parseFloat(item[2]) || 0, parseFloat(item[3]) || 0, parseFloat(item[4]) || 0, parseFloat(item[5]) || 0])
-                                newArray.push([Number(item[0]), parseFloat(this.toFixed(Number(item[1]))) || 0, parseFloat(this.toFixed(Number(item[2]))) || 0, parseFloat(this.toFixed(Number(item[3]))) || 0, parseFloat(this.toFixed(Number(item[4]))) || 0, parseFloat(this.toFixed(Number(item[5]))) || 0])
-                            })
-                            if (!this.isFirstKline) {
-                                let tempObj = {}
-                                newArray.forEach((item) => {
-                                    tempObj[String(item[0])] = item
-                                })
-                                for (let i = 0; i < klineDatas.length; i++) {
-                                    let td = klineDatas[i]
-                                    if (tempObj[String(td[0])]) {
-                                        klineDatas.splice(i, 1, tempObj[String(td[0])])
-                                        delete tempObj[String(td[0])]
-                                    }
-                                }
-                                newArray.forEach((item) => {
-                                    if (tempObj[String(item[0])]) {
-                                        klineDatas.push(item)
-                                    }
-                                })
-                                this.klineData = klineDatas
-                            } else {
-                                this.isFirstKline = false
-                                this.klineData = newArray
-                            }
-                            this.loading = false
-
-                        } else if (res.dataType === 'LastOrderBook') {
+                        if (res.dataType === 'LastOrderBook') {
                             // 深度数据
                             this.asks = res.data.asks
                             this.bids = res.data.bids
@@ -647,6 +592,7 @@
     .info > div:last-of-type {
         min-width: 0;
         padding-top: 0.54rem;
+
         p {
             display: flex;
             justify-content: space-between;
@@ -672,19 +618,22 @@
     .tabs li {
         width: 2rem;
         text-align: center;
-        font-size: 0.34rem;
+        font-size: 0.24rem;
         height: 100%;
         line-height: 0.8rem;
         position: relative;
-        &.full_screen{
+
+        &.full_screen {
             flex: 1;
             text-align: right;
-            a{
+
+            a {
                 padding: 0.08rem;
                 font-size: 0.24rem;
                 border: 0.02rem solid #43434E;
-                span{
-                    img{
+
+                span {
+                    img {
                         width: 0.24rem;
                     }
                 }
@@ -694,7 +643,8 @@
 
     .tabs li:first-child {
     }
-    .select{
+
+    .select {
         position: absolute;
         z-index: 99;
         width: 6.9rem;;
@@ -705,20 +655,23 @@
         display: flex;
         align-items: center;
         flex-wrap: wrap;
-        span{
+
+        span {
             width: 20%;
             text-align: center;
             line-height: 0.6rem;
             font-size: 0.24rem;
-            &.active{
+
+            &.active {
                 color: #00A0E9;
             }
         }
-        &:after{
+
+        &:after {
             content: '';
             display: block;
             position: absolute;
-            border:0.1rem solid rgba(54, 53, 62, 0.9);
+            border: 0.1rem solid rgba(54, 53, 62, 0.9);
             border-left-color: transparent;
             border-bottom-color: transparent;
             top: -0.1rem;
@@ -733,9 +686,10 @@
         text-align: center;
     }
 
-    .tabs li.active{
+    .tabs li.active {
         border-bottom: 0.04rem solid #00A0E9;
     }
+
     .tabs li.active a {
         color: #00A0E9;
 
@@ -777,7 +731,7 @@
     .kline-panel {
         margin-left: -0.3rem;
         margin-right: -0.3rem;
-        height: 5.3rem;
+        height: 6.3rem;
         overflow: hidden;
         position: relative;
     }
@@ -877,7 +831,8 @@
             border-bottom: 0.02rem solid #2A2A34;
             color: #A0A4B2;
             margin-bottom: 0.1rem;
-            p{
+
+            p {
                 width: 50%;
             }
         }
@@ -959,39 +914,47 @@
             }
         }
     }
-    .btn-cont{
+
+    .btn-cont {
         display: flex;
         justify-content: space-between;
         margin: 0.3rem 0;
-        label{
+
+        label {
             width: 2.2rem;
             height: 0.64rem;
             text-align: center;
             line-height: 0.64rem;
             background: #43434E;
-            &.show{
-                color:#00A0E9;
-                background:  #2A2A34;
+
+            &.show {
+                color: #00A0E9;
+                background: #2A2A34;
             }
         }
     }
-    .lastdeal{
+
+    .lastdeal {
         margin: 0 -0.3rem;
     }
-    .symbol-cont{
-        label{
+
+    .symbol-cont {
+        label {
             display: flex;
             font-size: 0.3rem;
         }
-        p{
+
+        p {
             display: flex;
             line-height: 0.5rem;
             justify-content: space-between;
             align-items: center;
-            span:first-child{
+
+            span:first-child {
                 color: #A0A4B2;
             }
-            span:last-child{
+
+            span:last-child {
                 flex-grow: 1;
                 white-space: nowrap;
                 text-overflow: ellipsis;
@@ -1001,7 +964,8 @@
             }
         }
     }
-    .load{
+
+    .load {
         position: absolute;
         top: 50%;
         left: 50%;

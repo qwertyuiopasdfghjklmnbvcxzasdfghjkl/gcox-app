@@ -66,3 +66,7 @@ $ cordova-splash --config=config.xml --splash=splash.png
 ```
 $ cordova-hcp build
 ```
+### cordova build android --release
+```
+cordova build android --release -- --keystore=./gcox-key.jks --storePassword=123456 --alias=key0 --password=123456
+```

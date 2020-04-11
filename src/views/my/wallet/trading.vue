@@ -52,7 +52,7 @@
                     <li v-for="data in filterSymboltList" v-tap="{methods: toWallet, item:data}">
                         <p>{{data.accountName}}</p>
                         <label>
-                            <p>{{data.totalBalance | number}}</p>
+                            <p>{{removeZore(data.totalBalance)}}</p>
                             <span><img src="../../../assets/img/i_rig_c@3x.png"/></span>
                         </label>
                     </li>
@@ -73,6 +73,7 @@
     import noMoreData from '@/components/common/noMoreData'
     import numUtils from '@/assets/js/numberUtils'
     import userUtils from '@/api/wallet'
+    import utils from '../../../assets/js/utils'
 
     export default {
         name: 'trading',
@@ -215,6 +216,9 @@
             toWallet(params) {
                 this.setSymbol(params.item.symbol)
                 this.$router.push({name: 'wallet-detail'})
+            },
+            removeZore(d){
+                return utils.removeEndZero(d)
             }
         }
     }

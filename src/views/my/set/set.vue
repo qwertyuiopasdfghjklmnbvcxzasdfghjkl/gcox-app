@@ -54,8 +54,8 @@
             // }
         },
         created(){
-            let userinfo = window.localStorage.userInfo
-            let isfirst = window.localStorage.isFirst
+            let userinfo = window.localStorage.userInfo  || ''
+            let isfirst = window.localStorage.isFirst || ''
             let userwallets = window.localStorage.userWallets || 0
             let lang = window.localStorage.lang || 'en'
             let langbag = window.localStorage[lang]

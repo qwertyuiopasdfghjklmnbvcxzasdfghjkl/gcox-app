@@ -112,5 +112,8 @@
         position: absolute;
         bottom: 1rem;
     }
+    .page-main{
+        min-height: 6rem;
+    }
 </style>
 

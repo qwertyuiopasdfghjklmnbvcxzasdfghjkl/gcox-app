@@ -130,7 +130,7 @@ market.cancelOrder = cancelOrder
 
 // 取消当前市场所有订单
 const cancelAllOrder = function (market, success, error) {
-  api.get(`${domain}api/v2/trade/my/orderBook/cancelAll?market=${market}`, (res) => {
+  api.get(`${domain}api/v2/trade/my/orderBook/cancelAll`,{market:'market'}, (res) => {
     if (res.rst === 1) {
       success && success(res.data)
     } else {
@@ -201,7 +201,7 @@ const exportHistory = function (date, success, error) {
 market.exportHistory = exportHistory
 // 根据Symbol获取当前委托
 const getCurrentEntrustBySymbol = function (history, market, success, error) {
-  api.get(`${domain}api/v3/trade/my/orderBook?history=${history}`, (res) => {
+  api.get(`${domain}api/v3/trade/my/orderBook`,{history:'history'}, (res) => {
     if (res.rst === 1) {
       success && success(res.data)
     } else {
@@ -213,7 +213,7 @@ market.getCurrentEntrustBySymbol = getCurrentEntrustBySymbol
 
 // 历史成交
 const getHistoryDeal = function (history, market, success, error) {
-  api.get(`${domain}api/v3/trade/my/orderBook?history=${history}`, (res) => {
+  api.get(`${domain}api/v3/trade/my/orderBook`,{history:'history'}, (res) => {
     if (res.rst === 1) {
       success && success(res.data)
     } else {
@@ -324,7 +324,7 @@ market.getKlineTestData = getKlineTestData
 
 // 首页市场推荐
 const marketListCom = function (recommand, success, error) {
-  api.get(`${domain}api/v2/trade/market?recommand=${recommand}`, (res) => {
+  api.get(`${domain}api/v2/trade/market`,{recommand:'recommand'}, (res) => {
     if (res.rst === 1) {
       success && success(res.data)
     } else {
@@ -336,7 +336,7 @@ market.marketListCom = marketListCom
 
 // 获取币种简介信息
 const getSymbolIntroduce = function (symbol, success, error) {
-  api.get(`${domain}api/v2/kline/symbolIntroduce?symbol=${symbol}`, (res) => {
+  api.get(`${domain}api/v2/kline/symbolIntroduce`,{symbol:'symbol'}, (res) => {
     if (res.rst === 1) {
       success && success(res.data)
     } else {

@@ -5,6 +5,7 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
     export default {
         name: "internationalWeb",
         data() {
@@ -12,6 +13,17 @@
             return {
                 vm: vm,
             }
+        },
+        computed:{
+           // ...mapGetters(['getSysParams']),
+        },
+        watch:{
+           /* getSysParams(e) {
+                let status = e['maintain']['value']
+                if( status === '1'){
+                    this.$emit('removeDialog')
+                }
+            }*/
         },
         created() {
 

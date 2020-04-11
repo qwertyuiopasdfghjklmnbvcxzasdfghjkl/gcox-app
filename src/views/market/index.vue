@@ -240,6 +240,7 @@
                 this.symbol = data.id.symbol
             },
             goToExchangePage(item) {
+                localStorage.market = `${item.currencySymbol}_${item.baseSymbol}`
                 if(this.form === 'kline'){
                     this.$router.push({name: 'kline', params: {market: `${item.currencySymbol}_${item.baseSymbol}`}})
                 }else{

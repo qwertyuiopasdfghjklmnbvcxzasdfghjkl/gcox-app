@@ -124,6 +124,9 @@
                     width: 0.54rem;
                     flex: 1;
                     flex-shrink: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
 
                     img {
                         width: 0.54rem;
@@ -136,7 +139,9 @@
                     white-space: nowrap;
                     text-overflow: ellipsis;
                     width: 6.1rem;
-
+                    p{
+                        line-height: 0.4rem;
+                    }
                     span {
                         font-size: 0.24rem;
                     }
