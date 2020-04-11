@@ -565,8 +565,8 @@ utils.copyText = copyText
 const getClientTimezone = ()=>{  
   var oDate = new Date();  
   var nTimezone = -oDate.getTimezoneOffset() / 60;
-  var offset = nTimezone.toFixed(2);  
-  return `（GMT ${Number(offset)>0?`+${offset}`:offset}）`
+  var offset = nTimezone.toFixed(2); 
+  return `(GMT ${Number(offset)>=0?'+':''}${('0'+(offset.split('.')[0]).replace('-','')).slice(-2)}:${offset.split('.')[1]})`
 }  
 utils.getClientTimezone = getClientTimezone
 
