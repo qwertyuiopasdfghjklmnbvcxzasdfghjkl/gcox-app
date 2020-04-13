@@ -157,18 +157,18 @@
                 let symbol = this.market || localStorage.market
                 if (symbol) {
                     symbol = symbol.split('_')[1]
-                    return symbol ? symbol : 'BTC'
+                    return symbol ? symbol : 'USDT'
                 } else {
-                    return 'BTC'
+                    return 'USDT'
                 }
             },
             currentSymbol() {
                 let symbol = this.market || localStorage.market
                 if (symbol) {
                     symbol = symbol.split('_')[0]
-                    return symbol ? symbol : 'ETH'
+                    return symbol ? symbol : 'ACM'
                 } else {
-                    return 'ETH'
+                    return 'ACM'
                 }
             },
             symbol() {

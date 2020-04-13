@@ -5,7 +5,7 @@
                 <p>
                     <span :class="[data.direction==1?'buy':'sell']">{{getPrice(data.price) }}
                     {{data.direction==1 ? $t('exchange.exchange_buy') : $t('exchange.exchange_sell')}}</span>
-                    <span>  {{data.toSymbol}} / {{data.fromSymbol}}</span>
+                    <span>  {{data.direction==1?`${data.toSymbol} / ${data.fromSymbol}`:`${data.fromSymbol} / ${data.toSymbol}`}}</span>
                 </p>
                 <p class="time">{{new Date(Number(data.createdAt)).format()}}</p>
             </div>
