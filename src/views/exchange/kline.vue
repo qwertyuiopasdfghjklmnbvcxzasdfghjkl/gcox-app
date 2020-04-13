@@ -95,9 +95,9 @@
                                 <span v-else>-</span>
                             </p>
                             <p>
-                                <span class="buy text-left" v-if="depthChange.bids[index]">{{toFixed(depthChange.bids[index][0])|number}}</span>
+                                <span class="buy text-left" v-if="depthChange.bids[index]">{{toFixed(depthChange.bids[index][0])}}</span>
                                 <span class="buy text-left" v-else>-</span>
-                                <span class="ml10 sell" v-if="depthChange.asks[index]">{{toFixed(depthChange.asks[index][0])|number}}</span>
+                                <span class="ml10 sell" v-if="depthChange.asks[index]">{{toFixed(depthChange.asks[index][0])}}</span>
                                 <span class="ml10 sell" v-else>-</span>
                             </p>
                             <p>
