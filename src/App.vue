@@ -106,7 +106,6 @@
 
             if(window['cordova']){
                 this.system = 1
-                navigator.splashscreen.hide();
                 console.log('我是app首页！',new Date().getTime())
             }else{
                 this.showSplash = false
@@ -231,6 +230,7 @@
                 if (window['deviceready']) {
                     this.setVersion(AppVersion.version)
                     cordovaUtils.getDeviceLang()
+                    navigator.splashscreen.hide();
                 } else {
                     setTimeout(this.checkDeviceready, 100)
                 }
