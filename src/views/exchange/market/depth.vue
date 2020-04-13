@@ -15,7 +15,7 @@
                     <span @click="clickChangeValue(toFixed(item.price), 'price')">{{Number(toFixed(item.avaliableAmount, accuracy.quantityAccu))}}</span>
                 </li>
             </ul>
-            <loading v-show="!asks.length" class="load"/>
+            <loading v-show="loading" class="load"/>
         </div>
         <div class="numb_text" :class="{up:(getLast24h.direction!=1)}">
             <span class="f32">{{toFixed(getLast24h.close)}}</span>
@@ -33,7 +33,7 @@
                     <span>--</span>
                 </li>
             </ul>
-            <loading v-show="!bids.length" class="load"/>
+            <loading v-show="loading" class="load"/>
         </div>
         <!--<div class="check">-->
             <!--<label>-->
@@ -102,6 +102,7 @@
                 show: false,
                 sellBuy: 0,
                 showSellBuy: false,
+                loading:true
             }
         },
         computed: {
@@ -202,7 +203,7 @@
                 })
             })
             this.getDepthList()
-            console.log(this.accuracy)
+            // console.log(this.accuracy)
         },
         beforeDestroy() {
             this.removeEvents('depthEvent')
@@ -213,10 +214,14 @@
                 this.$emit('input', !this.value)
             },
             getDepthList() {
+                this.loading = true
                 // 获取深度信息
                 marketApi.getDepths(this.symbol, (res) => {
+                    this.loading = false
                     this.asks = res.asks //  卖
                     this.bids = res.bids // 买
+                },msg=>{
+                    this.loading = false
                 })
             },
             mergeDatas(datas) {

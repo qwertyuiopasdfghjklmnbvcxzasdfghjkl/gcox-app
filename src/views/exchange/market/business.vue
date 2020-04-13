@@ -58,7 +58,6 @@
         <!--</div>-->
         <!--<div class="depth">-->
             <!--<div class="space-area" id="depth"></div>-->
-            <!--<loading v-show="showLatestDeal" class="load"/>-->
         <!--</div>-->
 
     </div>

@@ -89,16 +89,20 @@
                         </p>
                     </div>
                     <ul class="dept-list">
-                        <li v-for="(n,index) in depthChange.bids.length">
+                        <li v-for="(n,index) in Math.max(depthChange.bids.length,depthChange.asks.length)">
                             <p>
-                                <span>{{toFixed(depthChange.bids[index]&&depthChange.bids[index][1],accuracy.quantityAccu)|number}}</span>
+                                <span v-if="depthChange.bids[index]">{{toFixed(depthChange.bids[index][1],accuracy.quantityAccu)|number}}</span>
+                                <span v-else>-</span>
                             </p>
                             <p>
-                                <span class="buy text-left">{{toFixed(depthChange.bids[index]&&depthChange.bids[index][0])|number}}</span>
-                                <span class="ml10 sell ">{{toFixed(depthChange.asks[index]&&depthChange.asks[index][0])|number}}</span>
+                                <span class="buy text-left" v-if="depthChange.bids[index]">{{toFixed(depthChange.bids[index][0])|number}}</span>
+                                <span class="buy text-left" v-else>-</span>
+                                <span class="ml10 sell" v-if="depthChange.asks[index]">{{toFixed(depthChange.asks[index][0])|number}}</span>
+                                <span class="ml10 sell" v-else>-</span>
                             </p>
                             <p>
-                                <span>{{toFixed(depthChange.asks[index]&&depthChange.asks[index][1],accuracy.quantityAccu)|number}}</span>
+                                <span v-if="depthChange.asks[index]">{{toFixed(depthChange.asks[index][1],accuracy.quantityAccu)|number}}</span>
+                                <span v-else>-</span>
                             </p>
                         </li>
                     </ul>
