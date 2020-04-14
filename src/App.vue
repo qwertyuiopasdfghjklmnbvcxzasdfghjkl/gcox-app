@@ -5,7 +5,7 @@
             <router-view :class="{wrap:$route.meta.nav}"/>
         </transition>
         <!--<update ref="update"></update>-->
-        <init-slides v-if="system === 1"></init-slides>
+        <!-- <init-slides v-if="system === 1"></init-slides> -->
         <nav-footer v-show="$route.meta.nav"></nav-footer>
 
     </div>
@@ -66,6 +66,13 @@
             }
         },
         created() {
+            if(window['cordova']){
+                this.system = 1
+                console.log('我是app首页！',new Date().getTime())
+            }else{
+                // this.showSplash = false
+                console.log('我是h5首页！',new Date().getTime())
+            }
             this.getLang()
             //一键注册用户快速登录
             if (!this.getApiToken && this.getQuickLoginInfo) {
@@ -103,17 +110,9 @@
             $('#app').on('click', 'input', (e) => {
                 e.target.focus()
             })
-
-            if(window['cordova']){
-                this.system = 1
-                console.log('我是app首页！',new Date().getTime())
-            }else{
-                this.showSplash = false
-                console.log('我是h5首页！',new Date().getTime())
-            }
             setTimeout(()=>{
                 this.showSplash = false
-            },4000)
+            },5000)
         },
         methods: {
             ...mapActions(['setBTCValuation', 'setUSDCNY', 'setNetworkSignal', 'setBtcValues',
@@ -230,7 +229,7 @@
                 if (window['deviceready']) {
                     this.setVersion(AppVersion.version)
                     cordovaUtils.getDeviceLang()
-                    navigator.splashscreen.hide();
+                    setTimeout(navigator.splashscreen.hide(), 1000)
                 } else {
                     setTimeout(this.checkDeviceready, 100)
                 }
