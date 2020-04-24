@@ -5,7 +5,7 @@
                 <p>
                     <span :class="[data.direction==1?'buy':'sell']">{{getPrice(data.price) }}
                     {{data.direction==1 ? $t('exchange.exchange_buy') : $t('exchange.exchange_sell')}}</span>
-                    <span>  {{data.toSymbol}} / {{data.fromSymbol}}</span>
+                    <span>  {{data.direction==1?`${data.toSymbol} / ${data.fromSymbol}`:`${data.fromSymbol} / ${data.toSymbol}`}}</span>
                 </p>
                 <p class="time">{{new Date(Number(data.createdAt)).format()}}</p>
             </div>
@@ -32,15 +32,15 @@
                     <!--</div>-->
                     <!--<p :class="[data.direction==1?'buy':'sell']">{{value}}%</p>-->
                 <!--</div>-->
-                <p>{{$t('exchange.entrust_price')}}({{data.fromSymbol}})</p>
+                <p>{{$t('exchange.entrust_price')}}({{data.direction==1?data.fromSymbol:data.toSymbol}})</p>
                 <p>{{util.removeEndZero(toFixed(data.price))}}</p>
             </div>
             <div class="data-title">
-                <p>{{$t('exchange.exchange_Transaction_volume')}}<!--成交量--> / {{$t('exchange.entrust_total')}} ({{data.toSymbol}})<!--委托总量--></p>
+                <p>{{$t('exchange.exchange_Transaction_volume')}}<!--成交量--> / {{$t('exchange.entrust_total')}} ({{data.direction==1?data.toSymbol:data.fromSymbol}})<!--委托总量--></p>
                 <p>{{util.removeEndZero(toFixed(data.finishedAmount))}} / {{util.removeEndZero(toFixed(data.totalAmount))}}</p>
             </div>
             <div class="btn">
-                <p>{{$t('home.home_volume')}}<!--成交额-->({{data.fromSymbol}}) </p>
+                <p>{{$t('home.home_volume')}}<!--成交额-->({{data.direction==1?data.fromSymbol:data.toSymbol}}) </p>
                 <p>{{util.removeEndZero(toFixed(data.averagePrice * data.finishedAmount))}}</p>
                 <!--<span v-if="form">{{getStatue(data)}}</span>-->
                 <!--<span v-else class="cancel" @click="cancelOrder(data.orderBookId)">-->
