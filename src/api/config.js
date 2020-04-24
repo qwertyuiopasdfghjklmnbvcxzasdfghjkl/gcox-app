@@ -1,5 +1,5 @@
 
- let domain = process.env.NODE_ENV === 'development' ? 'gcox-dev.lab.ssss.so' : location.host.split(':')[0]
+ let domain = process.env.NODE_ENV === 'development' ? 'gcox-test.lab.ssss.so' : location.host.split(':')[0]
 
 if (process.env.VUE_APP_BASEURL) {
   domain = process.env.VUE_APP_BASEURL

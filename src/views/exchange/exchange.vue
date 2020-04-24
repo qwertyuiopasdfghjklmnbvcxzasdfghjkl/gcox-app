@@ -211,6 +211,7 @@
             }
         },
         created() {
+            this.market = this.$route.params.market || localStorage.market
             this.tradeType = this.$route.params.action !== false ? 'buy' : 'sell'
             this.InitDataSoket()
         },
