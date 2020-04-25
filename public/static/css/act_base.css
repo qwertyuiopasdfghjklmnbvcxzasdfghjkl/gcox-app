@@ -9,11 +9,12 @@
   margin: 0;
   -webkit-overflow-scrolling: touch;
 }
-html, body {
+html {
   padding: 0;
   margin: 0;
 }
 body {
+  margin: 0;
   font-family: Helvetica;
   color: #ffffff;
   background-color: #fff;
@@ -30,6 +31,13 @@ body {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  /* Status bar height on iOS 11.0 */
+  padding-top: constant(safe-area-inset-top);
+  padding-bottom: constant(safe-area-inset-bottom);
+  /* Status bar height on iOS 11+ */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+
 }
 dl, dd, h1, h2, h3, h4, h5, h6, p, form, ul, li {
   padding: 0;

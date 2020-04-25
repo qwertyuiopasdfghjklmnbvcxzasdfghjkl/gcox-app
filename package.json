@@ -12,8 +12,6 @@
     "build-android": "cordova build android"
   },
   "dependencies": {
-    "@sentry/browser": "^5.6.2",
-    "@sentry/integrations": "^5.6.1",
     "axios": "^0.18.0",
     "cordova-android": "^8.1.0",
     "cordova-hot-code-push-plugin": "git+ssh://git@c.koall.io:ko-plugins/cordova-hot-code-push-plugin.git",
