@@ -102,11 +102,12 @@ api.scanQRCode = scanQRCode
 document.addEventListener('deviceready', function(){
   if (window.StatusBar) {
     var u = navigator.userAgent
-    if(u.indexOf('Android') > -1 || u.indexOf('Adr') > -1){
+    StatusBar.backgroundColorByHexString('#2a2a34');
+    /*if(u.indexOf('Android') > -1 || u.indexOf('Adr') > -1){
       StatusBar.backgroundColorByHexString('#000000');
     } else {
       StatusBar.hide()
-    }
+    }*/
   }
 
   // 关闭启动页
