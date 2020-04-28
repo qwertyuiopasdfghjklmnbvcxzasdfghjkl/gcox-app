@@ -38,6 +38,18 @@
             <application android:usesCleartextTraffic="true" />
         </edit-config>
     </platform>
+    <platform name="ios">
+        <config-file platform="ios" target="*-Info.plist" parent="NSCameraUsageDescription">
+            <string>Scan QrCode</string>
+        </config-file>
+        <config-file platform="ios" target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
+            <string>Would you like to access your album, please?</string>
+        </config-file>
+        <preference name="DisallowOverscroll" value="true"/>
+        <preference name="StatusBarStyle" value="lightcontent" />
+        <preference name="StatusBarOverlaysWebView" value="false" />
+        <preference name="StatusBarBackgroundColor" value="#2a2a34" />
+    </platform>
     <chcp>
         <config-file url="http://res.ssss.so/hotfix/gcox/www/chcp.json" />
         <auto-download enabled="false" />
