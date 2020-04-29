@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "cordova-android": "^8.1.0",
     "cordova-hot-code-push-plugin": "^1.5.3",
     "cordova-plugin-app-update": "git+ssh://git@c.koall.io:ko-plugins/cordova-plugin-app-update.git",
     "cordova-plugin-appversion": "^1.0.0",
@@ -69,8 +68,6 @@
       "nl.madebymark.share": {},
       "cordova-plugin-splashscreen": {}
     },
-    "platforms": [
-      "android"
-    ]
+    "platforms": []
   }
 }

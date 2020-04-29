@@ -49,6 +49,7 @@
         <preference name="StatusBarStyle" value="lightcontent" />
         <preference name="StatusBarOverlaysWebView" value="false" />
         <preference name="StatusBarBackgroundColor" value="#2a2a34" />
+        <preference name="BackupWebStorage" value="local"/>
     </platform>
     <chcp>
         <config-file url="http://res.ssss.so/hotfix/gcox/www/chcp.json" />
