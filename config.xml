@@ -38,6 +38,13 @@
             <application android:usesCleartextTraffic="true" />
         </edit-config>
     </platform>
+    <platform name="ios">
+        <config-file platform="ios" target="*-Info.plist" parent="NSCameraUsageDescription">
+            <string>Scan QrCode</string>
+        </config-file>
+        <preference name="DisallowOverscroll" value="true"/>
+        <preference name="StatusBarStyle" value="default" />
+    </platform>
     <chcp>
         <config-file url="http://res.ssss.so/hotfix/gcox/www/chcp.json" />
         <auto-download enabled="false" />
