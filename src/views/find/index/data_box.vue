@@ -72,7 +72,7 @@
                 })
             },
             percentToMoney(item){
-                return utils.removeEndZero(this.toFixed(item.lastPrice, item.accuracy)).toMoney()
+                return utils.removeEndZero(numUtils.BN(item.lastPrice).toFixed(item.accuracy)).toMoney()
             }
         }
     }

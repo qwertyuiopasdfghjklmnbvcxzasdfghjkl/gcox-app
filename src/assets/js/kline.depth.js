@@ -42,7 +42,7 @@ export default function (opts) {
 
     return (window.devicePixelRatio || 1) / backingStore
   }
-  let _ratio = 3 || getPixelRatio()
+  let _ratio = 1
 
   var container = opts.container
   var cWidth = container.clientWidth * _ratio
@@ -342,6 +342,7 @@ export default function (opts) {
     // 买
     let bids = mergeDepthAmounts(res.bids)
     this.bids = bids
+    // console.log(this.asks,this.bids)
 
     // 量
     let askAmounts = asks.data.length ? asks.data[asks.data.length - 1].amounts : new BigNumber(0)
@@ -382,6 +383,14 @@ export default function (opts) {
       centerPrice = pxPrice.mul(this._right / 2)
     }
     this._centerPrice = centerPrice
+    // console.log('centerPrice=',centerPrice.toString(),JSON.stringify(asks.data),JSON.stringify(bids.data))
+    if(this._centerPrice-bids.min>asks.max-this._centerPrice){
+      this.asks.data.push({price:this._centerPrice.mul(2).minus(this.bids.min), amounts:askAmounts})
+      // console.log(JSON.stringify(this.asks.data))
+    } else {
+      this.bids.data.push({price:this._centerPrice.mul(2).minus(this.asks.max), amounts:bidAmounts})
+      // console.log(JSON.stringify(this.bids.data))
+    }
 
     // 计算买单最大没像素的价格
     let bidPxPrice = BigNumber.max(centerPrice, bids.max).minus(bids.min).div(this._right / 2).toFixed()
@@ -389,12 +398,18 @@ export default function (opts) {
     // 计算卖卖单没像素的价格
     let askPxPrice = asks.max.minus(BigNumber.min(centerPrice, asks.min)).div(this._right / 2).toFixed()
     askPxPrice = (new BigNumber(askPxPrice)).toFixed(getNaturalNumber.call(askPxPrice))
-    let avgPxPrice = BigNumber.min(bidPxPrice, askPxPrice)
+    let avgPxPrice = BigNumber.max(bidPxPrice, askPxPrice)
     if (!avgPxPrice.equals(0)) {
       pxPrice = avgPxPrice
     }
     pxPrice = pxPrice.mul(zoomRatio)
     this._pxPrice = pxPrice
+    if(bids.max.lt(this._centerPrice)){
+      bids.data.unshift({"price":this._centerPrice,"amounts":new BigNumber(0)})
+    }
+    if(asks.min.gt(this._centerPrice)){
+      asks.data.unshift({"price":this._centerPrice,"amounts":new BigNumber(0)})
+    }
 
     // X轴Price信息
     ctx.textAlign = 'center'

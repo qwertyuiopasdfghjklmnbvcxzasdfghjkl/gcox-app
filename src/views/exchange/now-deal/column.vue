@@ -33,7 +33,7 @@
                     <!--<p :class="[data.direction==1?'buy':'sell']">{{value}}%</p>-->
                 <!--</div>-->
                 <p>{{$t('exchange.entrust_price')}}({{data.direction==1?data.fromSymbol:data.toSymbol}})</p>
-                <p>{{util.removeEndZero(toFixed(data.price))}}</p>
+                <p>{{data.price==-1?$t('exchange.exchange_market_price'):util.removeEndZero(toFixed(data.price))}}</p>
             </div>
             <div class="data-title">
                 <p>{{$t('exchange.exchange_Transaction_volume')}}<!--成交量--> / {{$t('exchange.entrust_total')}} ({{data.direction==1?data.toSymbol:data.fromSymbol}})<!--委托总量--></p>

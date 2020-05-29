@@ -70,7 +70,7 @@
                 this.system = 1
                 console.log('我是app首页！',new Date().getTime())
             }else{
-                // this.showSplash = false
+                this.showSplash = false
                 console.log('我是h5首页！',new Date().getTime())
             }
             this.getLang()

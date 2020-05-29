@@ -111,7 +111,7 @@
                 markets: [],
                 index: 0,
                 // baseSymbol: [],
-                symbol: 'BTC',
+                symbol: '',
                 marketsList: [],
                 socket: null
             }
@@ -173,7 +173,13 @@
                 return list.sort()
             }
         },
-        watch: {},
+        watch: {
+            baseSymbol(_n){
+              if(!this.symbol && _n.length){
+                this.symbol = _n[0]
+              }
+            }
+        },
         created() {
             this.getMarkets()
             this.socket = KLineWebSocket({
