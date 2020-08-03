@@ -1,7 +1,7 @@
 {
-  "name": "gcox",
-  "ios_identifier": "com.gcox",
-  "android_identifier": "com.gcox",
+  "name": "GCOX",
+  "ios_identifier": "com.gcox.exchange",
+  "android_identifier": "com.gcox.exchange",
   "update": "resume",
   "content_url": "https://m-exchange.gcox.com",
   "min_native_interface": 1
