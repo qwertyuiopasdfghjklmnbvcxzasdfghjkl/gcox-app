@@ -16,6 +16,6 @@ platform :android do
       keystore_alias: 'key0',
       keystore_password: '123456'
     )
-    supply(apk: ENV['CORDOVA_ANDROID_RELEASE_BUILD_PATH'])
+    #supply(apk: ENV['CORDOVA_ANDROID_RELEASE_BUILD_PATH'])
   end
 end
