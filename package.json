@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "compare-func": "^2.0.0",
     "cordova-hot-code-push-plugin": "git+http://c.koall.io/gitlab/ko-plugins/cordova-hot-code-push-plugin.git",
     "cordova-ios": "^5.1.1",
     "cordova-plugin-app-update": "git+http://c.koall.io/gitlab/ko-plugins/cordova-plugin-app-update.git",
