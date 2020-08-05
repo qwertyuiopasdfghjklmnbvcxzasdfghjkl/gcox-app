@@ -4,7 +4,7 @@ import json
 import os
 
 def getFiles():
-    baseURL = 'https://m-exchange.gcox.com' #资源文件所在服务器域名
+    baseURL = 'http://chcp-gcox.chainteam.cc' #资源文件所在服务器域名
     manifest='chcp.manifest' #配置文件
     folderPath = os.path.split(os.path.realpath(__file__))[0]
     folderPath = os.path.join(folderPath, 'www')

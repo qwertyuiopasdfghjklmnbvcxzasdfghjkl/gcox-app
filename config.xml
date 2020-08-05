@@ -48,11 +48,11 @@
         <preference name="DisallowOverscroll" value="true"/>
         <preference name="StatusBarStyle" value="lightcontent" />
         <preference name="StatusBarOverlaysWebView" value="false" />
-        <preference name="StatusBarBackgroundColor" value="#2a2a34" />
+        <preference name="StatusBarBackgroundColor" value="#000000" />
         <preference name="BackupWebStorage" value="local"/>
     </platform>
     <chcp>
-        <config-file url="http://chcp.gcox.com/chcp.json" />
+        <config-file url="http://chcp-gcox.chainteam.cc/chcp.json" />
         <auto-download enabled="false" />
         <auto-install enabled="false" />
         <native-interface version="1" />

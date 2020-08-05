@@ -3,6 +3,6 @@
   "ios_identifier": "com.gcox.exchange",
   "android_identifier": "com.gcox.exchange",
   "update": "resume",
-  "content_url": "http://chcp.gcox.com",
+  "content_url": "http://chcp-gcox.chainteam.cc",
   "min_native_interface": 1
 }
