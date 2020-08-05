@@ -2,7 +2,7 @@ platform :ios do
   desc "Deploy ios app on the appstore"
 
   lane :deploy do
-    cordova(platform: 'ios')
+    cordova(platform: 'ios',type:'development',release:'false')
   end
 end
 
