@@ -38,6 +38,9 @@
         <config-file platform="ios" target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
             <string>Would you like to access your album, please?</string>
         </config-file>
+        <config-file platform="ios" target="*-Info.plist" parent="NSPhotoLibraryAddUsageDescription">
+            <string>Save QrCode</string>
+        </config-file>
         <preference name="DisallowOverscroll" value="true"/>
         <preference name="StatusBarStyle" value="lightcontent" />
         <preference name="StatusBarOverlaysWebView" value="false" />
