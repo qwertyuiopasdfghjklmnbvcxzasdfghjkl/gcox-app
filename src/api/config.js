@@ -2,21 +2,23 @@
  // let domain = process.env.NODE_ENV === 'development' ? 'gcox-test.lab.ssss.so' : location.host.split(':')[0]
  let domain = process.env.NODE_ENV === 'development' ? 'gcox.com' : location.host.split(':')[0]
 
-if (process.env.VUE_APP_BASEURL) {
+const protocol = location.protocol
+if (protocol == 'file:' && process.env.VUE_APP_BASEURL) {
   domain = process.env.VUE_APP_BASEURL
 }
-let https = window.location.protocol === 'https:'?true:false
-if (process.env.VUE_APP_HTTPS==='true') {
-  https = true
+let isHttps = protocol == 'https:'?true:false
+if (protocol == 'file:' && process.env.VUE_APP_HTTPS=='true') {
+  isHttps = true
 }
-const protocol = window.location.protocol === 'https:' || https ? 'wss://': 'ws://'
-const http = window.location.protocol === 'https:' || https ? 'https://' : 'http://'
+let isDev = process.env.NODE_ENV == 'development'
+const wshttp = isHttps ? 'wss://': 'ws://'
+const http = isHttps ? 'https://' : 'http://'
 const config = {
   domain: domain,
   imageType: /\.(jpg|png|jpeg|bmp)/i,
   http: http,
   url: `${http}${domain}`,
-  protocol: protocol,
+  protocol: wshttp,
   brand: 'GCOX',
   version:'1.1.1',
   updateInfo:{  //更新日志
