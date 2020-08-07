@@ -9,7 +9,7 @@ platform :ios do
     lane :deploy do
       cordova(platform: 'ios',type:'development',release:'false')
       resign(ipa:ENV['CORDOVA_IOS_RELEASE_BUILD_PATH'],signing_identity:"iPhone Distribution: GCOX Technology Pte Ltd (XJWAJMQ92S)",provisioning_profile:"prod.mobileprovision")
-      testflight(ipa: ENV['CORDOVA_IOS_RELEASE_BUILD_PATH'])
+      testflight(ipa: ENV['CORDOVA_IOS_RELEASE_BUILD_PATH'],skip_waiting_for_build_processing:"true")
     end
 end
 
