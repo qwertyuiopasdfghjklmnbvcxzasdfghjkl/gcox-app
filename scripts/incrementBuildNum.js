@@ -122,7 +122,9 @@ module.exports = function (context) {
         try {
             var l = match.length;
             match = parseInt(match) + 1;
-            match += parseInt(process.env.BUILD_NUMBER||0);
+            if(process.env.BUILD_NUMBER){
+                match += parseInt(process.env.BUILD_NUMBER)+1;
+            }
             return pad(match, l);
         } catch (e) {
             return null;
