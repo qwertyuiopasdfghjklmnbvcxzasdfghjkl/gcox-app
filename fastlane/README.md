@@ -16,11 +16,16 @@ or alternatively using `brew install fastlane`
 
 # Available Actions
 ## iOS
+### ios beta
+```
+fastlane ios beta
+```
+Deploy ios app on the appstore
 ### ios deploy
 ```
 fastlane ios deploy
 ```
-Deploy ios app on the appstore
+Deploy ios app on the box
 
 ----
 

@@ -1,9 +1,16 @@
 platform :ios do
   desc "Deploy ios app on the appstore"
-
-  lane :deploy do
+  lane :beta do
     cordova(platform: 'ios',type:'development',release:'false')
+
   end
+
+    desc "Deploy ios app on the box"
+    lane :deploy do
+      cordova(platform: 'ios',type:'development',release:'false')
+      resign(ipa:ENV['CORDOVA_IOS_RELEASE_BUILD_PATH'],signing_identity:"iPhone Distribution: GCOX Technology Pte Ltd (XJWAJMQ92S)",provisioning_profile:"prod.mobileprovision")
+      testflight(ipa: ENV['CORDOVA_IOS_RELEASE_BUILD_PATH'])
+    end
 end
 
 platform :android do
