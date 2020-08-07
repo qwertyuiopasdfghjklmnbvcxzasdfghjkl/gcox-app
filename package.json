@@ -15,7 +15,6 @@
     "axios": "^0.18.0",
     "compare-func": "^2.0.0",
     "cordova-android": "^9.0.0",
-    "cordova-build-increment": "^0.1.0",
     "cordova-ios": "git+http://c.koall.io/gitlab/ko-plugins/cordova-ios.git",
     "cordova-plugin-appversion": "^1.0.0",
     "cordova-plugin-share": "^0.1.3",
