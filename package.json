@@ -16,7 +16,6 @@
     "compare-func": "^2.0.0",
     "cordova-android": "^9.0.0",
     "cordova-build-increment": "^0.1.0",
-    "cordova-hot-code-push-plugin": "git+http://c.koall.io/gitlab/ko-plugins/cordova-hot-code-push-plugin.git",
     "cordova-ios": "git+http://c.koall.io/gitlab/ko-plugins/cordova-ios.git",
     "cordova-plugin-appversion": "^1.0.0",
     "cordova-plugin-share": "^0.1.3",
@@ -68,7 +67,6 @@
       "cordova-plugin-appversion": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-share": {},
-      "cordova-hot-code-push-plugin": {},
       "nl.madebymark.share": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-customurlscheme": {
@@ -79,8 +77,8 @@
       }
     },
     "platforms": [
-      "android",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }

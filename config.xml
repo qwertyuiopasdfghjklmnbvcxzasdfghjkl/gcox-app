@@ -46,7 +46,7 @@
 		<config-file platform="ios" target="*-Info.plist" parent="NSCameraUsageDescription">
 			<string>Scan QrCode</string>
 		</config-file>
-		<config-file platform="ios" target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
+        <config-file parent="NSPhotoLibraryUsageDescription" platform="ios" target="*-Info.plist">
 			<string>Would you like to access your album, please?</string>
 		</config-file>
 		<config-file platform="ios" target="*-Info.plist" parent="NSPhotoLibraryAddUsageDescription">
@@ -64,4 +64,13 @@
 		<auto-install enabled="false"/>
 		<native-interface version="1"/>
 	</chcp>
+    <preference name="ShowSplashScreenSpinner" value="false" />
+    <preference name="SplashMaintainAspectRatio" value="true" />
+    <preference name="SplashShowOnlyFirstTime" value="false" />
+    <preference name="StatusBarStyle" value="lightcontent" />
+    <preference name="StatusBarBackgroundColor" value="#000000" />
+    <preference name="AutoHideSplashScreen" value="false" />
+    <preference name="FadeSplashScreen" value="false" />
+    <plugin name="nl.madebymark.share" spec="~0.1.1" />
+    <plugin name="cordova-plugin-splashscreen" spec="^5.0.3" />
 </widget>
