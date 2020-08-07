@@ -26,24 +26,20 @@
         <icon density="hdpi" src="resources/android/icon/gcox.png" />
         <icon density="xhdpi" src="resources/android/icon/gcox.png" />
         <icon density="xxhdpi" src="resources/android/icon/gcox.png" />
-        <splash density="land-hdpi" src="resources/android/splash/splash.png" />
-        <splash density="land-ldpi" src="resources/android/splash/splash.png" />
-        <splash density="land-mdpi" src="resources/android/splash/splash.png" />
-        <splash density="land-xhdpi" src="resources/android/splash/splash.png" />
-        <splash density="port-hdpi" src="resources/android/splash/splash.png" />
-        <splash density="port-ldpi" src="resources/android/splash/splash.png" />
-        <splash density="port-mdpi" src="resources/android/splash/splash.png" />
-        <splash density="port-xhdpi" src="resources/android/splash/splash.png" />
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
             <application android:usesCleartextTraffic="true" />
         </edit-config>
     </platform>
     <platform name="ios">
-        <config-file parent="NSCameraUsageDescription" platform="ios" target="*-Info.plist">
+        <resource-file src="splash.png" />
+        <config-file platform="ios" target="*-Info.plist" parent="NSCameraUsageDescription">
             <string>Scan QrCode</string>
         </config-file>
         <config-file parent="NSPhotoLibraryUsageDescription" platform="ios" target="*-Info.plist">
             <string>Would you like to access your album, please?</string>
+        </config-file>
+        <config-file platform="ios" target="*-Info.plist" parent="NSPhotoLibraryAddUsageDescription">
+            <string>Save QrCode</string>
         </config-file>
         <preference name="DisallowOverscroll" value="true" />
         <preference name="StatusBarStyle" value="lightcontent" />
