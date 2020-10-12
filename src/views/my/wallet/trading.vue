@@ -30,13 +30,13 @@
                   </span>
                 </div>
             </section>
-            <div class="total">
+            <!-- <div class="total">
                 <p v-tap="{methods:()=>{ showMoney = !showMoney}}">
                     <span>{{$t('home.home47')}}</span>
                     <img :src="showMoney ? require('../../../assets/img/eye_open@2x.png'): require('../../../assets/img/eye_closed@2x.png')"/>
                 </p>
                 <h4 class="">{{currentSymbolInfo|number}} BTC</h4>
-            </div>
+            </div> -->
             <div class="list_title">
                 <p>{{$t('home.home53')}}</p>
                 <label>

@@ -12,7 +12,7 @@ if (protocol == 'file:' && process.env.VUE_APP_HTTPS=='true') {
 }
 let isDev = process.env.NODE_ENV == 'development'
 const wshttp = isHttps ? 'wss://': 'ws://'
-const http = isHttps ? 'https://' : 'http://'
+const http = isHttps ? 'https://' : 'https://'
 const config = {
   domain: domain,
   imageType: /\.(jpg|png|jpeg|bmp)/i,
