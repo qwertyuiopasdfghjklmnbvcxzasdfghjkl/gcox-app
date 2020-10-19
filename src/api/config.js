@@ -1,6 +1,6 @@
 
- // let domain = process.env.NODE_ENV === 'development' ? 'gcox-test.lab.ssss.so' : location.host.split(':')[0]
- let domain = process.env.NODE_ENV === 'development' ? 'gcox.com' : location.host.split(':')[0]
+ let domain = process.env.NODE_ENV === 'development' ? 'gcox-test.lab.ssss.so' : location.host.split(':')[0]
+ // let domain = process.env.NODE_ENV === 'development' ? 'gcox.com' : location.host.split(':')[0]
 
 const protocol = location.protocol
 if (protocol == 'file:' && process.env.VUE_APP_BASEURL) {
