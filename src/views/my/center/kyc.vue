@@ -66,7 +66,10 @@
             ...mapActions(['setUserInfo']),
             submitKYC() {
                 user.kyc(res => {
-                    this.$router.push({name: 'kyc-form', params: {url: res.data.redirect_url}})
+                    // kyc 国际化为 Locale = zh
+                    const url = res.data.redirect_url.replace(/locale=zh-CN/i, 'locale=zh')
+
+                    this.$router.push({ name: 'kyc-form', params: { url }})
                 }, msg => {
                     Tip({type: 'danger', message: this.$t(`error_code.${msg}`)})
                 })
